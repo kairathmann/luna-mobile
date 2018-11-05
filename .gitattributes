@@ -1,0 +1,5 @@
+*.pbxproj -text
+android/app/src/main/AndroidManifest.xml filter=update-fabric-keys
+android/app/fabric.properties filter=update-fabric-keys
+ios/lunamobile.xcodeproj/project.pbxproj filter=update-fabric-keys
+ios/lunamobile/Info.plist filter=update-fabric-keys
