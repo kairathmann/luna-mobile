@@ -6,15 +6,16 @@ import configureStore from './src/store'
 import configureApi from './src/config/config'
 import { AppStackNavigator } from './src/navigation'
 
+import { COLORS } from './src/styles'
+
 configureApi()
 const store = configureStore()
 
 const width = Dimensions.get('window').width
 EStyleSheet.build({
-	$rem: width > 340 ? 18 : 16
+	$rem: width > 340 ? 18 : 16,
+	$primaryColor: COLORS.LUNA_PRIMARY_COLOR
 })
-
-EStyleSheet.build()
 
 export default class App extends React.Component {
 	render() {

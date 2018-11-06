@@ -73,7 +73,7 @@ const styles = EStyleSheet.create({
 	},
 	button: {
 		marginBottom: '1rem',
-		backgroundColor: '#862b91',
+		backgroundColor: '$primaryColor',
 		width: '100%',
 		maxWidth: 200,
 		alignSelf: 'center',
