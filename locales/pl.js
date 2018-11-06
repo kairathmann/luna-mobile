@@ -1,7 +1,7 @@
-import { pl } from './welcome_page'
+import { pl as welcome_page } from '../src/views/pages/welcome/locales'
 
 export default {
-	welcome_page: pl,
+	welcome_page: welcome_page,
 	login_page: {
 		title: '_PL_Login'
 	},
