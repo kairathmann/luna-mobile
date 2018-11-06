@@ -1,8 +1,9 @@
-import { Button, Text } from 'native-base'
+import { Text } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Image, ImageBackground, ScrollView, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
+import Button from '../../../components/Button'
 import I18n from '../../../../locales/i18n'
 import { PAGES_NAMES } from '../../../navigation'
 import LunaLogoText from '../../../assets/logos/luna-logo-with-text.png'
@@ -27,25 +28,19 @@ class WelcomePage extends React.Component {
 						</View>
 						<View style={styles.buttonsContainer}>
 							<Button
-								style={styles.button}
+								text={I18n.t('welcome_page.signup')}
 								onPress={() => {
 									navigate(PAGES_NAMES.SIGNUP_PAGE)
 								}}
-							>
-								<Text style={styles.buttonText}>
-									{I18n.t('welcome_page.signup')}
-								</Text>
-							</Button>
+								buttonStyle={styles.button}
+							/>
 							<Button
-								style={styles.button}
+								text={I18n.t('welcome_page.login')}
 								onPress={() => {
 									navigate(PAGES_NAMES.LOGIN_PAGE)
 								}}
-							>
-								<Text style={styles.buttonText}>
-									{I18n.t('welcome_page.login')}
-								</Text>
-							</Button>
+								buttonStyle={styles.button}
+							/>
 						</View>
 					</View>
 				</ScrollView>
@@ -72,15 +67,8 @@ const styles = EStyleSheet.create({
 		marginBottom: '1rem'
 	},
 	button: {
-		marginBottom: '1rem',
-		backgroundColor: '$primaryColor',
-		width: '100%',
-		maxWidth: 200,
 		alignSelf: 'center',
-		justifyContent: 'center'
-	},
-	buttonText: {
-		justifyContent: 'center'
+		maxWidth: 200
 	},
 	container: {
 		width: '100%',
