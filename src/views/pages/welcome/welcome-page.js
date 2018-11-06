@@ -1,7 +1,7 @@
 import { Button, Text } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { Image, ImageBackground, View } from 'react-native'
+import { Image, ImageBackground, ScrollView, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import I18n from '../../../../locales/i18n'
 import { PAGES_NAMES } from '../../../navigation'
@@ -17,36 +17,38 @@ class WelcomePage extends React.Component {
 				style={styles.container}
 				blurRadius={5}
 			>
-				<View style={styles.content}>
-					<View style={styles.logo}>
-						<Image source={LunaLogoText} />
-						<Text style={styles.logoTitle} adjustsFontSizeToFit>
-							{I18n.t('welcome_page.app_description')}
-						</Text>
-					</View>
-					<View style={styles.buttonsContainer}>
-						<Button
-							style={styles.button}
-							onPress={() => {
-								navigate(PAGES_NAMES.SIGNUP_PAGE)
-							}}
-						>
-							<Text style={styles.buttonText}>
-								{I18n.t('welcome_page.signup')}
+				<ScrollView contentContainerStyle={styles.scrolledContent}>
+					<View style={styles.content}>
+						<View style={styles.logo}>
+							<Image source={LunaLogoText} />
+							<Text style={styles.logoTitle} adjustsFontSizeToFit>
+								{I18n.t('welcome_page.app_description')}
 							</Text>
-						</Button>
-						<Button
-							style={styles.button}
-							onPress={() => {
-								navigate(PAGES_NAMES.LOGIN_PAGE)
-							}}
-						>
-							<Text style={styles.buttonText}>
-								{I18n.t('welcome_page.login')}
-							</Text>
-						</Button>
+						</View>
+						<View style={styles.buttonsContainer}>
+							<Button
+								style={styles.button}
+								onPress={() => {
+									navigate(PAGES_NAMES.SIGNUP_PAGE)
+								}}
+							>
+								<Text style={styles.buttonText}>
+									{I18n.t('welcome_page.signup')}
+								</Text>
+							</Button>
+							<Button
+								style={styles.button}
+								onPress={() => {
+									navigate(PAGES_NAMES.LOGIN_PAGE)
+								}}
+							>
+								<Text style={styles.buttonText}>
+									{I18n.t('welcome_page.login')}
+								</Text>
+							</Button>
+						</View>
 					</View>
-				</View>
+				</ScrollView>
 			</ImageBackground>
 		)
 	}
@@ -58,8 +60,10 @@ WelcomePage.propTypes = {
 
 const styles = EStyleSheet.create({
 	content: {
-		flex: 1,
-		paddingTop: '2rem'
+		flex: 1
+	},
+	scrolledContent: {
+		flexGrow: 1
 	},
 	buttonsContainer: {
 		flex: 1,
@@ -83,7 +87,7 @@ const styles = EStyleSheet.create({
 		height: '100%'
 	},
 	logo: {
-		paddingTop: '1rem',
+		paddingTop: '2rem',
 		paddingRight: '1rem',
 		paddingLeft: '1rem',
 		paddingBottom: '1rem',
