@@ -6,8 +6,13 @@ import EStyleSheet from 'react-native-extended-stylesheet'
 import I18n from '../../../../locales/i18n'
 import { PAGES_NAMES } from '../../../navigation'
 import Config from 'react-native-config'
+import SplashScreen from 'react-native-splash-screen'
 
 class WelcomePage extends React.Component {
+	componentDidMount() {
+		SplashScreen.hide()
+	}
+
 	render() {
 		const { navigate } = this.props.navigation
 		return (
