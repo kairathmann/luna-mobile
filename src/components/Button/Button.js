@@ -3,9 +3,10 @@ import React from 'react'
 import { Button as NativeBaseButton, Text } from 'native-base'
 import EStyleSheet from 'react-native-extended-stylesheet'
 
-const Button = ({ text, onPress, buttonStyle, textStyle }) => (
+const Button = ({ text, onPress, disabled, buttonStyle, textStyle }) => (
 	<NativeBaseButton
-		style={buttonStyle ? [styles.button, buttonStyle] : styles.button}
+		disabled={disabled}
+		style={[styles.button, buttonStyle || '', disabled ? styles.disabled : '']}
 		onPress={onPress}
 	>
 		<Text
@@ -19,6 +20,7 @@ const Button = ({ text, onPress, buttonStyle, textStyle }) => (
 Button.propTypes = {
 	text: PropTypes.string.isRequired,
 	onPress: PropTypes.func.isRequired,
+	disabled: PropTypes.bool,
 	buttonStyle: PropTypes.object,
 	textStyle: PropTypes.object
 }
@@ -29,6 +31,9 @@ const styles = EStyleSheet.create({
 		backgroundColor: '$primaryColor',
 		justifyContent: 'center',
 		width: '100%'
+	},
+	disabled: {
+		opacity: 0.6
 	},
 	buttonText: {
 		justifyContent: 'center'
