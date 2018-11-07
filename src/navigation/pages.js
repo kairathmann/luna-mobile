@@ -1,8 +1,8 @@
 import { createStackNavigator } from 'react-navigation'
-import WelcomePage from '../views/pages/welcome/welcome-page'
+import I18n from '../../locales/i18n'
 import LoginPage from '../views/pages/login/login-page'
 import SignupPage from '../views/pages/signup/signup-page'
-import I18n from '../../locales/i18n'
+import WelcomePage from '../views/pages/welcome/welcome-page'
 
 const PAGES_NAMES = {
 	WELCOME_PAGE: 'WELCOME_PAGE',
@@ -38,8 +38,19 @@ const AppStackNavigator = createStackNavigator({
 	SIGNUP_PAGE: {
 		screen: SignupPage,
 		navigationOptions: () => ({
-			title: I18n.t('signup_page.title'),
-			header: null
+			// title: I18n.t('signup_page.title'),
+			// header: {
+			//   style: {
+			//     elevation: 0,       //remove shadow on Android
+			//     shadowOpacity: 0,   //remove shadow on iOS
+			//   }
+			// },
+			headerStyle: {
+				backgroundColor: 'white',
+				zIndex: 100,
+				elevation: 0, //remove shadow on Android
+				shadowOpacity: 0 //remove shadow on iOS
+			}
 		})
 	}
 })

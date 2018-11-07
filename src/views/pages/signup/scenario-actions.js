@@ -1,3 +1,4 @@
+// import {navigationService } from '../../../services'
 import api from '../../../api'
 import { getErrorDataFromNetworkException } from '../../../common/utils'
 import { signupError, signupSuccess } from '../../../store/auth/actions'
@@ -8,11 +9,10 @@ export function signup({ email, password }) {
 			// TODO: Show global loader
 			const result = await api.signup({ email, password })
 			dispatch(signupSuccess(result))
-			return
+			// TODO: uncomment when more screen will be ready
+			// navigationService.navigate('SOMEWHERE')
 		} catch (error) {
-			dispatch(
-				signupError(getErrorDataFromNetworkException(error).errorMessage)
-			)
+			dispatch(signupError(getErrorDataFromNetworkException(error)))
 		} finally {
 			// TODO: Hide global loader
 		}
