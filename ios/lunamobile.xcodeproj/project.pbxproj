@@ -45,11 +45,13 @@
 		6FA48D88DA1E4D0EBB7C776E /* libReactNativeConfig.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DB252C2CD5240659CA633A9 /* libReactNativeConfig.a */; };
 		774BC73E2F7F41779705160A /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 097491D04D004D7B8A75D195 /* Feather.ttf */; };
 		77DFCBD1E3BD47C6B17C6AE3 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3110A903DFBA47F5B51A0966 /* FontAwesome.ttf */; };
+		794AFA032191D5C70051E142 /* launch-screen.png in Resources */ = {isa = PBXBuildFile; fileRef = 794AFA022191D5C60051E142 /* launch-screen.png */; };
 		798BFB44218C50CD00AC330C /* libSMXCrashlytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 798BFB41218C509D00AC330C /* libSMXCrashlytics.a */; };
 		798BFB47218C516600AC330C /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 798BFB45218C516500AC330C /* Fabric.framework */; };
 		798BFB48218C516600AC330C /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 798BFB46218C516500AC330C /* Crashlytics.framework */; };
 		7E3A8E0C3B344BCB8025E38C /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 36DBAD862D234CEDA091DD9C /* EvilIcons.ttf */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
+		8538F63ED58D4936A20D45E9 /* libSplashScreen.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 143728B3859B43BAA4384DCB /* libSplashScreen.a */; };
 		8C87802D87704E56BB287439 /* Roboto_medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9E32CE8ACDB741A8B66775B4 /* Roboto_medium.ttf */; };
 		94B1D8AFE12740BA84C9377B /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C6C41431E2B84FA28CA273D6 /* SimpleLineIcons.ttf */; };
 		94D4D7009D574E799012E072 /* Roboto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BFF6B69A92B649A3AC2D40D1 /* Roboto.ttf */; };
@@ -323,6 +325,13 @@
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = RCTLinking;
 		};
+		794AF9EB2191CD630051E142 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B52CFCF2BA1C49729B0252AE /* SplashScreen.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3D7682761D8E76B80014119E;
+			remoteInfo = SplashScreen;
+		};
 		798BFAE7218C4B6100AC330C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A510F12F170D4F448DA5A294 /* ReactNativeConfig.xcodeproj */;
@@ -415,6 +424,7 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = lunamobile/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = lunamobile/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = lunamobile/main.m; sourceTree = "<group>"; };
+		143728B3859B43BAA4384DCB /* libSplashScreen.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libSplashScreen.a; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		19F12A7A5D0D45508FE47543 /* RNI18n.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNI18n.xcodeproj; path = "../node_modules/react-native-i18n/ios/RNI18n.xcodeproj"; sourceTree = "<group>"; };
 		1BB7B256A71146FAB08207A7 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/native-base/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
@@ -432,6 +442,7 @@
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		7942D83F218C81C200C23735 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		7942D840218C81CE00C23735 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		794AFA022191D5C60051E142 /* launch-screen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "launch-screen.png"; path = "lunamobile/launch-screen.png"; sourceTree = "<group>"; };
 		798BFB3B218C509D00AC330C /* SMXCrashlytics.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SMXCrashlytics.xcodeproj; path = "../node_modules/react-native-fabric/ios/SMXCrashlytics.xcodeproj"; sourceTree = "<group>"; };
 		798BFB45218C516500AC330C /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Fabric.framework; path = Crashlytics/Fabric.framework; sourceTree = "<group>"; };
 		798BFB46218C516500AC330C /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crashlytics.framework; path = Crashlytics/Crashlytics.framework; sourceTree = "<group>"; };
@@ -444,6 +455,7 @@
 		AAE41AD418FA4D4BA21FE2D6 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/native-base/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		B523282B88EC4CF99956F991 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/native-base/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
+		B52CFCF2BA1C49729B0252AE /* SplashScreen.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = SplashScreen.xcodeproj; path = "../node_modules/react-native-splash-screen/ios/SplashScreen.xcodeproj"; sourceTree = "<group>"; };
 		BFF6B69A92B649A3AC2D40D1 /* Roboto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Roboto.ttf; path = "../node_modules/native-base/Fonts/Roboto.ttf"; sourceTree = "<group>"; };
 		C6C41431E2B84FA28CA273D6 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/native-base/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		D4941EA52DFF4E29953041BE /* libRNLanguages-tvOS.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = "libRNLanguages-tvOS.a"; sourceTree = "<group>"; };
@@ -483,6 +495,7 @@
 				3C98D31A44BA45CDA8F77710 /* libRNI18n.a in Frameworks */,
 				798BFB47218C516600AC330C /* Fabric.framework in Frameworks */,
 				3ABD166DFEBD4A32AB570348 /* libRNLanguages.a in Frameworks */,
+				8538F63ED58D4936A20D45E9 /* libSplashScreen.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -597,6 +610,7 @@
 		13B07FAE1A68108700A75B9A /* lunamobile */ = {
 			isa = PBXGroup;
 			children = (
+				794AFA022191D5C60051E142 /* launch-screen.png */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -657,6 +671,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		794AF9E82191CD630051E142 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				794AF9EC2191CD630051E142 /* libSplashScreen.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		798BFAB7218C4B5C00AC330C /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
@@ -666,6 +688,7 @@
 				E6381DE0D03749DD804F84E7 /* libReactNativeConfig-tvOS.a */,
 				8DD8D7225D2C4ED49EA02197 /* libRNI18n-tvOS.a */,
 				D4941EA52DFF4E29953041BE /* libRNLanguages-tvOS.a */,
+				143728B3859B43BAA4384DCB /* libSplashScreen.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -725,6 +748,7 @@
 				A510F12F170D4F448DA5A294 /* ReactNativeConfig.xcodeproj */,
 				19F12A7A5D0D45508FE47543 /* RNI18n.xcodeproj */,
 				319CD7EB4A964EA2BC492222 /* RNLanguages.xcodeproj */,
+				B52CFCF2BA1C49729B0252AE /* SplashScreen.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -976,6 +1000,10 @@
 				{
 					ProductGroup = 798BFB3C218C509D00AC330C /* Products */;
 					ProjectRef = 798BFB3B218C509D00AC330C /* SMXCrashlytics.xcodeproj */;
+				},
+				{
+					ProductGroup = 794AF9E82191CD630051E142 /* Products */;
+					ProjectRef = B52CFCF2BA1C49729B0252AE /* SplashScreen.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -1234,6 +1262,13 @@
 			remoteRef = 78C398B81ACF4ADC00677621 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		794AF9EC2191CD630051E142 /* libSplashScreen.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSplashScreen.a;
+			remoteRef = 794AF9EB2191CD630051E142 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		798BFAE8218C4B6100AC330C /* libReactNativeConfig.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1332,6 +1367,7 @@
 				8C87802D87704E56BB287439 /* Roboto_medium.ttf in Resources */,
 				94D4D7009D574E799012E072 /* Roboto.ttf in Resources */,
 				AB1DCB590FC046DF9D15CD1C /* rubicon-icon-font.ttf in Resources */,
+				794AFA032191D5C70051E142 /* launch-screen.png in Resources */,
 				94B1D8AFE12740BA84C9377B /* SimpleLineIcons.ttf in Resources */,
 				BE475155582440BCB4F14C3D /* Zocial.ttf in Resources */,
 			);
@@ -1479,12 +1515,14 @@
 					"$(SRCROOT)/../node_modules/react-native-i18n/ios",
 					"$(SRCROOT)/../node_modules/react-native-languages/ios",
 					"$(SRCROOT)/../node_modules/react-native-fabric/ios/SMXCrashlytics/**",
+					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
 				);
 				INFOPLIST_FILE = lunamobileTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
@@ -1509,12 +1547,14 @@
 					"$(SRCROOT)/../node_modules/react-native-i18n/ios",
 					"$(SRCROOT)/../node_modules/react-native-languages/ios",
 					"$(SRCROOT)/../node_modules/react-native-fabric/ios/SMXCrashlytics/**",
+					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
 				);
 				INFOPLIST_FILE = lunamobileTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
@@ -1544,6 +1584,7 @@
 					"$(SRCROOT)/../node_modules/react-native-i18n/ios",
 					"$(SRCROOT)/../node_modules/react-native-languages/ios",
 					"$(SRCROOT)/../node_modules/react-native-fabric/ios/SMXCrashlytics/**",
+					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
 				);
 				INFOPLIST_FILE = lunamobile/Info.plist;
 				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";
@@ -1578,6 +1619,7 @@
 					"$(SRCROOT)/../node_modules/react-native-i18n/ios",
 					"$(SRCROOT)/../node_modules/react-native-languages/ios",
 					"$(SRCROOT)/../node_modules/react-native-fabric/ios/SMXCrashlytics/**",
+					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
 				);
 				INFOPLIST_FILE = lunamobile/Info.plist;
 				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";
@@ -1614,11 +1656,13 @@
 					"$(SRCROOT)/../node_modules/react-native-i18n/ios",
 					"$(SRCROOT)/../node_modules/react-native-languages/ios",
 					"$(SRCROOT)/../node_modules/react-native-fabric/ios/SMXCrashlytics/**",
+					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
 				);
 				INFOPLIST_FILE = "lunamobile-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
@@ -1651,11 +1695,13 @@
 					"$(SRCROOT)/../node_modules/react-native-i18n/ios",
 					"$(SRCROOT)/../node_modules/react-native-languages/ios",
 					"$(SRCROOT)/../node_modules/react-native-fabric/ios/SMXCrashlytics/**",
+					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
 				);
 				INFOPLIST_FILE = "lunamobile-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
@@ -1687,11 +1733,13 @@
 					"$(SRCROOT)/../node_modules/react-native-i18n/ios",
 					"$(SRCROOT)/../node_modules/react-native-languages/ios",
 					"$(SRCROOT)/../node_modules/react-native-fabric/ios/SMXCrashlytics/**",
+					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
 				);
 				INFOPLIST_FILE = "lunamobile-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
@@ -1723,11 +1771,13 @@
 					"$(SRCROOT)/../node_modules/react-native-i18n/ios",
 					"$(SRCROOT)/../node_modules/react-native-languages/ios",
 					"$(SRCROOT)/../node_modules/react-native-fabric/ios/SMXCrashlytics/**",
+					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
 				);
 				INFOPLIST_FILE = "lunamobile-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
