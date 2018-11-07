@@ -1,20 +1,35 @@
-import { Button, Form, H1, Input, Item, Label, Icon } from 'native-base'
+import { Form, H1, Icon, Input, Item, Label } from 'native-base'
+import PropTypes from 'prop-types'
 import React from 'react'
-import { StatusBar, Text, View, TouchableOpacity } from 'react-native'
+import { StatusBar, Text, TouchableOpacity, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { SafeAreaView } from 'react-navigation'
-import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import validator from 'validator'
+import I18n from '../../../../locales/i18n'
+import Button from '../../../components/Button/'
+import { signup } from './scenario-actions'
 
-class SignupPage extends React.Component {
+export class SignupPage extends React.Component {
 	state = {
 		email: '',
-		password: ''
+		password: '',
+		emailValid: true,
+		passwordValid: true,
+		validationEnabled: false
 	}
 
 	inputs = {}
 
-	handleChange = (val, field) => {
-		this.setState({ [field]: val })
+	handleChange = (event, field) => {
+		this.setState({ [field]: event.nativeEvent.text }, this.validateForm)
+	}
+
+	validateForm = () => {
+		this.setState({
+			emailValid: this.validateEmail(this.state.email),
+			passwordValid: this.validatePassword(this.state.password)
+		})
 	}
 
 	handleLink = link => {
@@ -22,7 +37,40 @@ class SignupPage extends React.Component {
 	}
 
 	handleSignup = () => {
-		console.log('Signup clicked')
+		this.setState(
+			{
+				validationEnabled: true
+			},
+			async () => {
+				const { email, password } = this.state
+				const emailValid = this.validateEmail(email)
+				const passwordValid = this.validatePassword(password)
+
+				if (emailValid && passwordValid) {
+					await this.props.signup({ email, password })
+					console.log('success')
+					// TODO: this.props.navigation.navigate(PAGES_NAMES.BIRTHDAY_GENDER)
+				} else {
+					this.setState({
+						emailValid,
+						passwordValid
+					})
+				}
+			}
+		)
+	}
+
+	validateEmail = email => {
+		if (!this.state.validationEnabled) return true
+		return !validator.isEmpty(email) && validator.isEmail(email)
+	}
+
+	validatePassword = password => {
+		if (!this.state.validationEnabled) return true
+		return (
+			!validator.isEmpty(password) &&
+			validator.isLength(password, { min: 8, max: undefined })
+		)
 	}
 
 	focusNextField = id => {
@@ -30,6 +78,13 @@ class SignupPage extends React.Component {
 	}
 
 	render() {
+		const {
+			emailValid,
+			email,
+			passwordValid,
+			password,
+			validationEnabled
+		} = this.state
 		return (
 			<SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
 				<StatusBar backgroundColor={'#fff'} barStyle="dark-content" />
@@ -46,15 +101,15 @@ class SignupPage extends React.Component {
 					/>
 				</TouchableOpacity>
 				<View style={styles.content}>
-					<H1 style={styles.title}>Sign up</H1>
+					<H1 style={styles.title}>{I18n.t('signup_page.title')}</H1>
 					<Form>
-						<Item floatingLabel last>
-							<Label>Email</Label>
+						<Item error={!emailValid} floatingLabel last>
+							<Label>{I18n.t('common.email')}</Label>
 							<Input
 								keyboardType={'email-address'}
 								blurOnSubmit={false}
 								onChange={val => this.handleChange(val, 'email')}
-								value={this.state.email}
+								value={email}
 								returnKeyType={'next'}
 								getRef={input => {
 									this.inputs['email'] = input
@@ -64,12 +119,12 @@ class SignupPage extends React.Component {
 								}}
 							/>
 						</Item>
-						<Item floatingLabel last>
-							<Label>Password (min. 8 chars)</Label>
+						<Item error={!passwordValid} floatingLabel last>
+							<Label>{I18n.t('signup_page.password_with_info')}</Label>
 							<Input
 								returnKeyType={'done'}
 								onChange={val => this.handleChange(val, 'password')}
-								value={this.state.password}
+								value={password}
 								secureTextEntry={true}
 								onSubmitEditing={() => {
 									this.handleSignup()
@@ -81,25 +136,29 @@ class SignupPage extends React.Component {
 						</Item>
 					</Form>
 					<Text style={styles.prompt}>
-						I agree to the&nbsp;
+						{I18n.t('signup_page.agreement_1')}
 						<Text
 							style={styles.underline}
 							onPress={() => this.handleLink('terms')}
 						>
-							Terms
+							{I18n.t('signup_page.terms')}
 						</Text>
-						&nbsp;and&nbsp;
+						{I18n.t('signup_page.agreement_2')}
 						<Text
 							style={styles.underline}
 							onPress={() => this.handleLink('policy')}
 						>
-							Privacy Policy
+							{I18n.t('signup_page.policy')}
 						</Text>
 						.
 					</Text>
-					<Button onPressed={this.handleSignup} block>
-						<Text>Next</Text>
-					</Button>
+					<Button
+						disabled={validationEnabled && !(emailValid && passwordValid)}
+						text={I18n.t('signup_page.sign_up')}
+						onPress={() => this.handleSignup()}
+						block
+					/>
+					<Text style={styles.errorText}>{this.props.error}</Text>
 				</View>
 			</SafeAreaView>
 		)
@@ -107,7 +166,9 @@ class SignupPage extends React.Component {
 }
 
 SignupPage.propTypes = {
-	navigation: PropTypes.object.isRequired
+	navigation: PropTypes.object.isRequired,
+	signup: PropTypes.func.isRequired,
+	error: PropTypes.string
 }
 
 const styles = EStyleSheet.create({
@@ -131,7 +192,26 @@ const styles = EStyleSheet.create({
 	backArrow: {
 		top: 16,
 		left: 16
+	},
+	errorText: {
+		color: 'red',
+		textAlign: 'center'
 	}
 })
 
-export default SignupPage
+const mapStateToProps = state => {
+	return {
+		error: state.auth.signupError
+	}
+}
+
+const mapDispatchToProps = dispatch => {
+	return {
+		signup: payload => dispatch(signup(payload))
+	}
+}
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(SignupPage)

@@ -1,7 +1,26 @@
 import axios from 'axios'
 import qs from 'qs'
 
-import { SIGN_IN_LOCAL_SUCCESS, SIGN_IN_LOCAL_ERROR } from './action-types'
+import {
+	SIGN_IN_LOCAL_SUCCESS,
+	SIGN_IN_LOCAL_ERROR,
+	SIGNUP_ERROR,
+	SIGNUP_SUCCESS
+} from './action-types'
+
+export function signupError(error) {
+	return {
+		type: SIGNUP_ERROR,
+		payload: error
+	}
+}
+
+export function signupSuccess(result) {
+	return {
+		type: SIGNUP_SUCCESS,
+		payload: result
+	}
+}
 
 export function signInLocalSuccess(result) {
 	return {
