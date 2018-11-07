@@ -1,13 +1,11 @@
+import { en as welcome_page } from '../src/views/pages/welcome/locales'
+
 export default {
-  "welcome_page": {
-    "app_description": "Blockchain Optimized Dating",
-    "login": "Login",
-    "signup": "Sign Up"
-  },
-  "login_page": {
-    "title": "Login"
-  },
-  "signup_page": {
-    "title": "Sign up"
-  }
+	welcome_page: welcome_page,
+	login_page: {
+		title: 'Login'
+	},
+	signup_page: {
+		title: 'Sign up'
+	}
 }
