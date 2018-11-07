@@ -1,5 +1,4 @@
 import { createStackNavigator } from 'react-navigation'
-import I18n from '../../locales/i18n'
 import LoginPage from '../views/pages/login/login-page'
 import SignupPage from '../views/pages/signup/signup-page'
 import WelcomePage from '../views/pages/welcome/welcome-page'
@@ -10,16 +9,16 @@ const PAGES_NAMES = {
 	SIGNUP_PAGE: 'SIGNUP_PAGE'
 }
 
-const commonNavBarStyle = {
-	headerStyle: {
-		backgroundColor: '#603695'
-	},
-	headerTitleStyle: {
-		fontWeight: 'bold',
-		color: '#FFF'
-	},
-	headerTintColor: '#FFF'
-}
+// const commonNavBarStyle = {
+// 	headerStyle: {
+// 		backgroundColor: '#603695'
+// 	},
+// 	headerTitleStyle: {
+// 		fontWeight: 'bold',
+// 		color: '#FFF'
+// 	},
+// 	headerTintColor: '#FFF'
+// }
 
 const AppStackNavigator = createStackNavigator({
 	WELCOME_PAGE: {
@@ -31,8 +30,12 @@ const AppStackNavigator = createStackNavigator({
 	LOGIN_PAGE: {
 		screen: LoginPage,
 		navigationOptions: () => ({
-			title: I18n.t('login_page.title'),
-			...commonNavBarStyle
+			headerStyle: {
+				backgroundColor: 'white',
+				zIndex: 100,
+				elevation: 0, //remove shadow on Android
+				shadowOpacity: 0 //remove shadow on iOS
+			}
 		})
 	},
 	SIGNUP_PAGE: {
