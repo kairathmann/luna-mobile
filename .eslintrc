@@ -11,7 +11,7 @@
     "plugin:react/recommended"
   ],
   "rules": {
-    // overrides
+    "no-console": 1
   },
   "globals": {
     "__DEV__": true,
@@ -23,7 +23,7 @@
     "clearImmediate": true,
     "clearInterval": false,
     "clearTimeout": false,
-    "console": false,
+    "console": true,
     "document": false,
     "escape": false,
     "Event": false,
