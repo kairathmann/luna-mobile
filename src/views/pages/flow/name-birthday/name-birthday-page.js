@@ -2,13 +2,13 @@ import { Form, H1, Input, Item, Label } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Text, View } from 'react-native'
+import DatePicker from 'react-native-datepicker'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { connect } from 'react-redux'
-import I18n from '../../../../locales/i18n'
-import Button from '../../../components/Button/'
-import { styles as commonStyles } from '../../../styles'
-import { login } from './scenario-actions'
+import I18n from '../../../../../locales/i18n'
+import Button from '../../../../components/Button'
+// import { login } from './scenario-actions'
 
 export class NameBirthdayPage extends React.Component {
 	state = {
@@ -22,7 +22,7 @@ export class NameBirthdayPage extends React.Component {
 		this.setState({ [field]: event.nativeEvent.text })
 	}
 
-	handleSignin = () => {
+	handleNext = () => {
 		const { name } = this.state
 		if (name.length !== 0) {
 			// this.props.login({ email, password })
@@ -34,10 +34,11 @@ export class NameBirthdayPage extends React.Component {
 	}
 
 	render() {
-		const { name } = this.state
+		const { name, birthday } = this.state
 		return (
 			<View style={styles.content}>
 				<KeyboardAwareScrollView
+					keyboardShouldPersistTaps={'handled'}
 					enableOnAndroid={true}
 					style={styles.innerContent}
 				>
@@ -46,15 +47,14 @@ export class NameBirthdayPage extends React.Component {
 					</H1>
 					<Form>
 						<Item floatingLabel last>
-							<Label>{I18n.t('common.email')}</Label>
+							<Label>{I18n.t('flow_page.name_birthday.name')}</Label>
 							<Input
-								keyboardType={'email-address'}
 								blurOnSubmit={false}
-								onChange={val => this.handleChange(val, 'email')}
+								onChange={val => this.handleChange(val, 'name')}
 								value={name}
 								returnKeyType={'next'}
 								getRef={input => {
-									this.inputs['email'] = input
+									this.inputs['name'] = input
 								}}
 								onSubmitEditing={() => {
 									this.focusNextField('password')
@@ -62,30 +62,50 @@ export class NameBirthdayPage extends React.Component {
 							/>
 						</Item>
 						<Item floatingLabel last>
-							<Label>{I18n.t('login_page.password_with_info')}</Label>
-							<Input
-								returnKeyType={'done'}
-								onChange={val => this.handleChange(val, 'password')}
-								value={name}
-								secureTextEntry={true}
-								onSubmitEditing={() => {
-									this.handleSignin()
+							<Label>{I18n.t('flow_page.name_birthday.birthday')}</Label>
+							{/*<Input*/}
+							{/*returnKeyType={'done'}*/}
+							{/*onChange={val => this.handleChange(val, 'birthday')}*/}
+							{/*value={name}*/}
+							{/*secureTextEntry={true}*/}
+							{/*onSubmitEditing={() => {*/}
+							{/*this.handleNext()*/}
+							{/*}}*/}
+							{/*getRef={input => {*/}
+							{/*this.inputs['birthday'] = input*/}
+							{/*}}*/}
+							{/*/>*/}
+							<DatePicker
+								style={{ width: 200 }}
+								date={birthday}
+								mode="date"
+								placeholder="select date"
+								format="YYYY-MM-DD"
+								minDate="2016-05-01"
+								maxDate="2016-06-01"
+								confirmBtnText="Confirm"
+								cancelBtnText="Cancel"
+								customStyles={{
+									dateIcon: {
+										position: 'absolute',
+										left: 0,
+										top: 4,
+										marginLeft: 0
+									},
+									dateInput: {
+										marginLeft: 36
+									}
+									// ... You can check the source to find the other keys.
 								}}
-								getRef={input => {
-									this.inputs['password'] = input
+								onDateChange={date => {
+									this.setState({ date: date })
 								}}
 							/>
 						</Item>
 					</Form>
-					<Text
-						onPress={this.handleForgetClick}
-						style={[styles.prompt, commonStyles.underline]}
-					>
-						{I18n.t('login_page.forget_password')}
-					</Text>
 					<Button
-						text={I18n.t('login_page.sign_in')}
-						onPress={() => this.handleSignin()}
+						text={I18n.t('flow_page.name_birthday.next')}
+						onPress={() => this.handleNext()}
 					/>
 					<Text style={styles.errorText}>{this.props.error}</Text>
 				</KeyboardAwareScrollView>
@@ -130,9 +150,9 @@ const mapStateToProps = state => {
 	}
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = () => {
 	return {
-		login: payload => dispatch(login(payload))
+		// login: payload => dispatch(login(payload))
 	}
 }
 

@@ -10,6 +10,9 @@ import LunaLogoText from '../../../assets/logos/luna-logo-with-text.png'
 import WomanBackground from '../../../assets/images/woman-welcome-page-background.jpg'
 
 class WelcomePage extends React.Component {
+	componentDidMount() {
+		this.props.navigation.navigate(PAGES_NAMES.LOGIN_PAGE)
+	}
 	render() {
 		const { navigate } = this.props.navigation
 		return (
