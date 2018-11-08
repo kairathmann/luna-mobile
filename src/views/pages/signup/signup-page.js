@@ -116,36 +116,6 @@ export class SignupPage extends React.Component {
 								}}
 							/>
 						</Item>
-						<Item error={!passwordValid} floatingLabel last>
-							<Label>{I18n.t('signup_page.password_with_info')}</Label>
-							<Input
-								returnKeyType={'done'}
-								onChange={val => this.handleChange(val, 'password')}
-								value={password}
-								secureTextEntry={true}
-								onSubmitEditing={() => {
-									this.handleSignup()
-								}}
-								getRef={input => {
-									this.inputs['password'] = input
-								}}
-							/>
-						</Item>
-						<Item error={!passwordValid} floatingLabel last>
-							<Label>{I18n.t('signup_page.password_with_info')}</Label>
-							<Input
-								returnKeyType={'done'}
-								onChange={val => this.handleChange(val, 'password')}
-								value={password}
-								secureTextEntry={true}
-								onSubmitEditing={() => {
-									this.handleSignup()
-								}}
-								getRef={input => {
-									this.inputs['password'] = input
-								}}
-							/>
-						</Item>
 					</Form>
 					<Text style={styles.prompt}>
 						{I18n.t('signup_page.agreement_1')}
