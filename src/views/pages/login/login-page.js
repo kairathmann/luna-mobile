@@ -1,7 +1,7 @@
 import { Form, H1, Input, Item, Label } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { Text, View } from 'react-native'
+import { Keyboard, Text, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { connect } from 'react-redux'
@@ -35,6 +35,7 @@ export class LoginPage extends React.Component {
 				validator.isEmail(email)
 			) {
 				this.props.login({ email, password })
+				Keyboard.dismiss()
 			}
 		})
 	}
