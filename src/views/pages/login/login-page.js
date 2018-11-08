@@ -48,6 +48,7 @@ export class LoginPage extends React.Component {
 		return (
 			<View style={styles.content}>
 				<KeyboardAwareScrollView
+					keyboardShouldPersistTaps={'handled'}
 					enableOnAndroid={true}
 					style={styles.innerContent}
 				>
