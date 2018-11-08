@@ -107,3 +107,5 @@ ios/assets/**/*.*
 ios/Crashlytics/**/*.*
 
 **/.DS_Store
+
+.idea
