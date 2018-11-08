@@ -10,7 +10,7 @@ const getErrorDataFromNetworkException = error => {
 			switch (error.response.status) {
 				case 400:
 					errorMessage = I18n.t(
-						`common.errors.${errorCode.code || 'incorrect_request'}`
+						`common.errors.${errorCode || 'incorrect_request'}`
 					)
 					break
 				case 404:

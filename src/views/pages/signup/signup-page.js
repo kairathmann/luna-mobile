@@ -1,13 +1,15 @@
 import { Form, H1, Input, Item, Label } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { Text, View } from 'react-native'
+import { Text, View, Keyboard } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { connect } from 'react-redux'
 import validator from 'validator'
 import I18n from '../../../../locales/i18n'
 import Button from '../../../components/Button/'
+import { styles as commonStyles } from '../../../styles'
 import { signup } from './scenario-actions'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 export class SignupPage extends React.Component {
 	state = {
@@ -31,9 +33,7 @@ export class SignupPage extends React.Component {
 		})
 	}
 
-	handleLink = link => {
-		console.log(` ${link} clicked`)
-	}
+	handleLink = () => {}
 
 	handleSignup = () => {
 		this.setState({ validationEnabled: true }, () => {
@@ -43,6 +43,7 @@ export class SignupPage extends React.Component {
 
 			if (emailValid && passwordValid) {
 				this.props.signup({ email, password })
+				Keyboard.dismiss()
 			} else {
 				this.setState({
 					emailValid,
@@ -79,64 +80,69 @@ export class SignupPage extends React.Component {
 		} = this.state
 		return (
 			<View style={styles.content}>
-				<H1 style={styles.title}>{I18n.t('signup_page.title')}</H1>
-				<Form>
-					<Item error={!emailValid} floatingLabel last>
-						<Label>{I18n.t('common.email')}</Label>
-						<Input
-							keyboardType={'email-address'}
-							blurOnSubmit={false}
-							onChange={val => this.handleChange(val, 'email')}
-							value={email}
-							returnKeyType={'next'}
-							getRef={input => {
-								this.inputs['email'] = input
-							}}
-							onSubmitEditing={() => {
-								this.focusNextField('password')
-							}}
-						/>
-					</Item>
-					<Item error={!passwordValid} floatingLabel last>
-						<Label>{I18n.t('signup_page.password_with_info')}</Label>
-						<Input
-							returnKeyType={'done'}
-							onChange={val => this.handleChange(val, 'password')}
-							value={password}
-							secureTextEntry={true}
-							onSubmitEditing={() => {
-								this.handleSignup()
-							}}
-							getRef={input => {
-								this.inputs['password'] = input
-							}}
-						/>
-					</Item>
-				</Form>
-				<Text style={styles.prompt}>
-					{I18n.t('signup_page.agreement_1')}
-					<Text
-						style={styles.underline}
-						onPress={() => this.handleLink('terms')}
-					>
-						{I18n.t('signup_page.terms')}
+				<KeyboardAwareScrollView
+					keyboardShouldPersistTaps={'handled'}
+					enableOnAndroid={true}
+					style={styles.innerContent}
+				>
+					<H1 style={styles.title}>{I18n.t('signup_page.title')}</H1>
+					<Form style={styles.form}>
+						<Item error={!emailValid} floatingLabel last>
+							<Label>{I18n.t('common.email')}</Label>
+							<Input
+								keyboardType={'email-address'}
+								blurOnSubmit={false}
+								onChange={val => this.handleChange(val, 'email')}
+								value={email}
+								returnKeyType={'next'}
+								getRef={input => {
+									this.inputs['email'] = input
+								}}
+								onSubmitEditing={() => {
+									this.focusNextField('password')
+								}}
+							/>
+						</Item>
+						<Item error={!passwordValid} floatingLabel last>
+							<Label>{I18n.t('signup_page.password_with_info')}</Label>
+							<Input
+								returnKeyType={'done'}
+								onChange={val => this.handleChange(val, 'password')}
+								value={password}
+								secureTextEntry={true}
+								onSubmitEditing={() => {
+									this.handleSignup()
+								}}
+								getRef={input => {
+									this.inputs['password'] = input
+								}}
+							/>
+						</Item>
+					</Form>
+					<Text style={styles.prompt}>
+						{I18n.t('signup_page.agreement_1')}
+						<Text
+							style={commonStyles.underline}
+							onPress={() => this.handleLink('terms')}
+						>
+							{I18n.t('signup_page.terms')}
+						</Text>
+						{I18n.t('signup_page.agreement_2')}
+						<Text
+							style={commonStyles.underline}
+							onPress={() => this.handleLink('policy')}
+						>
+							{I18n.t('signup_page.policy')}
+						</Text>
+						.
 					</Text>
-					{I18n.t('signup_page.agreement_2')}
-					<Text
-						style={styles.underline}
-						onPress={() => this.handleLink('policy')}
-					>
-						{I18n.t('signup_page.policy')}
-					</Text>
-					.
-				</Text>
-				<Button
-					disabled={validationEnabled && !(emailValid && passwordValid)}
-					text={I18n.t('signup_page.sign_up')}
-					onPress={() => this.handleSignup()}
-					block
-				/>
-				<Text style={styles.errorText}>{this.props.error}</Text>
+					<Button
+						disabled={validationEnabled && !(emailValid && passwordValid)}
+						text={I18n.t('signup_page.sign_up')}
+						onPress={() => this.handleSignup()}
+					/>
+					<Text style={styles.errorText}>{this.props.error}</Text>
+				</KeyboardAwareScrollView>
 			</View>
 		)
 	}
@@ -151,8 +157,10 @@ SignupPage.propTypes = {
 const styles = EStyleSheet.create({
 	content: {
 		flex: 1,
-		padding: 16,
 		backgroundColor: 'white'
+	},
+	innerContent: {
+		padding: 16
 	},
 	title: {
 		marginTop: 24,
@@ -164,16 +172,12 @@ const styles = EStyleSheet.create({
 		marginTop: 16,
 		marginBottom: 16
 	},
-	underline: {
-		textDecorationLine: 'underline'
-	},
-	backArrow: {
-		top: 16,
-		left: 16
-	},
 	errorText: {
 		color: 'red',
 		textAlign: 'center'
+	},
+	form: {
+		flexDirection: 'column'
 	}
 })
 

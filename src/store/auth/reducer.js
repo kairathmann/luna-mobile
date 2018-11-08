@@ -1,6 +1,6 @@
 import {
-	SIGN_IN_LOCAL_SUCCESS,
-	SIGN_IN_LOCAL_ERROR,
+	SIGNIN_SUCCESS,
+	SIGNIN_ERROR,
 	SIGNUP_ERROR,
 	SIGNUP_SUCCESS
 } from './action-types'
@@ -8,13 +8,13 @@ import {
 const initialState = {
 	authenticated: '',
 	signInLastResult: '',
-	signupError: ''
+	signupError: '',
+	signinError: ''
 }
 
 export function authReducer(state = initialState, { payload, type }) {
 	switch (type) {
 		case SIGNUP_ERROR:
-			console.log({ payload })
 			return {
 				...state,
 				signupError: payload
@@ -25,16 +25,16 @@ export function authReducer(state = initialState, { payload, type }) {
 				authenticated: true
 			}
 		}
-		case SIGN_IN_LOCAL_SUCCESS:
+		case SIGNIN_SUCCESS:
 			return {
 				...state,
 				authenticated: true
 			}
 
-		case SIGN_IN_LOCAL_ERROR:
+		case SIGNIN_ERROR:
 			return {
 				...state,
-				signInLastResult: payload
+				signinError: payload
 			}
 
 		default:
