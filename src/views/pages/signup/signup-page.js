@@ -140,7 +140,6 @@ export class SignupPage extends React.Component {
 						disabled={validationEnabled && !(emailValid && passwordValid)}
 						text={I18n.t('signup_page.sign_up')}
 						onPress={() => this.handleSignup()}
-						block
 					/>
 					<Text style={styles.errorText}>{this.props.error}</Text>
 				</KeyboardAwareScrollView>
