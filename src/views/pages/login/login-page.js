@@ -1,8 +1,9 @@
 import { Form, H1, Input, Item, Label } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { ScrollView, Text, View } from 'react-native'
+import { Text, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { connect } from 'react-redux'
 import validator from 'validator'
 import I18n from '../../../../locales/i18n'
@@ -46,7 +47,10 @@ export class LoginPage extends React.Component {
 		const { email, password, validationEnabled } = this.state
 		return (
 			<View style={styles.content}>
-				<ScrollView style={styles.innerContent}>
+				<KeyboardAwareScrollView
+					enableOnAndroid={true}
+					style={styles.innerContent}
+				>
 					<H1 style={styles.title}>{I18n.t('login_page.title')}</H1>
 					<Form>
 						<Item
@@ -112,7 +116,7 @@ export class LoginPage extends React.Component {
 						onPress={() => this.handleSignin()}
 					/>
 					<Text style={styles.errorText}>{this.props.error}</Text>
-				</ScrollView>
+				</KeyboardAwareScrollView>
 			</View>
 		)
 	}

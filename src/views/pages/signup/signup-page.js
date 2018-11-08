@@ -1,7 +1,7 @@
 import { Form, H1, Input, Item, Label } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { Text, View, ScrollView } from 'react-native'
+import { Text, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { connect } from 'react-redux'
 import validator from 'validator'
@@ -9,6 +9,7 @@ import I18n from '../../../../locales/i18n'
 import Button from '../../../components/Button/'
 import { styles as commonStyles } from '../../../styles'
 import { signup } from './scenario-actions'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 export class SignupPage extends React.Component {
 	state = {
@@ -78,7 +79,10 @@ export class SignupPage extends React.Component {
 		} = this.state
 		return (
 			<View style={styles.content}>
-				<ScrollView style={styles.innerContent}>
+				<KeyboardAwareScrollView
+					enableOnAndroid={true}
+					style={styles.innerContent}
+				>
 					<H1 style={styles.title}>{I18n.t('signup_page.title')}</H1>
 					<Form style={styles.form}>
 						<Item error={!emailValid} floatingLabel last>
@@ -94,6 +98,36 @@ export class SignupPage extends React.Component {
 								}}
 								onSubmitEditing={() => {
 									this.focusNextField('password')
+								}}
+							/>
+						</Item>
+						<Item error={!passwordValid} floatingLabel last>
+							<Label>{I18n.t('signup_page.password_with_info')}</Label>
+							<Input
+								returnKeyType={'done'}
+								onChange={val => this.handleChange(val, 'password')}
+								value={password}
+								secureTextEntry={true}
+								onSubmitEditing={() => {
+									this.handleSignup()
+								}}
+								getRef={input => {
+									this.inputs['password'] = input
+								}}
+							/>
+						</Item>
+						<Item error={!passwordValid} floatingLabel last>
+							<Label>{I18n.t('signup_page.password_with_info')}</Label>
+							<Input
+								returnKeyType={'done'}
+								onChange={val => this.handleChange(val, 'password')}
+								value={password}
+								secureTextEntry={true}
+								onSubmitEditing={() => {
+									this.handleSignup()
+								}}
+								getRef={input => {
+									this.inputs['password'] = input
 								}}
 							/>
 						</Item>
@@ -137,7 +171,7 @@ export class SignupPage extends React.Component {
 						block
 					/>
 					<Text style={styles.errorText}>{this.props.error}</Text>
-				</ScrollView>
+				</KeyboardAwareScrollView>
 			</View>
 		)
 	}
