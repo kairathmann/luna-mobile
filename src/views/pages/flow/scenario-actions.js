@@ -1,4 +1,3 @@
-// import {navigationService } from '../../../services'
 import api from '../../../api'
 import { getErrorDataFromNetworkException } from '../../../common/utils'
 import { navigationService } from '../../../services'

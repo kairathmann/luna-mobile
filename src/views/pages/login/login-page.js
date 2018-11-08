@@ -2,14 +2,15 @@ import { Form, H1, Input, Item, Label } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Text, View } from 'react-native'
-import EStyleSheet from 'react-native-extended-stylesheet'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { connect } from 'react-redux'
 import validator from 'validator'
 import I18n from '../../../../locales/i18n'
 import Button from '../../../components/Button/'
-import { styles as commonStyles } from '../../../styles'
+import { auth, styles as commonStyles } from '../../../styles'
 import { login } from './scenario-actions'
+
+const styles = auth
 
 export class LoginPage extends React.Component {
 	state = {
@@ -128,30 +129,6 @@ LoginPage.propTypes = {
 	login: PropTypes.func.isRequired,
 	error: PropTypes.string
 }
-
-const styles = EStyleSheet.create({
-	content: {
-		flex: 1,
-		backgroundColor: 'white'
-	},
-	innerContent: {
-		padding: 16
-	},
-	title: {
-		marginTop: 24,
-		marginBottom: 24,
-		fontWeight: 'bold'
-	},
-	prompt: {
-		textAlign: 'center',
-		marginTop: 16,
-		marginBottom: 16
-	},
-	errorText: {
-		color: 'red',
-		textAlign: 'center'
-	}
-})
 
 const mapStateToProps = state => {
 	return {

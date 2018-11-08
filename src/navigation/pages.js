@@ -12,17 +12,6 @@ const PAGES_NAMES = {
 	NAME_BIRTHDAY: 'NAME_BIRTHDAY'
 }
 
-// const commonNavBarStyle = {
-// 	headerStyle: {
-// 		backgroundColor: '#603695'
-// 	},
-// 	headerTitleStyle: {
-// 		fontWeight: 'bold',
-// 		color: '#FFF'
-// 	},
-// 	headerTintColor: '#FFF'
-// }
-
 const noNavbarStyle = {
 	headerStyle: {
 		backgroundColor: 'white',

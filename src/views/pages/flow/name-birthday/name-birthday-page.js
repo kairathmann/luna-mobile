@@ -2,7 +2,7 @@ import moment from 'moment'
 import { Form, H1, Input, Item, Label } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { Text, TouchableOpacity, View, Keyboard } from 'react-native'
+import { Keyboard, Text, TouchableOpacity, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import DateTimePicker from 'react-native-modal-datetime-picker'
@@ -59,9 +59,15 @@ export class NameBirthdayPage extends React.Component {
 	calculateProgress = () => {
 		const { name, birthday } = this.state
 
-		return (
-			0.2 + (name.length !== 0 ? 0.1 : 0) + (birthday.length !== 0 ? 0.1 : 0)
-		)
+		const BASE_PROGRESS_VALUE = 0.2
+		let newProgressValue = BASE_PROGRESS_VALUE
+		if (name.length !== 0) {
+			newProgressValue += 0.1
+		}
+		if (birthday.length !== 0) {
+			newProgressValue += 0.1
+		}
+		return newProgressValue
 	}
 
 	render() {
