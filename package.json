@@ -66,6 +66,7 @@
 		"react-native-languages": "3.0.1",
 		"react-native-modal-datetime-picker": "^6.0.0",
 		"react-native-progress": "^3.5.0",
+		"react-native-splash-screen": "3.1.1",
 		"react-navigation": "2.18.2",
 		"react-redux": "5.0.7",
 		"redux": "4.0.0",

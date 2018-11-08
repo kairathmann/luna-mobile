@@ -1,7 +1,8 @@
 import { Form, H1, Input, Item, Label } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { Text, View } from 'react-native'
+
+import { Keyboard, Text, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { connect } from 'react-redux'
 import validator from 'validator'
@@ -44,6 +45,7 @@ export class SignupPage extends React.Component {
 
 			if (emailValid && passwordValid) {
 				this.props.signup({ email, password })
+				Keyboard.dismiss()
 			} else {
 				this.setState({
 					emailValid,
@@ -81,6 +83,7 @@ export class SignupPage extends React.Component {
 		return (
 			<View style={styles.content}>
 				<KeyboardAwareScrollView
+					keyboardShouldPersistTaps={'handled'}
 					enableOnAndroid={true}
 					style={styles.innerContent}
 				>
@@ -139,7 +142,6 @@ export class SignupPage extends React.Component {
 						disabled={validationEnabled && !(emailValid && passwordValid)}
 						text={I18n.t('signup_page.sign_up')}
 						onPress={() => this.handleSignup()}
-						block
 					/>
 					<Text style={styles.errorText}>{this.props.error}</Text>
 				</KeyboardAwareScrollView>
