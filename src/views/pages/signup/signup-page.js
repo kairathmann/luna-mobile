@@ -1,7 +1,7 @@
 import { Form, H1, Input, Item, Label } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { Text, View } from 'react-native'
+import { Text, View, Keyboard } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { connect } from 'react-redux'
 import validator from 'validator'
@@ -43,6 +43,7 @@ export class SignupPage extends React.Component {
 
 			if (emailValid && passwordValid) {
 				this.props.signup({ email, password })
+				Keyboard.dismiss()
 			} else {
 				this.setState({
 					emailValid,
