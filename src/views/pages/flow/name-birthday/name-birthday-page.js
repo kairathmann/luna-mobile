@@ -116,7 +116,7 @@ export class NameBirthdayPage extends React.Component {
 
 NameBirthdayPage.propTypes = {
 	navigation: PropTypes.object.isRequired,
-	next: PropTypes.func.isRequired,
+	// next: PropTypes.func.isRequired,
 	error: PropTypes.string
 }
 
@@ -152,6 +152,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = () => {
 	return {
+		next: () => {}
 		// login: payload => dispatch(login(payload))
 	}
 }

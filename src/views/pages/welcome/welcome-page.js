@@ -11,7 +11,7 @@ import WomanBackground from '../../../assets/images/woman-welcome-page-backgroun
 
 class WelcomePage extends React.Component {
 	componentDidMount() {
-		this.props.navigation.navigate(PAGES_NAMES.LOGIN_PAGE)
+		this.props.navigation.navigate(PAGES_NAMES.NAME_BIRTHDAY)
 	}
 	render() {
 		const { navigate } = this.props.navigation
