@@ -20,8 +20,8 @@ const maxDate = moment()
 
 export class NameBirthdayPage extends React.Component {
 	state = {
-		name: this.props.profile.name,
-		birthday: this.props.profile.birthday,
+		name: this.props.profile.name || '',
+		birthday: this.props.profile.birthday || '',
 		pickerOpened: false
 	}
 
