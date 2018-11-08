@@ -1,40 +1,71 @@
+import moment from 'moment'
 import { Form, H1, Input, Item, Label } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { Text, View } from 'react-native'
-import DatePicker from 'react-native-datepicker'
+import { Text, TouchableOpacity, View, Keyboard } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import DateTimePicker from 'react-native-modal-datetime-picker'
+import * as Progress from 'react-native-progress'
 import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
 import Button from '../../../../components/Button'
-// import { login } from './scenario-actions'
+import { PAGES_NAMES } from '../../../../navigation'
+import { COLORS } from '../../../../styles'
+import { saveChanges } from '../scenario-actions'
+
+const maxDate = moment()
+	.subtract(18, 'years')
+	.toDate()
 
 export class NameBirthdayPage extends React.Component {
 	state = {
-		name: '',
-		birthday: ''
+		name: this.props.profile.name,
+		birthday: this.props.profile.birthday,
+		pickerOpened: false
 	}
-
-	inputs = {}
 
 	handleChange = (event, field) => {
 		this.setState({ [field]: event.nativeEvent.text })
 	}
 
 	handleNext = () => {
-		const { name } = this.state
-		if (name.length !== 0) {
-			// this.props.login({ email, password })
+		const { name, birthday } = this.state
+		if (name.length !== 0 && birthday.length !== 0) {
+			this.props.next({ name, birthday }, PAGES_NAMES.LOGIN_PAGE) // TODO: Change after next step ready
+			Keyboard.dismiss()
 		}
 	}
 
-	focusNextField = id => {
-		this.inputs[id]._root.focus()
+	handleDatePicked = date => {
+		this.setState({
+			birthday: date,
+			pickerOpened: false
+		})
+	}
+
+	hideDateTimePicker = () => {
+		this.setState({
+			pickerOpened: false
+		})
+	}
+
+	showDateTimePicker = () => {
+		this.setState({
+			pickerOpened: true
+		})
+	}
+
+	calculateProgress = () => {
+		const { name, birthday } = this.state
+
+		return (
+			0.2 + (name.length !== 0 ? 0.1 : 0) + (birthday.length !== 0 ? 0.1 : 0)
+		)
 	}
 
 	render() {
-		const { name, birthday } = this.state
+		const { name, birthday, pickerOpened } = this.state
 		return (
 			<View style={styles.content}>
 				<KeyboardAwareScrollView
@@ -42,6 +73,14 @@ export class NameBirthdayPage extends React.Component {
 					enableOnAndroid={true}
 					style={styles.innerContent}
 				>
+					<Progress.Bar
+						style={styles.progressBar}
+						useNativeDriver={true}
+						animationConfig={{ bounciness: 0.5 }}
+						color={COLORS.LUNA_PRIMARY_COLOR}
+						progress={this.calculateProgress()}
+						width={null}
+					/>
 					<H1 style={styles.title}>
 						{I18n.t('flow_page.name_birthday.title')}
 					</H1>
@@ -53,57 +92,35 @@ export class NameBirthdayPage extends React.Component {
 								onChange={val => this.handleChange(val, 'name')}
 								value={name}
 								returnKeyType={'next'}
-								getRef={input => {
-									this.inputs['name'] = input
-								}}
 								onSubmitEditing={() => {
-									this.focusNextField('password')
+									this.showDateTimePicker()
 								}}
 							/>
 						</Item>
-						<Item floatingLabel last>
+						<Item stackedLabel style={styles.birthdayContainer} last>
 							<Label>{I18n.t('flow_page.name_birthday.birthday')}</Label>
-							{/*<Input*/}
-							{/*returnKeyType={'done'}*/}
-							{/*onChange={val => this.handleChange(val, 'birthday')}*/}
-							{/*value={name}*/}
-							{/*secureTextEntry={true}*/}
-							{/*onSubmitEditing={() => {*/}
-							{/*this.handleNext()*/}
-							{/*}}*/}
-							{/*getRef={input => {*/}
-							{/*this.inputs['birthday'] = input*/}
-							{/*}}*/}
-							{/*/>*/}
-							<DatePicker
-								style={{ width: 200 }}
-								date={birthday}
-								mode="date"
-								placeholder="select date"
-								format="YYYY-MM-DD"
-								minDate="2016-05-01"
-								maxDate="2016-06-01"
-								confirmBtnText="Confirm"
-								cancelBtnText="Cancel"
-								customStyles={{
-									dateIcon: {
-										position: 'absolute',
-										left: 0,
-										top: 4,
-										marginLeft: 0
-									},
-									dateInput: {
-										marginLeft: 36
-									}
-									// ... You can check the source to find the other keys.
-								}}
-								onDateChange={date => {
-									this.setState({ date: date })
-								}}
+							<TouchableOpacity
+								style={styles.birthdayButton}
+								onPress={this.showDateTimePicker}
+							>
+								<Text style={styles.birthdayText}>
+									{birthday !== ''
+										? moment(birthday).format('DD-MM-YYYY')
+										: 'DD-MM-YYYY'}
+								</Text>
+							</TouchableOpacity>
+							<DateTimePicker
+								maximumDate={maxDate}
+								isVisible={pickerOpened}
+								confirmTextStyle={styles.datePickerButton}
+								cancelTextStyle={styles.datePickerButton}
+								onConfirm={this.handleDatePicked}
+								onCancel={this.hideDateTimePicker}
 							/>
 						</Item>
 					</Form>
 					<Button
+						disabled={!(name.length !== 0 && birthday.length !== 0)}
 						text={I18n.t('flow_page.name_birthday.next')}
 						onPress={() => this.handleNext()}
 					/>
@@ -116,8 +133,9 @@ export class NameBirthdayPage extends React.Component {
 
 NameBirthdayPage.propTypes = {
 	navigation: PropTypes.object.isRequired,
-	// next: PropTypes.func.isRequired,
-	error: PropTypes.string
+	next: PropTypes.func.isRequired,
+	error: PropTypes.string,
+	profile: PropTypes.object.isRequired
 }
 
 const styles = EStyleSheet.create({
@@ -133,27 +151,41 @@ const styles = EStyleSheet.create({
 		marginBottom: 24,
 		fontWeight: 'bold'
 	},
-	prompt: {
-		textAlign: 'center',
-		marginTop: 16,
-		marginBottom: 16
-	},
 	errorText: {
 		color: 'red',
 		textAlign: 'center'
+	},
+	birthdayContainer: {
+		marginBottom: 8
+	},
+	birthdayButton: {
+		width: '100%',
+		textAlign: 'left',
+		padding: 0,
+		marginTop: 12
+	},
+	birthdayText: {
+		fontSize: 16
+	},
+	progressBar: {
+		marginLeft: 16,
+		marginRight: 16
+	},
+	datePickerButton: {
+		color: '$primaryColor'
 	}
 })
 
 const mapStateToProps = state => {
 	return {
-		error: state.auth.signinError
+		profile: state.profile.profileToEdit,
+		error: state.profile.error
 	}
 }
 
-const mapDispatchToProps = () => {
+const mapDispatchToProps = dispatch => {
 	return {
-		next: () => {}
-		// login: payload => dispatch(login(payload))
+		next: (payload, next) => dispatch(saveChanges(payload, next))
 	}
 }
 

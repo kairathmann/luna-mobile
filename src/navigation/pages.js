@@ -1,9 +1,9 @@
 import { createStackNavigator } from 'react-navigation'
-import { NameBirthdayPage } from '../views/pages/flow/name-birthday/name-birthday-page'
+import I18n from '../../locales/i18n'
+import NameBirthdayPage from '../views/pages/flow/name-birthday/name-birthday-page'
 import LoginPage from '../views/pages/login/login-page'
 import SignupPage from '../views/pages/signup/signup-page'
 import WelcomePage from '../views/pages/welcome/welcome-page'
-import I18n from '../../locales/i18n'
 
 const PAGES_NAMES = {
 	WELCOME_PAGE: 'WELCOME_PAGE',
