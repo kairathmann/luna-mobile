@@ -1,7 +1,8 @@
-import { Form, H1, Icon, Item, Picker } from 'native-base'
+import MultiSlider from '@ptomasroos/react-native-multi-slider'
+import { Form, H1 } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { Keyboard, Platform, Text, View } from 'react-native'
+import { Keyboard, Text, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import * as Progress from 'react-native-progress'
@@ -13,13 +14,19 @@ import { COLORS, styles as commonStyles } from '../../../../styles'
 import { saveChanges } from '../scenario-actions'
 
 export class AgeLimitPage extends React.Component {
-	state = {
-		ageMax: this.props.profile.ageMax || 100,
-		ageMin: this.props.profile.ageMin || 18
+	constructor(props) {
+		super(props)
+		this.state = {
+			ageMax: props.profile.ageMax || 100,
+			ageMin: props.profile.ageMin || 18
+		}
 	}
 
-	handleChange = (value, field) => {
-		this.setState({ [field]: value })
+	handleChange = values => {
+		this.setState({
+			ageMin: values[0],
+			ageMax: values[1]
+		})
 	}
 
 	handleNext = () => {
@@ -34,7 +41,7 @@ export class AgeLimitPage extends React.Component {
 	}
 
 	render() {
-		const { gender, sexuality } = this.state
+		const { ageMin, ageMax } = this.state
 		return (
 			<View style={styles.content}>
 				<KeyboardAwareScrollView
@@ -50,71 +57,36 @@ export class AgeLimitPage extends React.Component {
 						progress={this.calculateProgress()}
 						width={null}
 					/>
-					<H1 style={styles.title}>
-						{I18n.t('flow_page.gender_preferences.title')}
-					</H1>
-					<Form>
-						<Item picker last>
-							<Picker
-								mode="dropdown"
-								iosIcon={<Icon name="ios-arrow-down-outline" />}
-								placeholder={I18n.t(
-									'flow_page.gender_preferences.gender_placeholder'
-								)}
-								placeholderStyle={{ color: '#bfc6ea' }}
-								placeholderIconColor="#007aff"
-								selectedValue={gender}
-								onValueChange={selected =>
-									this.handleChange(selected, 'gender')
-								}
-							>
-								{Platform.OS === 'android' && (
-									<Picker.Item
-										label={I18n.t(
-											'flow_page.gender_preferences.gender_placeholder'
-										)}
-										value={null}
-									/>
-								)}
-								<Picker.Item label={I18n.t('common.male')} value={1} />
-								<Picker.Item label={I18n.t('common.female')} value={2} />
-								<Picker.Item label={I18n.t('common.other')} value={3} />
-							</Picker>
-						</Item>
-						<Item picker last>
-							<Picker
-								mode="dropdown"
-								iosIcon={<Icon name="ios-arrow-down-outline" />}
-								placeholder={I18n.t(
-									'flow_page.gender_preferences.sexuality_placeholder'
-								)}
-								placeholderStyle={{ color: '#bfc6ea' }}
-								placeholderIconColor="#007aff"
-								selectedValue={sexuality}
-								onValueChange={selected =>
-									this.handleChange(selected, 'sexuality')
-								}
-							>
-								{Platform.OS === 'android' && (
-									<Picker.Item
-										label={I18n.t(
-											'flow_page.gender_preferences.sexuality_placeholder'
-										)}
-										value={null}
-									/>
-								)}
-								<Picker.Item label={I18n.t('common.male')} value={1} />
-								<Picker.Item label={I18n.t('common.female')} value={2} />
-								<Picker.Item label={I18n.t('common.both')} value={3} />
-							</Picker>
-						</Item>
+					<H1 style={styles.title}>{I18n.t('flow_page.age_limit.title')}</H1>
+					<Form style={{ justifyContent: 'center', alignItems: 'center' }}>
+						<View style={styles.dataEntryContainer}>
+							<Text style={styles.dataEntryLeft}>
+								{I18n.t('flow_page.age_limit.how_old')}
+							</Text>
+							<Text
+								style={styles.dataEntryRight}
+							>{`${ageMin} - ${ageMax}`}</Text>
+						</View>
+						<MultiSlider
+							isMarkersSeparated={true}
+							markerStyle={{
+								backgroundColor: COLORS.LUNA_PRIMARY_COLOR
+							}}
+							selectedStyle={{ backgroundColor: COLORS.LUNA_PRIMARY_COLOR }}
+							values={[ageMin, ageMax]}
+							min={18}
+							max={100}
+							onValuesChangeFinish={this.handleChange}
+						/>
+						<View style={[styles.dataEntryContainer, styles.inboxContainer]}>
+							<Text style={styles.dataEntryLeft}>
+								{I18n.t('flow_page.age_limit.inbox_limit')}
+							</Text>
+							<Text style={styles.dataEntryRight}>{`max. 10 intros/day`}</Text>
+						</View>
 					</Form>
-					<Text style={styles.prompt}>
-						{I18n.t('flow_page.gender_preferences.prompt')}
-					</Text>
 					<Button
-						disabled={!(gender !== null && sexuality !== null)}
-						text={I18n.t('flow_page.gender_preferences.next')}
+						text={I18n.t('flow_page.age_limit.next')}
 						onPress={() => this.handleNext()}
 					/>
 					<Text style={commonStyles.errorText}>{this.props.error}</Text>
@@ -170,6 +142,24 @@ const styles = EStyleSheet.create({
 	prompt: {
 		textAlign: 'center',
 		marginTop: 8,
+		marginBottom: 8
+	},
+	dataEntryContainer: {
+		display: 'flex',
+		flexDirection: 'row',
+		justifyContent: 'center',
+		width: '100%'
+	},
+	dataEntryRight: {
+		textAlign: 'right',
+		flex: 1,
+		color: '#888'
+	},
+	dataEntryLeft: {
+		textAlign: 'left',
+		flex: 1
+	},
+	inboxContainer: {
 		marginBottom: 8
 	}
 })
