@@ -3,7 +3,6 @@ import { NavigationActions } from 'react-navigation'
 let _navigator
 
 export const setTopLevelNavigator = navigatorRef => {
-	console.log('I WAS HERE')
 	_navigator = navigatorRef
 }
 
