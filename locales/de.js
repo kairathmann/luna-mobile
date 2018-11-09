@@ -15,6 +15,10 @@ export default {
 			incorrect_request: 'Incorrect request',
 			nonexistent_user: 'User does not exist',
 			wrong_password: 'Provided password is not correct'
-		}
+		},
+		male: 'Male',
+		female: 'Female',
+		both: 'Both',
+		other: 'Other'
 	}
 }

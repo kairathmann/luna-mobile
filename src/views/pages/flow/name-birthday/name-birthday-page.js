@@ -33,7 +33,7 @@ export class NameBirthdayPage extends React.Component {
 	handleNext = () => {
 		const { name, birthday } = this.state
 		if (name.length !== 0 && birthday.length !== 0) {
-			this.props.next({ name, birthday }, PAGES_NAMES.LOGIN_PAGE) // TODO: Change after next step ready
+			this.props.next({ name, birthday }, PAGES_NAMES.GENDER_SEXUALITY)
 			Keyboard.dismiss()
 		}
 	}
