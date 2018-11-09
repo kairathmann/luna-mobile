@@ -54,7 +54,6 @@ const AppStackNavigator = createStackNavigator({
 		screen: GenderPreferencesPage,
 		navigationOptions: () => ({
 			title: I18n.t('flow_page.title'),
-			headerLeft: null,
 			...noNavbarStyle
 		})
 	}
