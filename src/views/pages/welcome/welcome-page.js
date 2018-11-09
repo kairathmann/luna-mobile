@@ -6,7 +6,6 @@ import EStyleSheet from 'react-native-extended-stylesheet'
 import Button from '../../../components/Button'
 import I18n from '../../../../locales/i18n'
 import { PAGES_NAMES } from '../../../navigation'
-import Config from 'react-native-config'
 import SplashScreen from 'react-native-splash-screen'
 import LunaLogoText from '../../../assets/logos/luna-logo-with-text.png'
 import WomanBackground from '../../../assets/images/woman-welcome-page-background.jpg'
@@ -14,6 +13,7 @@ import WomanBackground from '../../../assets/images/woman-welcome-page-backgroun
 class WelcomePage extends React.Component {
 	componentDidMount() {
 		SplashScreen.hide()
+		this.props.navigation.navigate(PAGES_NAMES.NAME_BIRTHDAY)
 	}
 
 	render() {

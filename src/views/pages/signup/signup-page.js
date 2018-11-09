@@ -1,15 +1,17 @@
 import { Form, H1, Input, Item, Label } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { Text, View, Keyboard } from 'react-native'
-import EStyleSheet from 'react-native-extended-stylesheet'
+
+import { Keyboard, Text, View } from 'react-native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { connect } from 'react-redux'
 import validator from 'validator'
 import I18n from '../../../../locales/i18n'
 import Button from '../../../components/Button/'
-import { styles as commonStyles } from '../../../styles'
+import { auth, styles as commonStyles } from '../../../styles'
 import { signup } from './scenario-actions'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+
+const styles = auth
 
 export class SignupPage extends React.Component {
 	state = {
@@ -141,7 +143,7 @@ export class SignupPage extends React.Component {
 						text={I18n.t('signup_page.sign_up')}
 						onPress={() => this.handleSignup()}
 					/>
-					<Text style={styles.errorText}>{this.props.error}</Text>
+					<Text style={commonStyles.errorText}>{this.props.error}</Text>
 				</KeyboardAwareScrollView>
 			</View>
 		)
@@ -153,33 +155,6 @@ SignupPage.propTypes = {
 	signup: PropTypes.func.isRequired,
 	error: PropTypes.string
 }
-
-const styles = EStyleSheet.create({
-	content: {
-		flex: 1,
-		backgroundColor: 'white'
-	},
-	innerContent: {
-		padding: 16
-	},
-	title: {
-		marginTop: 24,
-		marginBottom: 24,
-		fontWeight: 'bold'
-	},
-	prompt: {
-		textAlign: 'center',
-		marginTop: 16,
-		marginBottom: 16
-	},
-	errorText: {
-		color: 'red',
-		textAlign: 'center'
-	},
-	form: {
-		flexDirection: 'column'
-	}
-})
 
 const mapStateToProps = state => {
 	return {
