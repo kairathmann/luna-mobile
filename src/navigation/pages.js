@@ -1,5 +1,6 @@
 import { createStackNavigator } from 'react-navigation'
 import I18n from '../../locales/i18n'
+import AgeLimitPage from '../views/pages/flow/age-limit/age-limit-page'
 import GenderPreferencesPage from '../views/pages/flow/gender-preferences/gender-preferences-page'
 import NameBirthdayPage from '../views/pages/flow/name-birthday/name-birthday-page'
 import LoginPage from '../views/pages/login/login-page'
@@ -11,7 +12,8 @@ const PAGES_NAMES = {
 	LOGIN_PAGE: 'LOGIN_PAGE',
 	SIGNUP_PAGE: 'SIGNUP_PAGE',
 	NAME_BIRTHDAY: 'NAME_BIRTHDAY',
-	GENDER_SEXUALITY: 'GENDER_SEXUALITY'
+	GENDER_SEXUALITY: 'GENDER_SEXUALITY',
+	AGE_LIMIT: 'AGE_LIMIT'
 }
 
 const noNavbarStyle = {
@@ -52,6 +54,13 @@ const AppStackNavigator = createStackNavigator({
 	},
 	GENDER_SEXUALITY: {
 		screen: GenderPreferencesPage,
+		navigationOptions: () => ({
+			title: I18n.t('flow_page.title'),
+			...noNavbarStyle
+		})
+	},
+	AGE_LIMIT: {
+		screen: AgeLimitPage,
 		navigationOptions: () => ({
 			title: I18n.t('flow_page.title'),
 			...noNavbarStyle
