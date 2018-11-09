@@ -159,24 +159,9 @@ const styles = EStyleSheet.create({
 		color: 'red',
 		textAlign: 'center'
 	},
-	birthdayContainer: {
-		marginBottom: 8
-	},
-	birthdayButton: {
-		width: '100%',
-		textAlign: 'left',
-		padding: 0,
-		marginTop: 12
-	},
-	birthdayText: {
-		fontSize: 16
-	},
 	progressBar: {
 		marginLeft: 16,
 		marginRight: 16
-	},
-	datePickerButton: {
-		color: '$primaryColor'
 	},
 	prompt: {
 		textAlign: 'center',
