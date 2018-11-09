@@ -157,6 +157,11 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-splash-screen')
+    compile project(':react-native-languages')
+    compile project(':react-native-i18n')
+    compile project(':react-native-fabric')
+    compile project(':react-native-config')
     implementation project(':react-native-splash-screen')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"

@@ -16,10 +16,6 @@ export default {
 		marginTop: 16,
 		marginBottom: 16
 	},
-	errorText: {
-		color: 'red',
-		textAlign: 'center'
-	},
 	form: {
 		flexDirection: 'column'
 	}

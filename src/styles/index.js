@@ -5,9 +5,13 @@ import * as COLORS from './colors'
 const styles = EStyleSheet.create({
 	underline: {
 		textDecorationLine: 'underline'
+	},
+	errorText: {
+		color: 'red',
+		textAlign: 'center'
 	}
 })
 
-const auth = EStyleSheet.create({ authStyles })
+const auth = EStyleSheet.create(authStyles)
 
 export { COLORS, styles, auth }

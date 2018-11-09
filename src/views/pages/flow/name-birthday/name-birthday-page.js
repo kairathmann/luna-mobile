@@ -13,6 +13,7 @@ import Button from '../../../../components/Button'
 import { PAGES_NAMES } from '../../../../navigation'
 import { COLORS } from '../../../../styles'
 import { saveChanges } from '../scenario-actions'
+import { styles as commonStyles } from '../../../../styles'
 
 const maxDate = moment()
 	.subtract(18, 'years')
@@ -130,7 +131,7 @@ export class NameBirthdayPage extends React.Component {
 						text={I18n.t('flow_page.name_birthday.next')}
 						onPress={() => this.handleNext()}
 					/>
-					<Text style={styles.errorText}>{this.props.error}</Text>
+					<Text style={commonStyles.errorText}>{this.props.error}</Text>
 				</KeyboardAwareScrollView>
 			</View>
 		)

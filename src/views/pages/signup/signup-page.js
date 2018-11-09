@@ -143,7 +143,7 @@ export class SignupPage extends React.Component {
 						text={I18n.t('signup_page.sign_up')}
 						onPress={() => this.handleSignup()}
 					/>
-					<Text style={styles.errorText}>{this.props.error}</Text>
+					<Text style={commonStyles.errorText}>{this.props.error}</Text>
 				</KeyboardAwareScrollView>
 			</View>
 		)

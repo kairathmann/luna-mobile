@@ -4,6 +4,11 @@ import android.app.Application;
 
 import com.crashlytics.android.Crashlytics;
 import com.facebook.react.ReactApplication;
+import org.devio.rn.splashscreen.SplashScreenReactPackage;
+import com.reactcommunity.rnlanguages.RNLanguagesPackage;
+import com.AlexanderZaytsev.RNI18n.RNI18nPackage;
+import com.smixx.fabric.FabricPackage;
+import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.facebook.react.ReactNativeHost;

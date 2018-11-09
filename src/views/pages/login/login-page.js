@@ -118,7 +118,7 @@ export class LoginPage extends React.Component {
 						text={I18n.t('login_page.sign_in')}
 						onPress={() => this.handleSignin()}
 					/>
-					<Text style={styles.errorText}>{this.props.error}</Text>
+					<Text style={commonStyles.errorText}>{this.props.error}</Text>
 				</KeyboardAwareScrollView>
 			</View>
 		)
