@@ -13,7 +13,7 @@ import WomanBackground from '../../../assets/images/woman-welcome-page-backgroun
 class WelcomePage extends React.Component {
 	componentDidMount() {
 		SplashScreen.hide()
-		this.props.navigation.navigate(PAGES_NAMES.AGE_LIMIT)
+		this.props.navigation.navigate(PAGES_NAMES.TAGLINE)
 	}
 
 	render() {
