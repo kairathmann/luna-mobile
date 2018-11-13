@@ -1,9 +1,7 @@
 package com.meetluna.luna;
 
 import android.os.Bundle;
-
 import com.facebook.react.ReactActivity;
-
 import org.devio.rn.splashscreen.SplashScreen;
 
 public class MainActivity extends ReactActivity {
@@ -22,4 +20,6 @@ public class MainActivity extends ReactActivity {
         SplashScreen.show(this);
         super.onCreate(savedInstanceState);
     }
+
+
 }
