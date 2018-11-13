@@ -76,7 +76,7 @@ export class AgeLimitPage extends React.Component {
 							values={[ageMin, ageMax]}
 							min={18}
 							max={100}
-							onValuesChangeFinish={this.handleChange}
+							onValuesChange={this.handleChange}
 						/>
 						<View style={[styles.dataEntryContainer, styles.inboxContainer]}>
 							<Text style={styles.dataEntryLeft}>
