@@ -2,7 +2,7 @@ import MultiSlider from '@ptomasroos/react-native-multi-slider'
 import { Form, H1 } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { Keyboard, Text, View } from 'react-native'
+import { Dimensions, Keyboard, Text, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import * as Progress from 'react-native-progress'
@@ -18,8 +18,28 @@ export class AgeLimitPage extends React.Component {
 		super(props)
 		this.state = {
 			ageMax: props.profile.ageMax || 100,
-			ageMin: props.profile.ageMin || 18
+			ageMin: props.profile.ageMin || 18,
+			sliderWidth: 280
 		}
+	}
+
+	UNSAFE_componentWillMount() {
+		const { width } = Dimensions.get('window')
+		this.setState({
+			sliderWidth: width - 64 // 2* SIDE MARGIN
+		})
+	}
+
+	componentDidMount() {
+		Dimensions.addEventListener('change', ({ window: { width } }) => {
+			this.setState({
+				sliderWidth: width - 64
+			})
+		})
+	}
+
+	componentWillUnmount() {
+		Dimensions.removeEventListener('change')
 	}
 
 	handleChange = values => {
@@ -41,7 +61,7 @@ export class AgeLimitPage extends React.Component {
 	}
 
 	render() {
-		const { ageMin, ageMax } = this.state
+		const { ageMin, ageMax, sliderWidth } = this.state
 		return (
 			<View style={styles.content}>
 				<KeyboardAwareScrollView
@@ -76,6 +96,7 @@ export class AgeLimitPage extends React.Component {
 							values={[ageMin, ageMax]}
 							min={18}
 							max={100}
+							sliderLength={sliderWidth}
 							onValuesChange={this.handleChange}
 						/>
 						<View style={[styles.dataEntryContainer, styles.inboxContainer]}>
