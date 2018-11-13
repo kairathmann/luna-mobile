@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Image, View } from 'react-native'
+import { ImageBackground, Text, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
+import LinearGradient from 'react-native-linear-gradient'
 import { fetchRecommendations } from './scenario-actions'
 import { styles as commonStyles } from '../../../styles'
 import { checkImageURL, getLoaderImageForGender } from '../../../common/utils'
@@ -20,8 +21,9 @@ class RecommendationsPage extends React.Component {
 					this.props.currentlyRenderRecommendation && (
 						<React.Fragment>
 							<View style={styles.userProfileContainer}>
-								<Image
-									style={styles.image}
+								<ImageBackground
+									imageStyle={styles.image}
+									style={styles.imageParent}
 									resizeMode="cover"
 									source={checkImageURL(
 										this.props.currentlyRenderRecommendation.avatarUrl
@@ -29,7 +31,21 @@ class RecommendationsPage extends React.Component {
 									defaultSource={getLoaderImageForGender(
 										this.props.currentlyRenderRecommendation.gidIs
 									)}
-								/>
+								>
+									<View style={{ flex: 7 }} />
+									<LinearGradient
+										colors={['transparent', '#000']}
+										style={styles.userInfoContainer}
+									>
+										<View>
+											<Text style={styles.userInfoText}>{`${
+												this.props.currentlyRenderRecommendation.firstName
+											}, ${
+												this.props.currentlyRenderRecommendation.age
+											}`}</Text>
+										</View>
+									</LinearGradient>
+								</ImageBackground>
 							</View>
 							<View style={styles.buttonsContainer} />
 						</React.Fragment>
@@ -46,11 +62,26 @@ const styles = EStyleSheet.create({
 		backgroundColor: '#f6f6f6',
 		padding: '0.9rem'
 	},
-	image: {
+	imageParent: {
 		flex: 1,
 		height: undefined,
-		width: undefined,
+		width: undefined
+	},
+	image: {
 		borderRadius: '3.1rem'
+	},
+	userInfoContainer: {
+		flex: 3,
+		justifyContent: 'center',
+		alignItems: 'center',
+		borderBottomLeftRadius: '3.1rem',
+		borderBottomRightRadius: '3.1rem',
+		borderTopLeftRadius: 0,
+		borderTopRightRadius: 0
+	},
+	userInfoText: {
+		color: '#FFF',
+		fontSize: 16
 	},
 	buttonsContainer: {
 		flex: 3,

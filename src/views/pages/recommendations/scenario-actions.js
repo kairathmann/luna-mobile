@@ -21,7 +21,8 @@ export const fetchRecommendations = () => async dispatch => {
 				person.avatarUrl
 			)
 			const photoUrlRewrittenToDefaultIfRequired = rewriteUrlImageForDefault(
-				avatarUrlToPhotoUrl
+				avatarUrlToPhotoUrl,
+				person.gidIs
 			)
 			return {
 				...person,
