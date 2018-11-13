@@ -23,18 +23,17 @@ export class AgeLimitPage extends React.Component {
 		}
 	}
 
-	UNSAFE_componentWillMount() {
+	componentDidMount() {
 		const { width } = Dimensions.get('window')
-		this.setState({
-			sliderWidth: width - 64 // 2* SIDE MARGIN
+		this.setWidth(width)
+		Dimensions.addEventListener('change', ({ window: { width } }) => {
+			this.setWidth(width)
 		})
 	}
 
-	componentDidMount() {
-		Dimensions.addEventListener('change', ({ window: { width } }) => {
-			this.setState({
-				sliderWidth: width - 64
-			})
+	setWidth(width) {
+		this.setState({
+			sliderWidth: width - 64
 		})
 	}
 
