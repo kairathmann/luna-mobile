@@ -1,7 +1,8 @@
-// import {navigationService } from '../../../services'
+import { navigationService } from '../../../services'
 import api from '../../../api'
 import { getErrorDataFromNetworkException } from '../../../common/utils'
 import { signinError, signinSuccess } from '../../../store/auth/actions'
+import { PAGES_NAMES } from '../../../navigation'
 
 export function login({ email, password }) {
 	return async dispatch => {
@@ -9,8 +10,7 @@ export function login({ email, password }) {
 			// TODO: Show global loader
 			const result = await api.signin({ email, password })
 			dispatch(signinSuccess(result))
-			// TODO: uncomment when more screen will be ready
-			// navigationService.navigate('SOMEWHERE')
+			navigationService.navigate(PAGES_NAMES.HOME_PAGE)
 		} catch (error) {
 			dispatch(signinError(getErrorDataFromNetworkException(error)))
 		} finally {
