@@ -25,7 +25,7 @@ export class GenderPreferencesPage extends React.Component {
 	handleNext = () => {
 		const { gender, sexuality } = this.state
 		if (gender !== null && sexuality !== null) {
-			this.props.next({ gender, sexuality }, PAGES_NAMES.AGE_LIMIT)
+			this.props.next({ gender, sexuality }, PAGES_NAMES.FLOW_AGE_LIMIT)
 			Keyboard.dismiss()
 		}
 	}

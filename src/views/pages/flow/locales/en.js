@@ -24,5 +24,10 @@ export default {
 		tagline:
 			"This is your moment of glory. Write an intro that will give your potential matches a hint of what you're all about",
 		next: 'Finish'
+	},
+	avatar: {
+		title: 'Avatar Upload',
+		next: 'Next',
+		select_image: 'Select image'
 	}
 }

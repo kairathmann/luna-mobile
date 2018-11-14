@@ -33,7 +33,7 @@ export class NameBirthdayPage extends React.Component {
 	handleNext = () => {
 		const { name, birthday } = this.state
 		if (name.length !== 0 && birthday.length !== 0) {
-			this.props.next({ name, birthday }, PAGES_NAMES.GENDER_SEXUALITY)
+			this.props.next({ name, birthday }, PAGES_NAMES.FLOW_GENDER_SEXUALITY)
 			Keyboard.dismiss()
 		}
 	}

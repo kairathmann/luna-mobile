@@ -1,6 +1,7 @@
 import { createStackNavigator } from 'react-navigation'
 import I18n from '../../locales/i18n'
 import AgeLimitPage from '../views/pages/flow/age-limit/age-limit-page'
+import AvatarPage from '../views/pages/flow/avatar/avatar-page'
 import GenderPreferencesPage from '../views/pages/flow/gender-preferences/gender-preferences-page'
 import NameBirthdayPage from '../views/pages/flow/name-birthday/name-birthday-page'
 import TaglinePage from '../views/pages/flow/tagline/tagline-page'
@@ -12,10 +13,11 @@ const PAGES_NAMES = {
 	WELCOME_PAGE: 'WELCOME_PAGE',
 	LOGIN_PAGE: 'LOGIN_PAGE',
 	SIGNUP_PAGE: 'SIGNUP_PAGE',
-	NAME_BIRTHDAY: 'NAME_BIRTHDAY',
-	GENDER_SEXUALITY: 'GENDER_SEXUALITY',
-	AGE_LIMIT: 'AGE_LIMIT',
-	TAGLINE: 'TAGLINE'
+	FLOW_NAME_BIRTHDAY: 'FLOW_NAME_BIRTHDAY',
+	FLOW_GENDER_SEXUALITY: 'FLOW_GENDER_SEXUALITY',
+	FLOW_AGE_LIMIT: 'FLOW_AGE_LIMIT',
+	FLOW_TAGLINE: 'FLOW_TAGLINE',
+	FLOW_AVATAR: 'FLOW_AVATAR'
 }
 
 const noNavbarStyle = {
@@ -46,7 +48,7 @@ const AppStackNavigator = createStackNavigator({
 			...noNavbarStyle
 		})
 	},
-	NAME_BIRTHDAY: {
+	FLOW_NAME_BIRTHDAY: {
 		screen: NameBirthdayPage,
 		navigationOptions: () => ({
 			title: I18n.t('flow_page.title'),
@@ -54,22 +56,29 @@ const AppStackNavigator = createStackNavigator({
 			...noNavbarStyle
 		})
 	},
-	GENDER_SEXUALITY: {
+	FLOW_GENDER_SEXUALITY: {
 		screen: GenderPreferencesPage,
 		navigationOptions: () => ({
 			title: I18n.t('flow_page.title'),
 			...noNavbarStyle
 		})
 	},
-	AGE_LIMIT: {
+	FLOW_AGE_LIMIT: {
 		screen: AgeLimitPage,
 		navigationOptions: () => ({
 			title: I18n.t('flow_page.title'),
 			...noNavbarStyle
 		})
 	},
-	TAGLINE: {
+	FLOW_TAGLINE: {
 		screen: TaglinePage,
+		navigationOptions: () => ({
+			title: I18n.t('flow_page.title'),
+			...noNavbarStyle
+		})
+	},
+	FLOW_AVATAR: {
+		screen: AvatarPage,
 		navigationOptions: () => ({
 			title: I18n.t('flow_page.title'),
 			...noNavbarStyle

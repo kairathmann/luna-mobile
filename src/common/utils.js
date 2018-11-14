@@ -8,6 +8,9 @@ const getErrorDataFromNetworkException = error => {
 		} else {
 			const errorCode = error.response.data.code
 			switch (error.response.status) {
+				case 401:
+					errorMessage = I18n.t('common.errors.not_authenticated')
+					break
 				case 400:
 					errorMessage = I18n.t(
 						`common.errors.${errorCode || 'incorrect_request'}`

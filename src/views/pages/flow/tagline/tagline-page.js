@@ -28,7 +28,7 @@ export class TaglinePage extends React.Component {
 
 	handleNext = () => {
 		const { tagline } = this.state
-		this.props.next({ tagline }, PAGES_NAMES.GENDER_SEXUALITY)
+		this.props.next({ tagline }, PAGES_NAMES.FLOW_GENDER_SEXUALITY)
 		Keyboard.dismiss()
 	}
 

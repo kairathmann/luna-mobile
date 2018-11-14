@@ -3,13 +3,15 @@ import {
 	FINISH_UPDATING_PROFILE,
 	SAVE_PROFILE_ERROR,
 	SAVE_PROFILE_SUCCESS,
+	START_LOCAL_LOADING,
 	START_UPDATING_PROFILE
 } from './action-types'
 
 const initialState = {
 	profile: {},
 	profileToEdit: {},
-	error: ''
+	error: '',
+	isLoading: false
 }
 
 export function profileReducer(state = initialState, { payload, type }) {
@@ -38,13 +40,22 @@ export function profileReducer(state = initialState, { payload, type }) {
 				profileToEdit: {
 					...state.profileToEdit,
 					...payload
-				}
+				},
+				isLoading: false
 			}
 
 		case SAVE_PROFILE_ERROR:
 			return {
 				...state,
-				error: payload
+				error: payload,
+				isLoading: false
+			}
+
+		case START_LOCAL_LOADING:
+			return {
+				...state,
+				isLoading: true,
+				error: ''
 			}
 
 		default:

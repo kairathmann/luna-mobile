@@ -14,8 +14,8 @@ const styles = auth
 
 export class LoginPage extends React.Component {
 	state = {
-		email: '',
-		password: '',
+		email: 'test+2@test.com',
+		password: 'qweqweqwe',
 		validationEnabled: false
 	}
 

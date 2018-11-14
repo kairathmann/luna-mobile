@@ -50,7 +50,7 @@ export class AgeLimitPage extends React.Component {
 
 	handleNext = () => {
 		const { ageMax, ageMin } = this.state
-		this.props.next({ ageMax, ageMin }, PAGES_NAMES.GENDER_SEXUALITY)
+		this.props.next({ ageMax, ageMin }, PAGES_NAMES.FLOW_GENDER_SEXUALITY)
 		Keyboard.dismiss()
 	}
 
