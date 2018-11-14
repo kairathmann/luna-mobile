@@ -7,7 +7,8 @@ import {
 import {
 	startFetchingRecommendations,
 	doneFetchingRecommendationsSuccess,
-	doneFetchingRecommendationsError
+	doneFetchingRecommendationsError,
+	unmatchRecommendation
 } from '../../../store/recommendations/actions'
 
 export const fetchRecommendations = () => async dispatch => {
@@ -30,6 +31,21 @@ export const fetchRecommendations = () => async dispatch => {
 			}
 		})
 		dispatch(doneFetchingRecommendationsSuccess(recommendations))
+	} catch (err) {
+		getErrorDataFromNetworkException(err)
+		dispatch(doneFetchingRecommendationsError(err))
+		// TODO: Better error handling
+		console.log(err)
+	} finally {
+		// TODO: Hide global loader
+	}
+}
+
+export const unmatch = userid => async dispatch => {
+	try {
+		// TODO: Show global loader
+		await api.unmatch({ recipient_hid: userid })
+		dispatch(unmatchRecommendation(userid))
 	} catch (err) {
 		getErrorDataFromNetworkException(err)
 		dispatch(doneFetchingRecommendationsError(err))

@@ -2,7 +2,7 @@ import {
 	LOAD_RECOMMENDATIONS_PROGRESS,
 	LOAD_RECOMMENDATIONS_SUCCESS,
 	LOAD_RECOMMENDATIONS_ERROR,
-	NEXT_RECOMMENDATION,
+	UNMATCH_RECOMMENDATION,
 	CLEAR_DATA
 } from './action-types'
 
@@ -10,9 +10,7 @@ const initialState = {
 	recommendations: [],
 	isLoading: false,
 	isError: false,
-	errorMessage: '',
-	currentlyRenderRecommendation: null,
-	currentlyRenderRecommendationIndex: 0
+	errorMessage: ''
 }
 
 export function recommendationsReducer(
@@ -31,11 +29,7 @@ export function recommendationsReducer(
 			return {
 				...state,
 				isLoading: false,
-				recommendations: payload,
-				currentlyRenderRecommendationIndex:
-					payload.length > 0 ? 0 : state.currentlyRenderRecommendationIndex,
-				currentlyRenderRecommendation:
-					payload.length > 0 ? payload[0] : state.currentlyRenderRecommendation
+				recommendations: payload
 			}
 		case LOAD_RECOMMENDATIONS_ERROR:
 			return {
@@ -45,16 +39,12 @@ export function recommendationsReducer(
 				errorMessage: payload.errorMessage,
 				recommendations: []
 			}
-		case NEXT_RECOMMENDATION:
+		case UNMATCH_RECOMMENDATION:
 			return {
 				...state,
-				currentlyRenderRecommendationIndex:
-					state.currentlyRenderRecommendationIndex ===
-					state.recommendations.length - 1
-						? state.recommendations.length - 1
-						: state.currentlyRenderRecommendationIndex++,
-				currentlyRenderRecommendation:
-					state.recommendations[state.currentlyRenderRecommendationIndex]
+				recommendations: state.recommendations.filter(
+					person => person.hid !== payload
+				)
 			}
 		case CLEAR_DATA:
 			return {

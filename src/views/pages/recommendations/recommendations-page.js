@@ -5,7 +5,7 @@ import { Button, Icon } from 'native-base'
 import { ImageBackground, Text, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import LinearGradient from 'react-native-linear-gradient'
-import { fetchRecommendations } from './scenario-actions'
+import { fetchRecommendations, unmatch } from './scenario-actions'
 import { styles as commonStyles } from '../../../styles'
 import { checkImageURL, getLoaderImageForGender } from '../../../common/utils'
 import { GENDER } from '../../../enums'
@@ -13,6 +13,10 @@ import { GENDER } from '../../../enums'
 class RecommendationsPage extends React.Component {
 	componentDidMount() {
 		this.props.fetchRecommendations()
+	}
+
+	unmatchRecommendation = userId => {
+		this.props.unmatchRecommendation(userId)
 	}
 
 	render() {
@@ -55,7 +59,16 @@ class RecommendationsPage extends React.Component {
 							</View>
 							<View style={styles.buttonsColumnContainer}>
 								<View style={styles.buttonsRowContainer}>
-									<Button rounded icon style={styles.declineButton}>
+									<Button
+										rounded
+										icon
+										style={styles.declineButton}
+										onPress={() => {
+											this.unmatchRecommendation(
+												this.props.currentlyRenderRecommendation.hid
+											)
+										}}
+									>
 										<Icon
 											type="MaterialCommunityIcons"
 											name="close"
@@ -140,6 +153,7 @@ const styles = EStyleSheet.create({
 
 RecommendationsPage.propTypes = {
 	fetchRecommendations: PropTypes.func.isRequired,
+	unmatchRecommendation: PropTypes.func.isRequired,
 	isLoading: PropTypes.bool.isRequired,
 	isError: PropTypes.bool.isRequired,
 	errorMessage: PropTypes.string,
@@ -165,14 +179,15 @@ const mapStateToProps = state => {
 		isLoading: state.recommendations.isLoading,
 		isError: state.recommendations.isError,
 		errorMessage: state.recommendations.errorMessage,
-		currentlyRenderRecommendation:
-			state.recommendations.currentlyRenderRecommendation
+		//TODO: Refactor later on to selectors or something similar
+		currentlyRenderRecommendation: state.recommendations.recommendations[0]
 	}
 }
 
 const mapDispatchToProps = dispatch => {
 	return {
-		fetchRecommendations: () => dispatch(fetchRecommendations())
+		fetchRecommendations: () => dispatch(fetchRecommendations()),
+		unmatchRecommendation: userId => dispatch(unmatch(userId))
 	}
 }
 
