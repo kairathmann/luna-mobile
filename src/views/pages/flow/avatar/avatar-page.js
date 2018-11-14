@@ -91,59 +91,20 @@ export class AvatarPage extends React.Component {
 					/>
 					<H1 style={styles.title}>{I18n.t('flow_page.avatar.title')}</H1>
 
-					<View
-						style={{
-							flexDirection: 'row',
-							width: '100%',
-							height: 256,
-							justifyContent: 'center',
-							alignContent: 'center',
-							marginBottom: 16
-						}}
-					>
+					<View style={styles.uploadContainer}>
 						<TouchableOpacity
 							onPress={this.handleGetImage}
 							disabled={this.props.loading}
-							style={{
-								borderWidth: 1,
-								borderColor: 'rgba(0,0,0,0.2)',
-								alignItems: 'center',
-								justifyContent: 'center',
-								width: 256,
-								height: 256,
-								backgroundColor: '#fff',
-								borderRadius: 128
-							}}
+							style={styles.previewContainer}
 						>
 							<Image
-								style={{
-									opacity: this.props.loading ? 0.75 : 1,
-									borderWidth: 1,
-									borderColor: 'rgba(0,0,0,0.2)',
-									alignItems: 'center',
-									justifyContent: 'center',
-									width: 256,
-									height: 256,
-									backgroundColor: '#fff',
-									borderRadius: 128
-								}}
+								style={styles.preview}
 								source={avatar ? { uri: avatar } : this.getDefaultImage()}
 							/>
 						</TouchableOpacity>
 						{this.props.loading && (
-							<View
-								style={{
-									position: 'absolute',
-									height: 256,
-									width: 256,
-									alignItems: 'center',
-									justifyContent: 'center'
-								}}
-							>
-								<Spinner
-									style={{ justifyContent: 'center' }}
-									color={LUNA_PRIMARY_COLOR}
-								/>
+							<View style={styles.loaderContainer}>
+								<Spinner style={styles.loader} color={LUNA_PRIMARY_COLOR} />
 							</View>
 						)}
 					</View>
@@ -210,7 +171,44 @@ const styles = EStyleSheet.create({
 	},
 	taglineCounterLimit: {
 		color: LUNA_PRIMARY_COLOR
-	}
+	},
+	uploadContainer: {
+		flexDirection: 'row',
+		width: '100%',
+		height: 256,
+		justifyContent: 'center',
+		alignContent: 'center',
+		marginBottom: 16
+	},
+	previewContainer: {
+		borderWidth: 1,
+		borderColor: 'rgba(0,0,0,0.2)',
+		alignItems: 'center',
+		justifyContent: 'center',
+		width: 256,
+		height: 256,
+		backgroundColor: '#fff',
+		borderRadius: 128
+	},
+	preview: {
+		opacity: this.props.loading ? 0.75 : 1,
+		borderWidth: 1,
+		borderColor: 'rgba(0,0,0,0.2)',
+		alignItems: 'center',
+		justifyContent: 'center',
+		width: 256,
+		height: 256,
+		backgroundColor: '#fff',
+		borderRadius: 128
+	},
+	loaderContainer: {
+		position: 'absolute',
+		height: 256,
+		width: 256,
+		alignItems: 'center',
+		justifyContent: 'center'
+	},
+	loader: { justifyContent: 'center' }
 })
 
 const mapStateToProps = state => {
