@@ -2,14 +2,14 @@ import {
 	LOAD_RECOMMENDATIONS_PROGRESS,
 	LOAD_RECOMMENDATIONS_SUCCESS,
 	LOAD_RECOMMENDATIONS_ERROR,
-	UNMATCH_RECOMMENDATION,
+	UNMATCH_RECOMMENDATION_SUCCESS,
 	CLEAR_DATA
 } from './action-types'
 
 const initialState = {
 	recommendations: [],
 	isLoading: false,
-	isError: false,
+	isFetchingRecommendationsError: false,
 	errorMessage: ''
 }
 
@@ -22,7 +22,8 @@ export function recommendationsReducer(
 			return {
 				...state,
 				isLoading: true,
-				isError: false,
+				isFetchingRecommendationsError: false,
+				isUnmatchingRecommendationError: false,
 				errorMessage: ''
 			}
 		case LOAD_RECOMMENDATIONS_SUCCESS:
@@ -35,11 +36,11 @@ export function recommendationsReducer(
 			return {
 				...state,
 				isLoading: false,
-				isError: true,
+				isFetchingRecommendationsError: true,
 				errorMessage: payload.errorMessage,
 				recommendations: []
 			}
-		case UNMATCH_RECOMMENDATION:
+		case UNMATCH_RECOMMENDATION_SUCCESS:
 			return {
 				...state,
 				recommendations: state.recommendations.filter(

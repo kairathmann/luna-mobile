@@ -138,6 +138,7 @@ const styles = EStyleSheet.create({
 		width: 60,
 		height: 60,
 		backgroundColor: 'white',
+		borderWidth: 1,
 		justifyContent: 'center',
 		borderColor: 'black',
 		marginRight: '2rem'
@@ -146,8 +147,7 @@ const styles = EStyleSheet.create({
 		width: 60,
 		height: 60,
 		backgroundColor: '#862b91',
-		justifyContent: 'center',
-		borderColor: '#862b91'
+		justifyContent: 'center'
 	}
 })
 
@@ -155,7 +155,7 @@ RecommendationsPage.propTypes = {
 	fetchRecommendations: PropTypes.func.isRequired,
 	unmatchRecommendation: PropTypes.func.isRequired,
 	isLoading: PropTypes.bool.isRequired,
-	isError: PropTypes.bool.isRequired,
+	isFetchingRecommendationsError: PropTypes.bool.isRequired,
 	errorMessage: PropTypes.string,
 	currentlyRenderRecommendation: PropTypes.shape({
 		bio: PropTypes.string,
@@ -177,7 +177,8 @@ RecommendationsPage.propTypes = {
 const mapStateToProps = state => {
 	return {
 		isLoading: state.recommendations.isLoading,
-		isError: state.recommendations.isError,
+		isFetchingRecommendationsError:
+			state.recommendations.isFetchingRecommendationsError,
 		errorMessage: state.recommendations.errorMessage,
 		//TODO: Refactor later on to selectors or something similar
 		currentlyRenderRecommendation: state.recommendations.recommendations[0]

@@ -2,6 +2,7 @@ import React from 'react'
 import { Dimensions } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { Provider } from 'react-redux'
+import { Root } from 'native-base'
 import configureApi from './src/config/config'
 import { AppStackNavigator } from './src/navigation'
 import { navigationService } from './src/services'
@@ -22,11 +23,13 @@ export default class App extends React.Component {
 	render() {
 		return (
 			<Provider store={store}>
-				<AppStackNavigator
-					ref={navigatorRef => {
-						navigationService.setTopLevelNavigator(navigatorRef)
-					}}
-				/>
+				<Root>
+					<AppStackNavigator
+						ref={navigatorRef => {
+							navigationService.setTopLevelNavigator(navigatorRef)
+						}}
+					/>
+				</Root>
 			</Provider>
 		)
 	}

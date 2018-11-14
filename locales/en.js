@@ -14,7 +14,8 @@ export default {
 			email_in_use: 'This email address is already taken',
 			incorrect_request: 'Incorrect request',
 			nonexistent_user: 'User does not exist',
-			wrong_password: 'Provided password is not correct'
+			wrong_password: 'Provided password is not correct',
+			server_error: 'Something is wrong at our side. Please try again later.'
 		},
 		male: 'Male',
 		female: 'Female',

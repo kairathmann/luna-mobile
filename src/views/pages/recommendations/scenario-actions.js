@@ -8,8 +8,9 @@ import {
 	startFetchingRecommendations,
 	doneFetchingRecommendationsSuccess,
 	doneFetchingRecommendationsError,
-	unmatchRecommendation
+	doneUnmatchingRecommendationSuccess
 } from '../../../store/recommendations/actions'
+import { toastService } from '../../../services'
 
 export const fetchRecommendations = () => async dispatch => {
 	try {
@@ -35,7 +36,6 @@ export const fetchRecommendations = () => async dispatch => {
 		getErrorDataFromNetworkException(err)
 		dispatch(doneFetchingRecommendationsError(err))
 		// TODO: Better error handling
-		console.log(err)
 	} finally {
 		// TODO: Hide global loader
 	}
@@ -44,13 +44,12 @@ export const fetchRecommendations = () => async dispatch => {
 export const unmatch = userid => async dispatch => {
 	try {
 		// TODO: Show global loader
-		await api.unmatch({ recipient_hid: userid })
-		dispatch(unmatchRecommendation(userid))
+		await api.unmatch({ recipient2_hid: userid })
+		dispatch(doneUnmatchingRecommendationSuccess(userid))
 	} catch (err) {
-		getErrorDataFromNetworkException(err)
-		dispatch(doneFetchingRecommendationsError(err))
+		const errorMessage = getErrorDataFromNetworkException(err)
+		toastService.showErrorToast(errorMessage, 'top')
 		// TODO: Better error handling
-		console.log(err)
 	} finally {
 		// TODO: Hide global loader
 	}
