@@ -94,15 +94,18 @@ export class AvatarPage extends React.Component {
 					<View style={styles.uploadContainer}>
 						<TouchableOpacity
 							onPress={this.handleGetImage}
-							disabled={this.props.loading}
+							disabled={this.props.isLoading}
 							style={styles.previewContainer}
 						>
 							<Image
-								style={styles.preview}
+								style={[
+									styles.preview,
+									{ opacity: this.props.isLoading ? 0.75 : 1 }
+								]}
 								source={avatar ? { uri: avatar } : this.getDefaultImage()}
 							/>
 						</TouchableOpacity>
-						{this.props.loading && (
+						{this.props.isLoading && (
 							<View style={styles.loaderContainer}>
 								<Spinner style={styles.loader} color={LUNA_PRIMARY_COLOR} />
 							</View>
@@ -125,7 +128,7 @@ AvatarPage.propTypes = {
 	next: PropTypes.func.isRequired,
 	error: PropTypes.string,
 	profile: PropTypes.object.isRequired,
-	loading: PropTypes.boolean.isRequired
+	isLoading: PropTypes.bool
 }
 
 const styles = EStyleSheet.create({
@@ -191,7 +194,6 @@ const styles = EStyleSheet.create({
 		borderRadius: 128
 	},
 	preview: {
-		opacity: this.props.loading ? 0.75 : 1,
 		borderWidth: 1,
 		borderColor: 'rgba(0,0,0,0.2)',
 		alignItems: 'center',
@@ -215,7 +217,7 @@ const mapStateToProps = state => {
 	return {
 		profile: state.profile.profileToEdit,
 		error: state.profile.error,
-		loading: state.profile.isLoading
+		isLoading: state.profile.isLoading
 	}
 }
 
