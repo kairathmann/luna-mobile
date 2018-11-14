@@ -164,7 +164,7 @@ AvatarPage.propTypes = {
 	next: PropTypes.func.isRequired,
 	error: PropTypes.string,
 	profile: PropTypes.object.isRequired,
-	loading: PropTypes.bool.isRequired
+	loading: PropTypes.boolean.isRequired
 }
 
 const styles = EStyleSheet.create({
