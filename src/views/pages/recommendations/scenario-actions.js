@@ -44,7 +44,7 @@ export const fetchRecommendations = () => async dispatch => {
 export const unmatch = userid => async dispatch => {
 	try {
 		// TODO: Show global loader
-		await api.unmatch({ recipient2_hid: userid })
+		await api.unmatch({ recipient_hid: userid })
 		dispatch(doneUnmatchingRecommendationSuccess(userid))
 	} catch (err) {
 		const errorMessage = getErrorDataFromNetworkException(err)

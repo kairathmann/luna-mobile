@@ -1,15 +1,14 @@
 import React from 'react'
+import { Text, View } from 'react-native'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Button, Icon } from 'native-base'
-import { ImageBackground, Text, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
-import LinearGradient from 'react-native-linear-gradient'
 import I18n from '../../../../locales/i18n'
 import { fetchRecommendations, unmatch } from './scenario-actions'
 import { styles as commonStyles } from '../../../styles'
-import { checkImageURL, getLoaderImageForGender } from '../../../common/utils'
 import { GENDER } from '../../../enums'
+import UserMatchView from '../../../components/UserMatchView'
 
 class RecommendationsPage extends React.Component {
 	componentDidMount() {
@@ -38,36 +37,9 @@ class RecommendationsPage extends React.Component {
 					this.props.currentlyRenderRecommendation && (
 						<React.Fragment>
 							<View style={styles.userProfileContainer}>
-								<ImageBackground
-									imageStyle={styles.image}
-									style={styles.imageParent}
-									resizeMode="cover"
-									source={checkImageURL(
-										this.props.currentlyRenderRecommendation.avatarUrl
-									)}
-									defaultSource={getLoaderImageForGender(
-										this.props.currentlyRenderRecommendation.gidIs
-									)}
-								>
-									<View style={{ flex: 7 }} />
-									<LinearGradient
-										colors={['transparent', '#000']}
-										style={styles.userInfoContainer}
-									>
-										<View style={styles.userInfoTextContainer}>
-											<Text style={styles.userInfoText}>
-												{`${
-													this.props.currentlyRenderRecommendation.firstName
-												}, ${this.props.currentlyRenderRecommendation.age}`}
-											</Text>
-											<Icon
-												type="MaterialCommunityIcons"
-												name="information-outline"
-												style={{ color: 'white' }}
-											/>
-										</View>
-									</LinearGradient>
-								</ImageBackground>
+								<UserMatchView
+									userProfile={this.props.currentlyRenderRecommendation}
+								/>
 							</View>
 							<View style={styles.buttonsColumnContainer}>
 								<View style={styles.buttonsRowContainer}>

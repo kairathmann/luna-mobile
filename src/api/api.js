@@ -52,7 +52,7 @@ export default {
 		return axios.post('/message/message/create/', qs.stringify(payload))
 	},
 	fetchRecommendations: () => {
-		return axios.post('/user/retrieve/recommend2/')
+		return axios.post('/user/retrieve/recommend/')
 	},
 	createConversation: payload => {
 		return axios.post('/message/conversation/create/', qs.stringify(payload))
