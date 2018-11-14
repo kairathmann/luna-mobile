@@ -5,6 +5,7 @@ import { Button, Icon } from 'native-base'
 import { ImageBackground, Text, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import LinearGradient from 'react-native-linear-gradient'
+import I18n from '../../../../locales/i18n'
 import { fetchRecommendations, unmatch } from './scenario-actions'
 import { styles as commonStyles } from '../../../styles'
 import { checkImageURL, getLoaderImageForGender } from '../../../common/utils'
@@ -23,6 +24,17 @@ class RecommendationsPage extends React.Component {
 		return (
 			<View style={commonStyles.content}>
 				{!this.props.isLoading &&
+					this.props.isFetchingRecommendationsError && (
+						<View style={styles.errorTextContainer}>
+							<Text style={[commonStyles.errorText, styles.errorText]}>
+								{I18n.t(
+									'recommendations_page.error_could_not_fetch_recommendations'
+								)}
+							</Text>
+						</View>
+					)}
+				{!this.props.isLoading &&
+					!this.props.isFetchingRecommendationsError &&
 					this.props.currentlyRenderRecommendation && (
 						<React.Fragment>
 							<View style={styles.userProfileContainer}>
@@ -148,6 +160,14 @@ const styles = EStyleSheet.create({
 		height: 60,
 		backgroundColor: '#862b91',
 		justifyContent: 'center'
+	},
+	errorTextContainer: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center'
+	},
+	errorText: {
+		fontSize: '1.2rem'
 	}
 })
 
