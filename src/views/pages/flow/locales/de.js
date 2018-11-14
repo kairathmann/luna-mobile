@@ -18,5 +18,11 @@ export default {
 		how_old: 'How old should they be?',
 		inbox_limit: 'Inbox limit',
 		next: 'Next step'
+	},
+	tagline: {
+		title: 'Your Tagline',
+		tagline:
+			"This is your moment of glory. Write an intro that will give your potential matches a hint of what you're all about",
+		next: 'Finish'
 	}
 }
