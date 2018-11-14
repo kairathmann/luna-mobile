@@ -10,6 +10,7 @@ import I18n from '../../locales/i18n'
 import AgeLimitPage from '../views/pages/flow/age-limit/age-limit-page'
 import GenderPreferencesPage from '../views/pages/flow/gender-preferences/gender-preferences-page'
 import NameBirthdayPage from '../views/pages/flow/name-birthday/name-birthday-page'
+import TaglinePage from '../views/pages/flow/tagline/tagline-page'
 import LoginPage from '../views/pages/login/login-page'
 import SignupPage from '../views/pages/signup/signup-page'
 import WelcomePage from '../views/pages/welcome/welcome-page'
@@ -31,6 +32,7 @@ const PAGES_NAMES = {
 	SIGNUP_PAGE: 'SIGNUP_PAGE',
 	NAME_BIRTHDAY: 'NAME_BIRTHDAY',
 	GENDER_SEXUALITY: 'GENDER_SEXUALITY',
+	TAGLINE: 'TAGLINE',
 	AGE_LIMIT: 'AGE_LIMIT',
 	HOME_PAGE: 'HOME_PAGE',
 	PROFILE_PAGE: 'PROFILE_PAGE',
@@ -147,6 +149,13 @@ const AppStackNavigator = createStackNavigator({
 	},
 	AGE_LIMIT: {
 		screen: AgeLimitPage,
+		navigationOptions: () => ({
+			title: I18n.t('flow_page.title'),
+			...noNavbarStyle
+		})
+	},
+	TAGLINE: {
+		screen: TaglinePage,
 		navigationOptions: () => ({
 			title: I18n.t('flow_page.title'),
 			...noNavbarStyle
