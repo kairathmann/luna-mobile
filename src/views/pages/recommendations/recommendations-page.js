@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { Icon } from 'native-base'
 import { ImageBackground, Text, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import LinearGradient from 'react-native-linear-gradient'
@@ -37,12 +38,17 @@ class RecommendationsPage extends React.Component {
 										colors={['transparent', '#000']}
 										style={styles.userInfoContainer}
 									>
-										<View>
-											<Text style={styles.userInfoText}>{`${
-												this.props.currentlyRenderRecommendation.firstName
-											}, ${
-												this.props.currentlyRenderRecommendation.age
-											}`}</Text>
+										<View style={styles.userInfoTextContainer}>
+											<Text style={styles.userInfoText}>
+												{`${
+													this.props.currentlyRenderRecommendation.firstName
+												}, ${this.props.currentlyRenderRecommendation.age}`}
+											</Text>
+											<Icon
+												type="MaterialCommunityIcons"
+												name="information-outline"
+												style={{ color: 'white' }}
+											/>
 										</View>
 									</LinearGradient>
 								</ImageBackground>
@@ -79,9 +85,16 @@ const styles = EStyleSheet.create({
 		borderTopLeftRadius: 0,
 		borderTopRightRadius: 0
 	},
+	userInfoTextContainer: {
+		flexDirection: 'row',
+		justifyContent: 'center',
+		alignItems: 'center'
+	},
 	userInfoText: {
 		color: '#FFF',
-		fontSize: 16
+		fontSize: '1.1rem',
+		fontFamily: 'Lato-Regular',
+		marginRight: '1rem'
 	},
 	buttonsContainer: {
 		flex: 3,

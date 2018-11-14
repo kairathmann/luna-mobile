@@ -92,5 +92,10 @@
 		"hooks": {
 			"pre-commit": "lint-staged"
 		}
-	}
+	},
+	"rnpm": {
+		"assets": [
+		  "./src/assets/fonts/"
+		]
+	  }
 }
