@@ -102,11 +102,7 @@ const HomePageBottomTabNavigation = createBottomTabNavigator(
 		initialRouteName: PAGES_NAMES.RECOMMENDATIONS_PAGE,
 		tabBarOptions: {
 			style: {
-				backgroundColor: COLORS.LUNA_PRIMARY_COLOR,
-				position: 'absolute',
-				left: 0,
-				right: 0,
-				bottom: 0
+				backgroundColor: COLORS.LUNA_PRIMARY_COLOR
 			},
 			showLabel: false
 		}

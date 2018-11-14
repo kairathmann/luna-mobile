@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Icon } from 'native-base'
+import { Button, Icon } from 'native-base'
 import { ImageBackground, Text, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import LinearGradient from 'react-native-linear-gradient'
@@ -53,7 +53,24 @@ class RecommendationsPage extends React.Component {
 									</LinearGradient>
 								</ImageBackground>
 							</View>
-							<View style={styles.buttonsContainer} />
+							<View style={styles.buttonsColumnContainer}>
+								<View style={styles.buttonsRowContainer}>
+									<Button rounded icon style={styles.declineButton}>
+										<Icon
+											type="MaterialCommunityIcons"
+											name="close"
+											style={{ color: 'black', marginLeft: 0, marginRight: 0 }}
+										/>
+									</Button>
+									<Button rounded icon style={styles.messageButton}>
+										<Icon
+											type="MaterialCommunityIcons"
+											name="email-outline"
+											style={{ color: 'white', marginLeft: 0, marginRight: 0 }}
+										/>
+									</Button>
+								</View>
+							</View>
 						</React.Fragment>
 					)}
 			</View>
@@ -63,7 +80,7 @@ class RecommendationsPage extends React.Component {
 
 const styles = EStyleSheet.create({
 	userProfileContainer: {
-		flex: 7,
+		flex: 8,
 		justifyContent: 'flex-start',
 		backgroundColor: '#f6f6f6',
 		padding: '0.9rem'
@@ -77,7 +94,7 @@ const styles = EStyleSheet.create({
 		borderRadius: '3.1rem'
 	},
 	userInfoContainer: {
-		flex: 3,
+		flex: 2,
 		justifyContent: 'center',
 		alignItems: 'center',
 		borderBottomLeftRadius: '3.1rem',
@@ -96,9 +113,28 @@ const styles = EStyleSheet.create({
 		fontFamily: 'Lato-Regular',
 		marginRight: '1rem'
 	},
-	buttonsContainer: {
-		flex: 3,
-		justifyContent: 'flex-end'
+	buttonsColumnContainer: {
+		flex: 2,
+		justifyContent: 'center'
+	},
+	buttonsRowContainer: {
+		flexDirection: 'row',
+		justifyContent: 'center'
+	},
+	declineButton: {
+		width: 60,
+		height: 60,
+		backgroundColor: 'white',
+		justifyContent: 'center',
+		borderColor: 'black',
+		marginRight: '2rem'
+	},
+	messageButton: {
+		width: 60,
+		height: 60,
+		backgroundColor: '#862b91',
+		justifyContent: 'center',
+		borderColor: '#862b91'
 	}
 })
 
