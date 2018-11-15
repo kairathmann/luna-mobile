@@ -86,10 +86,20 @@ const getLoaderImageForGender = (gender = GENDER.OTHER) => {
 	}
 }
 
+const isPortrait = (screenWidth, screenHeight) => {
+	return screenHeight >= screenWidth
+}
+
+const isLandscape = (screenWidth, screenHeight) => {
+	return screenWidth >= screenHeight
+}
+
 export {
 	avatarRelativeUrlToFullPhotoUrl,
 	checkImageURL,
 	getErrorDataFromNetworkException,
 	getLoaderImageForGender,
+	isPortrait,
+	isLandscape,
 	rewriteUrlImageForDefault
 }

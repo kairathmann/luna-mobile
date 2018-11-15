@@ -4,3 +4,8 @@ export const GENDER = {
 	OTHER: 3,
 	BOTH: 3
 }
+
+export const ORIENTATION = {
+	PORTRAIT: 1,
+	LANDSCAPE: 2
+}
