@@ -1,6 +1,8 @@
 import { createStackNavigator } from 'react-navigation'
 import I18n from '../../locales/i18n'
 import AgeLimitPage from '../views/pages/flow/age-limit/age-limit-page'
+import AlldonePage from '../views/pages/flow/alldone/alldone-page'
+import AvatarPage from '../views/pages/flow/avatar/avatar-page'
 import GenderPreferencesPage from '../views/pages/flow/gender-preferences/gender-preferences-page'
 import NameBirthdayPage from '../views/pages/flow/name-birthday/name-birthday-page'
 import TaglinePage from '../views/pages/flow/tagline/tagline-page'
@@ -12,10 +14,12 @@ const PAGES_NAMES = {
 	WELCOME_PAGE: 'WELCOME_PAGE',
 	LOGIN_PAGE: 'LOGIN_PAGE',
 	SIGNUP_PAGE: 'SIGNUP_PAGE',
-	NAME_BIRTHDAY: 'NAME_BIRTHDAY',
-	GENDER_SEXUALITY: 'GENDER_SEXUALITY',
-	AGE_LIMIT: 'AGE_LIMIT',
-	TAGLINE: 'TAGLINE'
+	FLOW_NAME_BIRTHDAY: 'FLOW_NAME_BIRTHDAY',
+	FLOW_GENDER_SEXUALITY: 'FLOW_GENDER_SEXUALITY',
+	FLOW_AGE_LIMIT: 'FLOW_AGE_LIMIT',
+	FLOW_TAGLINE: 'FLOW_TAGLINE',
+	FLOW_AVATAR: 'FLOW_AVATAR',
+	FLOW_ALLDONE: 'FLOW_ALLDONE'
 }
 
 const noNavbarStyle = {
@@ -46,33 +50,52 @@ const AppStackNavigator = createStackNavigator({
 			...noNavbarStyle
 		})
 	},
-	NAME_BIRTHDAY: {
+	FLOW_NAME_BIRTHDAY: {
 		screen: NameBirthdayPage,
 		navigationOptions: () => ({
 			title: I18n.t('flow_page.title'),
 			headerLeft: null,
-			...noNavbarStyle
+			...noNavbarStyle,
+			headerBackTitle: I18n.t('common.back')
 		})
 	},
-	GENDER_SEXUALITY: {
+	FLOW_GENDER_SEXUALITY: {
 		screen: GenderPreferencesPage,
 		navigationOptions: () => ({
 			title: I18n.t('flow_page.title'),
-			...noNavbarStyle
+			...noNavbarStyle,
+			headerBackTitle: I18n.t('common.back')
 		})
 	},
-	AGE_LIMIT: {
+	FLOW_AGE_LIMIT: {
 		screen: AgeLimitPage,
 		navigationOptions: () => ({
 			title: I18n.t('flow_page.title'),
-			...noNavbarStyle
+			...noNavbarStyle,
+			headerBackTitle: I18n.t('common.back')
 		})
 	},
-	TAGLINE: {
+	FLOW_TAGLINE: {
 		screen: TaglinePage,
 		navigationOptions: () => ({
 			title: I18n.t('flow_page.title'),
-			...noNavbarStyle
+			...noNavbarStyle,
+			headerBackTitle: I18n.t('common.back')
+		})
+	},
+	FLOW_AVATAR: {
+		screen: AvatarPage,
+		navigationOptions: () => ({
+			title: I18n.t('flow_page.title'),
+			...noNavbarStyle,
+			headerBackTitle: I18n.t('common.back')
+		})
+	},
+	FLOW_ALLDONE: {
+		screen: AlldonePage,
+		navigationOptions: () => ({
+			title: I18n.t('flow_page.title'),
+			header: null
 		})
 	}
 })

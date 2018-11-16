@@ -14,11 +14,13 @@ export default {
 			email_in_use: '_PL_This email address is already taken',
 			incorrect_request: 'Incorrect request',
 			nonexistent_user: 'User does not exist',
-			wrong_password: 'Provided password is not correct'
+			wrong_password: 'Provided password is not correct',
+			not_authenticated: 'You are logged out'
 		},
 		male: 'Male',
 		female: 'Female',
 		both: 'Both',
-		other: 'Other'
+		other: 'Other',
+		back: 'Back'
 	}
 }

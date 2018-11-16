@@ -1,6 +1,7 @@
 import axios from 'axios'
 import * as humps from 'humps'
 import qs from 'qs'
+import { getNameFromUri } from '../common/utils'
 
 export default {
 	signup: payload => {
@@ -27,8 +28,16 @@ export default {
 	loadUserForEdit: () => {
 		return axios.post('/user/retrieve/edit/')
 	},
-	stashAvatar: payload => {
-		return axios.post('/user/avatar/stash/', payload).then(({ data }) => {
+	stashAvatar: uri => {
+		const bodyFormData = new FormData()
+		bodyFormData.append('image', {
+			uri,
+			type: 'image/jpeg',
+			name: getNameFromUri(uri)
+		})
+		bodyFormData.append('resize_width', 1000)
+		bodyFormData.append('resize_height', 1000)
+		return axios.post('/user/avatar/stash/', bodyFormData).then(({ data }) => {
 			if (!data.success) throw new Error('error.stashing')
 			return data
 		})
