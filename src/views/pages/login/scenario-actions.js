@@ -11,7 +11,7 @@ export function login({ email, password }) {
 			const result = await api.signin({ email, password })
 			dispatch(signinSuccess(result))
 			// TODO: Change in last commit
-			navigationService.navigate(PAGES_NAMES.FLOW_AVATAR)
+			navigationService.navigate(PAGES_NAMES.FLOW_NAME_BIRTHDAY)
 		} catch (error) {
 			dispatch(signinError(getErrorDataFromNetworkException(error)))
 		} finally {
