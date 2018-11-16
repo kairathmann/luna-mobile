@@ -4,7 +4,7 @@ import {
 	START_UPDATING_PROFILE,
 	SAVE_PROFILE_ERROR,
 	SAVE_PROFILE_SUCCESS,
-	START_LOCAL_LOADING
+	PROFILE_START_LOCAL_LOADING
 } from './action-types'
 
 export function startUpdatingProfile() {
@@ -15,7 +15,7 @@ export function startUpdatingProfile() {
 
 export function startLocalLoading() {
 	return {
-		type: START_LOCAL_LOADING
+		type: PROFILE_START_LOCAL_LOADING
 	}
 }
 

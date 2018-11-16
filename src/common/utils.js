@@ -1,5 +1,12 @@
 import I18n from '../../locales/i18n'
 
+const getNameFromUri = uri => {
+	const lastPart = uri.split('/').slice(-1)[0]
+	const strictName = lastPart.split('.')[0]
+
+	return `${strictName}.jpg`
+}
+
 const getErrorDataFromNetworkException = error => {
 	let errorMessage = ''
 	if (error.response) {
@@ -30,4 +37,4 @@ const getErrorDataFromNetworkException = error => {
 	return errorMessage
 }
 
-export { getErrorDataFromNetworkException }
+export { getErrorDataFromNetworkException, getNameFromUri }

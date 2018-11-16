@@ -1,6 +1,7 @@
 import axios from 'axios'
 import * as humps from 'humps'
 import qs from 'qs'
+import { getNameFromUri } from '../common/utils'
 
 export default {
 	signup: payload => {
@@ -28,11 +29,12 @@ export default {
 		return axios.post('/user/retrieve/edit/')
 	},
 	stashAvatar: uri => {
+		console.log(getNameFromUri(uri))
 		const bodyFormData = new FormData()
 		bodyFormData.append('image', {
 			uri,
 			type: 'image/jpeg',
-			name: 'testPhotoName.jpg'
+			name: getNameFromUri(uri)
 		})
 		bodyFormData.append('resize_width', 1000)
 		bodyFormData.append('resize_height', 1000)

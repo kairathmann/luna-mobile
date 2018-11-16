@@ -3,7 +3,7 @@ import {
 	FINISH_UPDATING_PROFILE,
 	SAVE_PROFILE_ERROR,
 	SAVE_PROFILE_SUCCESS,
-	START_LOCAL_LOADING,
+	PROFILE_START_LOCAL_LOADING,
 	START_UPDATING_PROFILE
 } from './action-types'
 
@@ -51,7 +51,7 @@ export function profileReducer(state = initialState, { payload, type }) {
 				isLoading: false
 			}
 
-		case START_LOCAL_LOADING:
+		case PROFILE_START_LOCAL_LOADING:
 			return {
 				...state,
 				isLoading: true,
