@@ -18,11 +18,13 @@ export default {
 			nonexistent_user: 'User does not exist',
 			wrong_password: 'Provided password is not correct',
 			server_error:
-				'_PL_Something is wrong at our side. Please try again later.'
+				'_PL_Something is wrong at our side. Please try again later.',
+			not_authenticated: 'You are logged out'
 		},
 		male: 'Male',
 		female: 'Female',
 		both: 'Both',
-		other: 'Other'
+		other: 'Other',
+		back: 'Back'
 	}
 }

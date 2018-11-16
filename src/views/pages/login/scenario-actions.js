@@ -10,7 +10,8 @@ export function login({ email, password }) {
 			// TODO: Show global loader
 			const result = await api.signin({ email, password })
 			dispatch(signinSuccess(result))
-			navigationService.navigate(PAGES_NAMES.HOME_PAGE)
+			// TODO: Change in last commit
+			navigationService.navigate(PAGES_NAMES.FLOW_NAME_BIRTHDAY)
 		} catch (error) {
 			dispatch(signinError(getErrorDataFromNetworkException(error)))
 		} finally {

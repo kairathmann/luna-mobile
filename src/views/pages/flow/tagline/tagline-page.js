@@ -9,7 +9,7 @@ import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
 import Button from '../../../../components/Button'
 import { PAGES_NAMES } from '../../../../navigation'
-import { COLORS, styles as commonStyles } from '../../../../styles'
+import { COLORS, styles as commonStyles, flow } from '../../../../styles'
 import { LUNA_PRIMARY_COLOR } from '../../../../styles/colors'
 import { saveChanges } from '../scenario-actions'
 
@@ -28,7 +28,7 @@ export class TaglinePage extends React.Component {
 
 	handleNext = () => {
 		const { tagline } = this.state
-		this.props.next({ tagline }, PAGES_NAMES.GENDER_SEXUALITY)
+		this.props.next({ tagline }, PAGES_NAMES.FLOW_ALLDONE)
 		Keyboard.dismiss()
 	}
 
@@ -46,25 +46,26 @@ export class TaglinePage extends React.Component {
 	render() {
 		const { tagline } = this.state
 		return (
-			<View style={styles.content}>
+			<View style={flow.content}>
 				<KeyboardAwareScrollView
 					keyboardShouldPersistTaps={'handled'}
 					enableOnAndroid={true}
-					style={styles.innerContent}
+					style={flow.innerContent}
 				>
 					<Progress.Bar
-						style={styles.progressBar}
+						indeterminate={this.props.isLoading}
+						style={flow.progressBar}
 						useNativeDriver={true}
 						animationConfig={{ bounciness: 0.5 }}
 						color={COLORS.LUNA_PRIMARY_COLOR}
 						progress={this.calculateProgress()}
 						width={null}
 					/>
-					<H1 style={styles.title}>{I18n.t('flow_page.tagline.title')}</H1>
+					<H1 style={flow.title}>{I18n.t('flow_page.tagline.title')}</H1>
 					<Text>{I18n.t('flow_page.tagline.tagline')}</Text>
 					<Form>
 						<Item floatingLabel last>
-							<Label>Tagline</Label>
+							<Label>{I18n.t('flow_page.tagline.inputLabel')}</Label>
 							<Input
 								numberOfLines={3}
 								multiline={true}
@@ -81,10 +82,11 @@ export class TaglinePage extends React.Component {
 					<Text
 						style={[
 							styles.taglineCounter,
-							tagline.length === 50 ? styles.taglineCounterLimit : {}
+							tagline.length === MAX_LENGTH ? styles.taglineCounterLimit : {}
 						]}
 					>{`${tagline.length}/${MAX_LENGTH}`}</Text>
 					<Button
+						disabled={this.props.isLoading}
 						text={I18n.t('flow_page.tagline.next')}
 						onPress={() => this.handleNext()}
 					/>
@@ -99,45 +101,11 @@ TaglinePage.propTypes = {
 	navigation: PropTypes.object.isRequired,
 	next: PropTypes.func.isRequired,
 	error: PropTypes.string,
-	profile: PropTypes.object.isRequired
+	profile: PropTypes.object.isRequired,
+	isLoading: PropTypes.bool
 }
 
 const styles = EStyleSheet.create({
-	content: {
-		flex: 1,
-		backgroundColor: 'white'
-	},
-	innerContent: {
-		padding: 16
-	},
-	title: {
-		marginTop: 24,
-		marginBottom: 24,
-		fontWeight: 'bold'
-	},
-	errorText: {
-		color: 'red',
-		textAlign: 'center'
-	},
-	birthdayContainer: {
-		marginBottom: 8
-	},
-	birthdayButton: {
-		width: '100%',
-		textAlign: 'left',
-		padding: 0,
-		marginTop: 12
-	},
-	birthdayText: {
-		fontSize: 16
-	},
-	progressBar: {
-		marginLeft: 16,
-		marginRight: 16
-	},
-	datePickerButton: {
-		color: '$primaryColor'
-	},
 	taglineCounter: {
 		textAlign: 'right',
 		marginTop: 8,
@@ -151,7 +119,8 @@ const styles = EStyleSheet.create({
 const mapStateToProps = state => {
 	return {
 		profile: state.profile.profileToEdit,
-		error: state.profile.error
+		error: state.profile.error,
+		isLoading: state.profile.isLoading
 	}
 }
 
