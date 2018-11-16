@@ -99,9 +99,7 @@ export class GenderPreferencesPage extends React.Component {
 						{I18n.t('flow_page.gender_preferences.prompt')}
 					</Text>
 					<Button
-						disabled={
-							!(gender !== null && sexuality !== null) || this.props.isLoading
-						}
+						disabled={this.props.isLoading}
 						text={I18n.t('flow_page.gender_preferences.next')}
 						onPress={() => this.handleNext()}
 					/>
