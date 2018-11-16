@@ -1,8 +1,10 @@
 import { H3 } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
+import { connect } from 'react-redux'
 import { Dimensions, Image, StatusBar, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
+import { fetchRecommendations } from '../../recommendations/scenario-actions'
 import I18n from '../../../../../locales/i18n'
 import Background from '../../../../assets/images/luna_logo.png'
 import { PAGES_NAMES } from '../../../../navigation/pages'
@@ -15,7 +17,8 @@ const { width } = Dimensions.get('window')
 export class AlldonePage extends React.Component {
 	componentDidMount() {
 		setTimeout(() => {
-			this.props.navigation.navigate(PAGES_NAMES.WELCOME_PAGE)
+			this.props.fetchRecommendations()
+			this.props.navigation.navigate(PAGES_NAMES.HOME_PAGE)
 		}, LOAD_FEED_PAGE_DELAY)
 	}
 
@@ -33,7 +36,8 @@ export class AlldonePage extends React.Component {
 }
 
 AlldonePage.propTypes = {
-	navigation: PropTypes.object.isRequired
+	navigation: PropTypes.object.isRequired,
+	fetchRecommendations: PropTypes.func.isRequired
 }
 
 const styles = EStyleSheet.create({
@@ -65,4 +69,13 @@ const styles = EStyleSheet.create({
 	}
 })
 
-export default AlldonePage
+const mapDispatchToProps = dispatch => {
+	return {
+		fetchRecommendations: () => dispatch(fetchRecommendations())
+	}
+}
+
+export default connect(
+	null,
+	mapDispatchToProps
+)(AlldonePage)

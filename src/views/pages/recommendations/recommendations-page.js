@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { Button, Icon } from 'native-base'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import I18n from '../../../../locales/i18n'
-import { fetchRecommendations, unmatch } from './scenario-actions'
+import { unmatch } from './scenario-actions'
 import { styles as commonStyles } from '../../../styles'
 import { GENDER, ORIENTATION } from '../../../enums'
 import { isLandscape } from '../../../common/utils'
@@ -24,10 +24,6 @@ class RecommendationsPage extends React.Component {
 		return isLandscape(screenDimensions.width, screenDimensions.height)
 			? ORIENTATION.LANDSCAPE
 			: ORIENTATION.PORTRAIT
-	}
-
-	componentDidMount() {
-		this.props.fetchRecommendations()
 	}
 
 	unmatchRecommendation = userId => {
@@ -183,7 +179,6 @@ const styles = EStyleSheet.create({
 })
 
 RecommendationsPage.propTypes = {
-	fetchRecommendations: PropTypes.func.isRequired,
 	unmatchRecommendation: PropTypes.func.isRequired,
 	isLoading: PropTypes.bool.isRequired,
 	isFetchingRecommendationsError: PropTypes.bool.isRequired,
@@ -218,7 +213,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		fetchRecommendations: () => dispatch(fetchRecommendations()),
 		unmatchRecommendation: userId => dispatch(unmatch(userId))
 	}
 }
