@@ -25,26 +25,20 @@ export class AgeLimitPage extends React.Component {
 			ageMin: props.profile.ageMin || MIN_AGE,
 			minTouched: false,
 			maxtouched: false,
-			sliderWidth: 280
+			sliderWidth: this.calculateWidthOfMultiSlider()
 		}
 	}
 
-	componentDidMount() {
-		const { width } = Dimensions.get('window')
-		this.setWidth(width)
-		Dimensions.addEventListener('change', ({ window: { width } }) => {
-			this.setWidth(width)
-		})
+	onLayout = () => {
+		const newSliderWidth = this.calculateWidthOfMultiSlider()
+		if (newSliderWidth !== this.state.sliderWidth) {
+			this.setState({ sliderWidth: newSliderWidth })
+		}
 	}
 
-	setWidth(width) {
-		this.setState({
-			sliderWidth: width - 2 * EXTRA_MARGIN
-		})
-	}
-
-	componentWillUnmount() {
-		Dimensions.removeEventListener('change')
+	calculateWidthOfMultiSlider = () => {
+		const screenDimensions = Dimensions.get('window')
+		return screenDimensions.width - 2 * EXTRA_MARGIN
 	}
 
 	handleChange = values => {
@@ -83,7 +77,7 @@ export class AgeLimitPage extends React.Component {
 	render() {
 		const { ageMin, ageMax, sliderWidth } = this.state
 		return (
-			<View style={flow.content}>
+			<View style={flow.content} onLayout={this.onLayout}>
 				<KeyboardAwareScrollView
 					keyboardShouldPersistTaps={'handled'}
 					enableOnAndroid={true}
@@ -156,11 +150,6 @@ AgeLimitPage.propTypes = {
 }
 
 const styles = EStyleSheet.create({
-	prompt: {
-		textAlign: 'center',
-		marginTop: 8,
-		marginBottom: 8
-	},
 	dataEntryContainer: {
 		display: 'flex',
 		flexDirection: 'row',
