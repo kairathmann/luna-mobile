@@ -2,12 +2,14 @@ import { pl as welcome_page } from '../src/views/pages/welcome/locales'
 import { pl as signup_page } from '../src/views/pages/signup/locales'
 import { pl as login_page } from '../src/views/pages/login/locales'
 import { pl as flow_page } from '../src/views/pages/flow/locales'
+import { pl as profile_page } from '../src/views/pages/profile/locales'
 
 export default {
 	welcome_page,
 	signup_page,
 	login_page,
 	flow_page,
+	profile_page,
 	common: {
 		email: 'Email',
 		errors: {
