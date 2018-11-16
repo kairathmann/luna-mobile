@@ -1,5 +1,5 @@
 import MultiSlider from '@ptomasroos/react-native-multi-slider'
-import { Form, H1 } from 'native-base'
+import { Form, H1, Button as LinkButton } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Dimensions, Keyboard, Text, View } from 'react-native'
@@ -10,15 +10,21 @@ import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
 import Button from '../../../../components/Button'
 import { PAGES_NAMES } from '../../../../navigation'
-import { COLORS, styles as commonStyles } from '../../../../styles'
+import { COLORS, flow, styles as commonStyles } from '../../../../styles'
 import { saveChanges } from '../scenario-actions'
+
+const MAX_AGE = 100
+const MIN_AGE = 18
+const EXTRA_MARGIN = 32
 
 export class AgeLimitPage extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			ageMax: props.profile.ageMax || 100,
-			ageMin: props.profile.ageMin || 18,
+			ageMax: props.profile.ageMax || MAX_AGE,
+			ageMin: props.profile.ageMin || MIN_AGE,
+			minTouched: false,
+			maxtouched: false,
 			sliderWidth: 280
 		}
 	}
@@ -33,7 +39,7 @@ export class AgeLimitPage extends React.Component {
 
 	setWidth(width) {
 		this.setState({
-			sliderWidth: width - 64
+			sliderWidth: width - 2 * EXTRA_MARGIN
 		})
 	}
 
@@ -44,40 +50,56 @@ export class AgeLimitPage extends React.Component {
 	handleChange = values => {
 		this.setState({
 			ageMin: values[0],
-			ageMax: values[1]
+			ageMax: values[1],
+			minTouched: this.state.minTouched || values[0] !== this.state.ageMin,
+			maxTouched: this.state.maxTouched || values[1] !== this.state.ageMax
 		})
 	}
 
 	handleNext = () => {
 		const { ageMax, ageMin } = this.state
-		this.props.next({ ageMax, ageMin }, PAGES_NAMES.FLOW_GENDER_SEXUALITY)
+		this.props.next({ ageMax, ageMin }, PAGES_NAMES.FLOW_TAGLINE)
+		Keyboard.dismiss()
+	}
+
+	handleSkip = () => {
+		this.props.navigation.navigate(PAGES_NAMES.FLOW_ALLDONE)
 		Keyboard.dismiss()
 	}
 
 	calculateProgress = () => {
-		const BASE_PROGRESS_VALUE = 0.6
-		return BASE_PROGRESS_VALUE
+		const BASE_PROGRESS_VALUE = 0.7
+		let value = BASE_PROGRESS_VALUE
+		const { minTouched, maxTouched } = this.state
+		if (minTouched) {
+			value += 0.1
+		}
+		if (maxTouched) {
+			value += 0.1
+		}
+		return value
 	}
 
 	render() {
 		const { ageMin, ageMax, sliderWidth } = this.state
 		return (
-			<View style={styles.content}>
+			<View style={flow.content}>
 				<KeyboardAwareScrollView
 					keyboardShouldPersistTaps={'handled'}
 					enableOnAndroid={true}
-					style={styles.innerContent}
+					style={flow.innerContent}
 				>
 					<Progress.Bar
-						style={styles.progressBar}
+						indeterminate={this.props.isLoading}
+						style={flow.progressBar}
 						useNativeDriver={true}
 						animationConfig={{ bounciness: 0.5 }}
 						color={COLORS.LUNA_PRIMARY_COLOR}
 						progress={this.calculateProgress()}
 						width={null}
 					/>
-					<H1 style={styles.title}>{I18n.t('flow_page.age_limit.title')}</H1>
-					<Form style={{ justifyContent: 'center', alignItems: 'center' }}>
+					<H1 style={flow.title}>{I18n.t('flow_page.age_limit.title')}</H1>
+					<Form style={styles.form}>
 						<View style={styles.dataEntryContainer}>
 							<Text style={styles.dataEntryLeft}>
 								{I18n.t('flow_page.age_limit.how_old')}
@@ -93,8 +115,8 @@ export class AgeLimitPage extends React.Component {
 							}}
 							selectedStyle={{ backgroundColor: COLORS.LUNA_PRIMARY_COLOR }}
 							values={[ageMin, ageMax]}
-							min={18}
-							max={100}
+							min={MIN_AGE}
+							max={MAX_AGE}
 							sliderLength={sliderWidth}
 							onValuesChange={this.handleChange}
 						/>
@@ -106,9 +128,18 @@ export class AgeLimitPage extends React.Component {
 						</View>
 					</Form>
 					<Button
+						disabled={this.props.isLoading}
 						text={I18n.t('flow_page.age_limit.next')}
 						onPress={() => this.handleNext()}
 					/>
+					<LinkButton
+						block
+						disabled={this.props.isLoading}
+						transparent
+						onPress={() => this.handleSkip()}
+					>
+						<Text style={flow.skipText}>{I18n.t('flow_page.skip')}</Text>
+					</LinkButton>
 					<Text style={commonStyles.errorText}>{this.props.error}</Text>
 				</KeyboardAwareScrollView>
 			</View>
@@ -120,45 +151,11 @@ AgeLimitPage.propTypes = {
 	navigation: PropTypes.object.isRequired,
 	next: PropTypes.func.isRequired,
 	error: PropTypes.string,
-	profile: PropTypes.object.isRequired
+	profile: PropTypes.object.isRequired,
+	isLoading: PropTypes.bool
 }
 
 const styles = EStyleSheet.create({
-	content: {
-		flex: 1,
-		backgroundColor: 'white'
-	},
-	innerContent: {
-		padding: 16
-	},
-	title: {
-		marginTop: 24,
-		marginBottom: 24,
-		fontWeight: 'bold'
-	},
-	errorText: {
-		color: 'red',
-		textAlign: 'center'
-	},
-	birthdayContainer: {
-		marginBottom: 8
-	},
-	birthdayButton: {
-		width: '100%',
-		textAlign: 'left',
-		padding: 0,
-		marginTop: 12
-	},
-	birthdayText: {
-		fontSize: 16
-	},
-	progressBar: {
-		marginLeft: 16,
-		marginRight: 16
-	},
-	datePickerButton: {
-		color: '$primaryColor'
-	},
 	prompt: {
 		textAlign: 'center',
 		marginTop: 8,
@@ -181,13 +178,18 @@ const styles = EStyleSheet.create({
 	},
 	inboxContainer: {
 		marginBottom: 8
+	},
+	form: {
+		justifyContent: 'center',
+		alignItems: 'center'
 	}
 })
 
 const mapStateToProps = state => {
 	return {
 		profile: state.profile.profileToEdit,
-		error: state.profile.error
+		error: state.profile.error,
+		isLoading: state.profile.isLoading
 	}
 }
 

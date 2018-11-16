@@ -1,4 +1,4 @@
-import { H1, Spinner } from 'native-base'
+import { Button as LinkButton, H1, Spinner } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Image, Keyboard, Text, TouchableOpacity, View } from 'react-native'
@@ -13,7 +13,7 @@ import DefaultMale from '../../../../assets/images/default_male.png'
 import DefaultOther from '../../../../assets/images/default_other.png'
 import Button from '../../../../components/Button'
 import { PAGES_NAMES } from '../../../../navigation'
-import { COLORS, styles as commonStyles } from '../../../../styles'
+import { COLORS, flow, styles as commonStyles } from '../../../../styles'
 import { LUNA_PRIMARY_COLOR } from '../../../../styles/colors'
 import { uploadAvatar } from '../scenario-actions'
 
@@ -32,7 +32,12 @@ export class AvatarPage extends React.Component {
 
 	handleNext = () => {
 		const { avatar } = this.state
-		this.props.next(avatar, PAGES_NAMES.FLOW_GENDER_SEXUALITY)
+		this.props.next(avatar, PAGES_NAMES.FLOW_AGE_LIMIT)
+		Keyboard.dismiss()
+	}
+
+	handleSkip = () => {
+		this.props.navigation.navigate(PAGES_NAMES.FLOW_ALLDONE)
 		Keyboard.dismiss()
 	}
 
@@ -75,21 +80,22 @@ export class AvatarPage extends React.Component {
 	render() {
 		const { avatar } = this.state
 		return (
-			<View style={styles.content}>
+			<View style={flow.content}>
 				<KeyboardAwareScrollView
 					keyboardShouldPersistTaps={'handled'}
 					enableOnAndroid={true}
-					style={styles.innerContent}
+					style={flow.innerContent}
 				>
 					<Progress.Bar
-						style={styles.progressBar}
+						indeterminate={this.props.isLoading}
+						style={flow.progressBar}
 						useNativeDriver={true}
 						animationConfig={{ bounciness: 0.5 }}
 						color={COLORS.LUNA_PRIMARY_COLOR}
 						progress={this.calculateProgress()}
 						width={null}
 					/>
-					<H1 style={styles.title}>{I18n.t('flow_page.avatar.title')}</H1>
+					<H1 style={flow.title}>{I18n.t('flow_page.avatar.title')}</H1>
 
 					<View style={styles.uploadContainer}>
 						<TouchableOpacity
@@ -113,9 +119,18 @@ export class AvatarPage extends React.Component {
 					</View>
 
 					<Button
+						disabled={this.props.isLoading}
 						text={I18n.t('flow_page.avatar.next')}
 						onPress={() => this.handleNext()}
 					/>
+					<LinkButton
+						block
+						disabled={this.props.isLoading}
+						transparent
+						onPress={() => this.handleSkip()}
+					>
+						<Text style={flow.skipText}>{I18n.t('flow_page.skip')}</Text>
+					</LinkButton>
 					<Text style={commonStyles.errorText}>{this.props.error}</Text>
 				</KeyboardAwareScrollView>
 			</View>
@@ -132,49 +147,6 @@ AvatarPage.propTypes = {
 }
 
 const styles = EStyleSheet.create({
-	content: {
-		flex: 1,
-		backgroundColor: 'white'
-	},
-	innerContent: {
-		padding: 16
-	},
-	title: {
-		marginTop: 24,
-		marginBottom: 24,
-		fontWeight: 'bold'
-	},
-	errorText: {
-		color: 'red',
-		textAlign: 'center'
-	},
-	birthdayContainer: {
-		marginBottom: 8
-	},
-	birthdayButton: {
-		width: '100%',
-		textAlign: 'left',
-		padding: 0,
-		marginTop: 12
-	},
-	birthdayText: {
-		fontSize: 16
-	},
-	progressBar: {
-		marginLeft: 16,
-		marginRight: 16
-	},
-	datePickerButton: {
-		color: '$primaryColor'
-	},
-	taglineCounter: {
-		textAlign: 'right',
-		marginTop: 8,
-		marginBottom: 8
-	},
-	taglineCounterLimit: {
-		color: LUNA_PRIMARY_COLOR
-	},
 	uploadContainer: {
 		flexDirection: 'row',
 		width: '100%',
@@ -183,6 +155,7 @@ const styles = EStyleSheet.create({
 		alignContent: 'center',
 		marginBottom: 16
 	},
+	// It's a little bit stupid
 	previewContainer: {
 		borderWidth: 1,
 		borderColor: 'rgba(0,0,0,0.2)',
@@ -210,7 +183,9 @@ const styles = EStyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'center'
 	},
-	loader: { justifyContent: 'center' }
+	loader: {
+		justifyContent: 'center'
+	}
 })
 
 const mapStateToProps = state => {

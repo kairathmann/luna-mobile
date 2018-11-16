@@ -11,6 +11,7 @@ export function saveChanges(changes, nextPage) {
 	return async dispatch => {
 		try {
 			// TODO: Show global loader
+			dispatch(startLocalLoading())
 			await api.updateProfile(changes)
 			dispatch(saveProfileSuccess(changes))
 			navigationService.navigate(nextPage)
@@ -27,7 +28,20 @@ export function uploadAvatar(source, nextPage) {
 		try {
 			// TODO: Show global loader
 			dispatch(startLocalLoading())
-			await api.stashAvatar(source)
+			if (source) {
+				// TODO: Change to smartcrop or introduce better mechanism
+				const {
+					data: { guid, viewerHid }
+				} = await api.stashAvatar(source)
+				await api.cropAvatar({
+					target_hid: viewerHid,
+					stash_guid: guid,
+					x1: 0,
+					y1: 0,
+					x2: 1000,
+					y2: 1000
+				})
+			}
 			dispatch(saveProfileSuccess({ avatar: source }))
 			navigationService.navigate(nextPage)
 		} catch (error) {

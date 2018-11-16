@@ -3,17 +3,16 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { Image, ImageBackground, ScrollView, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
-import Button from '../../../components/Button'
-import I18n from '../../../../locales/i18n'
-import { PAGES_NAMES } from '../../../navigation'
 import SplashScreen from 'react-native-splash-screen'
-import LunaLogoText from '../../../assets/logos/luna-logo-with-text.png'
+import I18n from '../../../../locales/i18n'
 import WomanBackground from '../../../assets/images/woman-welcome-page-background.jpg'
+import LunaLogoText from '../../../assets/logos/luna-logo-with-text.png'
+import Button from '../../../components/Button'
+import { PAGES_NAMES } from '../../../navigation'
 
 class WelcomePage extends React.Component {
 	componentDidMount() {
 		SplashScreen.hide()
-		this.props.navigation.navigate(PAGES_NAMES.FLOW_AVATAR)
 	}
 
 	render() {
@@ -74,7 +73,7 @@ const styles = EStyleSheet.create({
 	},
 	button: {
 		alignSelf: 'center',
-		maxWidth: 200
+		maxWidth: 256
 	},
 	container: {
 		width: '100%',

@@ -1,6 +1,7 @@
 import { createStackNavigator } from 'react-navigation'
 import I18n from '../../locales/i18n'
 import AgeLimitPage from '../views/pages/flow/age-limit/age-limit-page'
+import AlldonePage from '../views/pages/flow/alldone/alldone-page'
 import AvatarPage from '../views/pages/flow/avatar/avatar-page'
 import GenderPreferencesPage from '../views/pages/flow/gender-preferences/gender-preferences-page'
 import NameBirthdayPage from '../views/pages/flow/name-birthday/name-birthday-page'
@@ -17,7 +18,8 @@ const PAGES_NAMES = {
 	FLOW_GENDER_SEXUALITY: 'FLOW_GENDER_SEXUALITY',
 	FLOW_AGE_LIMIT: 'FLOW_AGE_LIMIT',
 	FLOW_TAGLINE: 'FLOW_TAGLINE',
-	FLOW_AVATAR: 'FLOW_AVATAR'
+	FLOW_AVATAR: 'FLOW_AVATAR',
+	FLOW_ALLDONE: 'FLOW_ALLDONE'
 }
 
 const noNavbarStyle = {
@@ -53,35 +55,47 @@ const AppStackNavigator = createStackNavigator({
 		navigationOptions: () => ({
 			title: I18n.t('flow_page.title'),
 			headerLeft: null,
-			...noNavbarStyle
+			...noNavbarStyle,
+			headerBackTitle: I18n.t('common.back')
 		})
 	},
 	FLOW_GENDER_SEXUALITY: {
 		screen: GenderPreferencesPage,
 		navigationOptions: () => ({
 			title: I18n.t('flow_page.title'),
-			...noNavbarStyle
+			...noNavbarStyle,
+			headerBackTitle: I18n.t('common.back')
 		})
 	},
 	FLOW_AGE_LIMIT: {
 		screen: AgeLimitPage,
 		navigationOptions: () => ({
 			title: I18n.t('flow_page.title'),
-			...noNavbarStyle
+			...noNavbarStyle,
+			headerBackTitle: I18n.t('common.back')
 		})
 	},
 	FLOW_TAGLINE: {
 		screen: TaglinePage,
 		navigationOptions: () => ({
 			title: I18n.t('flow_page.title'),
-			...noNavbarStyle
+			...noNavbarStyle,
+			headerBackTitle: I18n.t('common.back')
 		})
 	},
 	FLOW_AVATAR: {
 		screen: AvatarPage,
 		navigationOptions: () => ({
 			title: I18n.t('flow_page.title'),
-			...noNavbarStyle
+			...noNavbarStyle,
+			headerBackTitle: I18n.t('common.back')
+		})
+	},
+	FLOW_ALLDONE: {
+		screen: AlldonePage,
+		navigationOptions: () => ({
+			title: I18n.t('flow_page.title'),
+			header: null
 		})
 	}
 })

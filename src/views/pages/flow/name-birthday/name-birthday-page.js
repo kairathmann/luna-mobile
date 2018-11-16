@@ -13,7 +13,7 @@ import Button from '../../../../components/Button'
 import { PAGES_NAMES } from '../../../../navigation'
 import { COLORS } from '../../../../styles'
 import { saveChanges } from '../scenario-actions'
-import { styles as commonStyles } from '../../../../styles'
+import { styles as commonStyles, flow } from '../../../../styles'
 
 const maxDate = moment()
 	.subtract(18, 'years')
@@ -74,23 +74,22 @@ export class NameBirthdayPage extends React.Component {
 	render() {
 		const { name, birthday, pickerOpened } = this.state
 		return (
-			<View style={styles.content}>
+			<View style={flow.content}>
 				<KeyboardAwareScrollView
 					keyboardShouldPersistTaps={'handled'}
 					enableOnAndroid={true}
-					style={styles.innerContent}
+					style={flow.innerContent}
 				>
 					<Progress.Bar
-						style={styles.progressBar}
+						indeterminate={this.props.isLoading}
+						style={flow.progressBar}
 						useNativeDriver={true}
 						animationConfig={{ bounciness: 0.5 }}
 						color={COLORS.LUNA_PRIMARY_COLOR}
 						progress={this.calculateProgress()}
 						width={null}
 					/>
-					<H1 style={styles.title}>
-						{I18n.t('flow_page.name_birthday.title')}
-					</H1>
+					<H1 style={flow.title}>{I18n.t('flow_page.name_birthday.title')}</H1>
 					<Form>
 						<Item floatingLabel last>
 							<Label>{I18n.t('flow_page.name_birthday.name')}</Label>
@@ -127,7 +126,10 @@ export class NameBirthdayPage extends React.Component {
 						</Item>
 					</Form>
 					<Button
-						disabled={!(name.length !== 0 && birthday.length !== 0)}
+						disabled={
+							!(name.length !== 0 && birthday.length !== 0) ||
+							this.props.isLoading
+						}
 						text={I18n.t('flow_page.name_birthday.next')}
 						onPress={() => this.handleNext()}
 					/>
@@ -142,26 +144,11 @@ NameBirthdayPage.propTypes = {
 	navigation: PropTypes.object.isRequired,
 	next: PropTypes.func.isRequired,
 	error: PropTypes.string,
-	profile: PropTypes.object.isRequired
+	profile: PropTypes.object.isRequired,
+	isLoading: PropTypes.bool
 }
 
 const styles = EStyleSheet.create({
-	content: {
-		flex: 1,
-		backgroundColor: 'white'
-	},
-	innerContent: {
-		padding: 16
-	},
-	title: {
-		marginTop: 24,
-		marginBottom: 24,
-		fontWeight: 'bold'
-	},
-	errorText: {
-		color: 'red',
-		textAlign: 'center'
-	},
 	birthdayContainer: {
 		marginBottom: 8
 	},
@@ -174,10 +161,6 @@ const styles = EStyleSheet.create({
 	birthdayText: {
 		fontSize: 16
 	},
-	progressBar: {
-		marginLeft: 16,
-		marginRight: 16
-	},
 	datePickerButton: {
 		color: '$primaryColor'
 	}
@@ -186,7 +169,8 @@ const styles = EStyleSheet.create({
 const mapStateToProps = state => {
 	return {
 		profile: state.profile.profileToEdit,
-		error: state.profile.error
+		error: state.profile.error,
+		isLoading: state.profile.isLoading
 	}
 }
 

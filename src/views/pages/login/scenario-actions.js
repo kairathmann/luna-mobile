@@ -10,7 +10,7 @@ export function login({ email, password }) {
 			// TODO: Show global loader
 			const result = await api.signin({ email, password })
 			dispatch(signinSuccess(result))
-			// TODO: uncomment when more screen will be ready
+			// TODO: Change in last commit
 			navigationService.navigate(PAGES_NAMES.FLOW_AVATAR)
 		} catch (error) {
 			dispatch(signinError(getErrorDataFromNetworkException(error)))

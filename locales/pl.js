@@ -19,6 +19,7 @@ export default {
 		male: 'Male',
 		female: 'Female',
 		both: 'Both',
-		other: 'Other'
+		other: 'Other',
+		back: 'Back'
 	}
 }
