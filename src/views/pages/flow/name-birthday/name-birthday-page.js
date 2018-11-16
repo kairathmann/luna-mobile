@@ -21,8 +21,8 @@ const maxDate = moment()
 
 export class NameBirthdayPage extends React.Component {
 	state = {
-		name: this.props.profile.name || '',
-		birthday: this.props.profile.birthday || '',
+		name: this.props.profile.firstName || '',
+		birthday: this.props.profile.birthDate || '',
 		pickerOpened: false
 	}
 
@@ -33,7 +33,10 @@ export class NameBirthdayPage extends React.Component {
 	handleNext = () => {
 		const { name, birthday } = this.state
 		if (name.length !== 0 && birthday.length !== 0) {
-			this.props.next({ name, birthday }, PAGES_NAMES.FLOW_GENDER_SEXUALITY)
+			this.props.next(
+				{ firstName: name, birthDate: birthday },
+				PAGES_NAMES.FLOW_GENDER_SEXUALITY
+			)
 			Keyboard.dismiss()
 		}
 	}
