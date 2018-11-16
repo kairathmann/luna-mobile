@@ -11,6 +11,7 @@ import Button from '../../../../components/Button'
 import { PAGES_NAMES } from '../../../../navigation'
 import { COLORS, flow, styles as commonStyles } from '../../../../styles'
 import { saveChanges } from '../scenario-actions'
+import { GENDER } from '../../../../enums'
 
 export class GenderPreferencesPage extends React.Component {
 	state = {
@@ -76,9 +77,18 @@ export class GenderPreferencesPage extends React.Component {
 									this.handleChange(selected, 'gender')
 								}
 							>
-								<Picker.Item label={I18n.t('common.male')} value={1} />
-								<Picker.Item label={I18n.t('common.female')} value={2} />
-								<Picker.Item label={I18n.t('common.other')} value={3} />
+								<Picker.Item
+									label={I18n.t('common.male')}
+									value={GENDER.MALE}
+								/>
+								<Picker.Item
+									label={I18n.t('common.female')}
+									value={GENDER.FEMALE}
+								/>
+								<Picker.Item
+									label={I18n.t('common.other')}
+									value={GENDER.OTHER}
+								/>
 							</Picker>
 						</Item>
 						<Item picker last>
@@ -98,9 +108,18 @@ export class GenderPreferencesPage extends React.Component {
 									this.handleChange(selected, 'sexuality')
 								}
 							>
-								<Picker.Item label={I18n.t('common.male')} value={1} />
-								<Picker.Item label={I18n.t('common.female')} value={2} />
-								<Picker.Item label={I18n.t('common.both')} value={3} />
+								<Picker.Item
+									label={I18n.t('common.male')}
+									value={GENDER.MALE}
+								/>
+								<Picker.Item
+									label={I18n.t('common.female')}
+									value={GENDER.FEMALE}
+								/>
+								<Picker.Item
+									label={I18n.t('common.both')}
+									value={GENDER.OTHER}
+								/>
 							</Picker>
 						</Item>
 					</Form>
