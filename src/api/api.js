@@ -29,7 +29,6 @@ export default {
 		return axios.post('/user/retrieve/edit/')
 	},
 	stashAvatar: uri => {
-		console.log(getNameFromUri(uri))
 		const bodyFormData = new FormData()
 		bodyFormData.append('image', {
 			uri,
