@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { Dimensions, Image, StatusBar, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
-import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
 import Background from '../../../../assets/images/luna_logo.png'
 import { PAGES_NAMES } from '../../../../navigation/pages'
@@ -66,7 +65,4 @@ const styles = EStyleSheet.create({
 	}
 })
 
-export default connect(
-	null,
-	null
-)(AlldonePage)
+export default AlldonePage
