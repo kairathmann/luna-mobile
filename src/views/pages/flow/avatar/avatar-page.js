@@ -65,7 +65,7 @@ export class AvatarPage extends React.Component {
 	}
 
 	getDefaultImage = () => {
-		switch (this.props.profile.gender) {
+		switch (this.props.profile.gidIs) {
 			case 1:
 				return DefaultMale
 			case 2:
