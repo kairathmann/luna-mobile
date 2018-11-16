@@ -3,12 +3,19 @@ import {
 	FINISH_UPDATING_PROFILE,
 	START_UPDATING_PROFILE,
 	SAVE_PROFILE_ERROR,
-	SAVE_PROFILE_SUCCESS
+	SAVE_PROFILE_SUCCESS,
+	PROFILE_START_LOCAL_LOADING
 } from './action-types'
 
 export function startUpdatingProfile() {
 	return {
 		type: START_UPDATING_PROFILE
+	}
+}
+
+export function startLocalLoading() {
+	return {
+		type: PROFILE_START_LOCAL_LOADING
 	}
 }
 

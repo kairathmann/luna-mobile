@@ -1,7 +1,7 @@
-import { Form, H1, Icon, Item, Picker } from 'native-base'
+import { Form, H1, Icon, Item, Picker, Label } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { Keyboard, Platform, Text, View } from 'react-native'
+import { Keyboard, Text, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import * as Progress from 'react-native-progress'
@@ -9,13 +9,13 @@ import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
 import Button from '../../../../components/Button'
 import { PAGES_NAMES } from '../../../../navigation'
-import { COLORS, styles as commonStyles } from '../../../../styles'
+import { COLORS, flow, styles as commonStyles } from '../../../../styles'
 import { saveChanges } from '../scenario-actions'
 
 export class GenderPreferencesPage extends React.Component {
 	state = {
-		gender: this.props.profile.gender || null,
-		sexuality: this.props.profile.sexuality || null
+		gender: this.props.profile.gidIs || 1,
+		sexuality: this.props.profile.gidSeeking || 2
 	}
 
 	handleChange = (value, field) => {
@@ -25,47 +25,44 @@ export class GenderPreferencesPage extends React.Component {
 	handleNext = () => {
 		const { gender, sexuality } = this.state
 		if (gender !== null && sexuality !== null) {
-			this.props.next({ gender, sexuality }, PAGES_NAMES.AGE_LIMIT)
+			this.props.next(
+				{ gidIs: gender, gidSeeking: sexuality },
+				PAGES_NAMES.FLOW_AVATAR
+			)
 			Keyboard.dismiss()
 		}
 	}
 
 	calculateProgress = () => {
-		const { gender, sexuality } = this.state
-
-		const BASE_PROGRESS_VALUE = 0.4
-		let newProgressValue = BASE_PROGRESS_VALUE
-		if (gender !== -1 && gender !== null) {
-			newProgressValue += 0.1
-		}
-		if (sexuality !== -1 && sexuality !== null) {
-			newProgressValue += 0.1
-		}
-		return newProgressValue
+		return 0.5
 	}
 
 	render() {
 		const { gender, sexuality } = this.state
 		return (
-			<View style={styles.content}>
+			<View style={flow.content}>
 				<KeyboardAwareScrollView
 					keyboardShouldPersistTaps={'handled'}
 					enableOnAndroid={true}
-					style={styles.innerContent}
+					style={flow.innerContent}
 				>
 					<Progress.Bar
-						style={styles.progressBar}
+						indeterminate={this.props.isLoading}
+						style={flow.progressBar}
 						useNativeDriver={true}
 						animationConfig={{ bounciness: 0.5 }}
 						color={COLORS.LUNA_PRIMARY_COLOR}
 						progress={this.calculateProgress()}
 						width={null}
 					/>
-					<H1 style={styles.title}>
+					<H1 style={flow.title}>
 						{I18n.t('flow_page.gender_preferences.title')}
 					</H1>
 					<Form>
 						<Item picker last>
+							<Label>
+								{I18n.t('flow_page.gender_preferences.gender_placeholder')}
+							</Label>
 							<Picker
 								mode="dropdown"
 								iosIcon={<Icon name="ios-arrow-down-outline" />}
@@ -79,20 +76,15 @@ export class GenderPreferencesPage extends React.Component {
 									this.handleChange(selected, 'gender')
 								}
 							>
-								{Platform.OS === 'android' && (
-									<Picker.Item
-										label={I18n.t(
-											'flow_page.gender_preferences.gender_placeholder'
-										)}
-										value={null}
-									/>
-								)}
 								<Picker.Item label={I18n.t('common.male')} value={1} />
 								<Picker.Item label={I18n.t('common.female')} value={2} />
 								<Picker.Item label={I18n.t('common.other')} value={3} />
 							</Picker>
 						</Item>
 						<Item picker last>
+							<Label>
+								{I18n.t('flow_page.gender_preferences.sexuality_placeholder')}
+							</Label>
 							<Picker
 								mode="dropdown"
 								iosIcon={<Icon name="ios-arrow-down-outline" />}
@@ -106,14 +98,6 @@ export class GenderPreferencesPage extends React.Component {
 									this.handleChange(selected, 'sexuality')
 								}
 							>
-								{Platform.OS === 'android' && (
-									<Picker.Item
-										label={I18n.t(
-											'flow_page.gender_preferences.sexuality_placeholder'
-										)}
-										value={null}
-									/>
-								)}
 								<Picker.Item label={I18n.t('common.male')} value={1} />
 								<Picker.Item label={I18n.t('common.female')} value={2} />
 								<Picker.Item label={I18n.t('common.both')} value={3} />
@@ -124,7 +108,7 @@ export class GenderPreferencesPage extends React.Component {
 						{I18n.t('flow_page.gender_preferences.prompt')}
 					</Text>
 					<Button
-						disabled={!(gender !== null && sexuality !== null)}
+						disabled={this.props.isLoading}
 						text={I18n.t('flow_page.gender_preferences.next')}
 						onPress={() => this.handleNext()}
 					/>
@@ -139,30 +123,11 @@ GenderPreferencesPage.propTypes = {
 	navigation: PropTypes.object.isRequired,
 	next: PropTypes.func.isRequired,
 	error: PropTypes.string,
-	profile: PropTypes.object.isRequired
+	profile: PropTypes.object.isRequired,
+	isLoading: PropTypes.bool
 }
 
 const styles = EStyleSheet.create({
-	content: {
-		flex: 1,
-		backgroundColor: 'white'
-	},
-	innerContent: {
-		padding: 16
-	},
-	title: {
-		marginTop: 24,
-		marginBottom: 24,
-		fontWeight: 'bold'
-	},
-	errorText: {
-		color: 'red',
-		textAlign: 'center'
-	},
-	progressBar: {
-		marginLeft: 16,
-		marginRight: 16
-	},
 	prompt: {
 		textAlign: 'center',
 		marginTop: 8,
@@ -173,7 +138,8 @@ const styles = EStyleSheet.create({
 const mapStateToProps = state => {
 	return {
 		profile: state.profile.profileToEdit,
-		error: state.profile.error
+		error: state.profile.error,
+		isLoading: state.profile.isLoading
 	}
 }
 
