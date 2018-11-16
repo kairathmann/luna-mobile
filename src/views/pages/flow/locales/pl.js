@@ -24,7 +24,8 @@ export default {
 		title: 'Your Tagline',
 		tagline:
 			"This is your moment of glory. Write an intro that will give your potential matches a hint of what you're all about",
-		next: 'Finish profile'
+		next: 'Finish profile',
+		inputLabel: '_PL_Tagline '
 	},
 	avatar: {
 		title: 'Avatar Upload',

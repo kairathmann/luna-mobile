@@ -65,7 +65,7 @@ export class TaglinePage extends React.Component {
 					<Text>{I18n.t('flow_page.tagline.tagline')}</Text>
 					<Form>
 						<Item floatingLabel last>
-							<Label>Tagline</Label>
+							<Label>{I18n.t('flow_page.tagline.inputLabel')}</Label>
 							<Input
 								numberOfLines={3}
 								multiline={true}
