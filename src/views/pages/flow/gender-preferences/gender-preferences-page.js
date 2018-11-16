@@ -1,4 +1,4 @@
-import { Form, H1, Icon, Item, Picker } from 'native-base'
+import { Form, H1, Icon, Item, Picker, Label } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Keyboard, Text, View } from 'react-native'
@@ -14,8 +14,8 @@ import { saveChanges } from '../scenario-actions'
 
 export class GenderPreferencesPage extends React.Component {
 	state = {
-		gender: this.props.profile.gender || 1,
-		sexuality: this.props.profile.sexuality || 2
+		gender: this.props.profile.gidIs || 1,
+		sexuality: this.props.profile.gidSeeking || 2
 	}
 
 	handleChange = (value, field) => {
@@ -25,7 +25,10 @@ export class GenderPreferencesPage extends React.Component {
 	handleNext = () => {
 		const { gender, sexuality } = this.state
 		if (gender !== null && sexuality !== null) {
-			this.props.next({ gender, sexuality }, PAGES_NAMES.FLOW_AVATAR)
+			this.props.next(
+				{ gidIs: gender, gidSeeking: sexuality },
+				PAGES_NAMES.FLOW_AVATAR
+			)
 			Keyboard.dismiss()
 		}
 	}
@@ -57,6 +60,9 @@ export class GenderPreferencesPage extends React.Component {
 					</H1>
 					<Form>
 						<Item picker last>
+							<Label>
+								{I18n.t('flow_page.gender_preferences.gender_placeholder')}
+							</Label>
 							<Picker
 								mode="dropdown"
 								iosIcon={<Icon name="ios-arrow-down-outline" />}
@@ -76,6 +82,9 @@ export class GenderPreferencesPage extends React.Component {
 							</Picker>
 						</Item>
 						<Item picker last>
+							<Label>
+								{I18n.t('flow_page.gender_preferences.sexuality_placeholder')}
+							</Label>
 							<Picker
 								mode="dropdown"
 								iosIcon={<Icon name="ios-arrow-down-outline" />}

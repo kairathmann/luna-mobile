@@ -1,5 +1,5 @@
 import MultiSlider from '@ptomasroos/react-native-multi-slider'
-import { Form, H1, Button as LinkButton } from 'native-base'
+import { Button as LinkButton, Form, H1 } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Dimensions, Keyboard, Text, View } from 'react-native'
@@ -21,8 +21,8 @@ export class AgeLimitPage extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			ageMax: props.profile.ageMax || MAX_AGE,
-			ageMin: props.profile.ageMin || MIN_AGE,
+			ageMax: props.profile.seekingAgeTo || MAX_AGE,
+			ageMin: props.profile.seekingAgeFrom || MIN_AGE,
 			minTouched: false,
 			maxtouched: false,
 			sliderWidth: 280
@@ -58,7 +58,10 @@ export class AgeLimitPage extends React.Component {
 
 	handleNext = () => {
 		const { ageMax, ageMin } = this.state
-		this.props.next({ ageMax, ageMin }, PAGES_NAMES.FLOW_TAGLINE)
+		this.props.next(
+			{ seekingAgeTo: ageMax, seekingAgeFrom: ageMin },
+			PAGES_NAMES.FLOW_TAGLINE
+		)
 		Keyboard.dismiss()
 	}
 
