@@ -1,3 +1,4 @@
+import React from 'react'
 import { createStackNavigator } from 'react-navigation'
 import I18n from '../../locales/i18n'
 import AgeLimitPage from '../views/pages/flow/age-limit/age-limit-page'
@@ -7,8 +8,10 @@ import GenderPreferencesPage from '../views/pages/flow/gender-preferences/gender
 import NameBirthdayPage from '../views/pages/flow/name-birthday/name-birthday-page'
 import TaglinePage from '../views/pages/flow/tagline/tagline-page'
 import LoginPage from '../views/pages/login/login-page'
+import ProfilePage from '../views/pages/profile/profile-page'
 import SignupPage from '../views/pages/signup/signup-page'
 import WelcomePage from '../views/pages/welcome/welcome-page'
+import { Button, Icon } from 'native-base'
 
 const PAGES_NAMES = {
 	WELCOME_PAGE: 'WELCOME_PAGE',
@@ -19,7 +22,8 @@ const PAGES_NAMES = {
 	FLOW_AGE_LIMIT: 'FLOW_AGE_LIMIT',
 	FLOW_TAGLINE: 'FLOW_TAGLINE',
 	FLOW_AVATAR: 'FLOW_AVATAR',
-	FLOW_ALLDONE: 'FLOW_ALLDONE'
+	FLOW_ALLDONE: 'FLOW_ALLDONE',
+	PROFILE: 'PROFILE'
 }
 
 const noNavbarStyle = {
@@ -96,6 +100,31 @@ const AppStackNavigator = createStackNavigator({
 		navigationOptions: () => ({
 			title: I18n.t('flow_page.title'),
 			header: null
+		})
+	},
+	PROFILE: {
+		screen: ProfilePage,
+		navigationOptions: ({ navigation }) => ({
+			title: null,
+			headerTintColor: 'white',
+			headerTransparent: true,
+			headerRight: (
+				<Button
+					icon
+					transparent
+					style={{ marginRight: 4, marginTop: 4 }}
+					onPress={navigation.getParam('goToEditPage')}
+					title={'edit'}
+					color="#fff"
+				>
+					<Icon name={'create'} color={'white'} style={{ color: 'white' }} />
+				</Button>
+			),
+			headerStyle: {
+				zIndex: 100,
+				elevation: 0, //remove shadow on Android
+				shadowOpacity: 0 //remove shadow on iOS
+			}
 		})
 	}
 })
