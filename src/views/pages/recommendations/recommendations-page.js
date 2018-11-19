@@ -202,8 +202,8 @@ const styles = EStyleSheet.create({
 		justifyContent: 'center'
 	},
 	declineButton: {
-		width: 60,
-		height: 60,
+		width: 64,
+		height: 64,
 		backgroundColor: 'white',
 		borderWidth: 1,
 		justifyContent: 'center',
@@ -213,8 +213,8 @@ const styles = EStyleSheet.create({
 		marginRight: '2rem'
 	},
 	messageButton: {
-		width: 60,
-		height: 60,
+		width: 64,
+		height: 64,
 		backgroundColor: '#862b91',
 		justifyContent: 'center'
 	},
