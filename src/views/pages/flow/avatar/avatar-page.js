@@ -8,14 +8,12 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import * as Progress from 'react-native-progress'
 import { connect } from 'react-redux'
 import I18n from '../../../../../locales/i18n'
-import DefaultFemale from '../../../../assets/images/default_female.png'
-import DefaultMale from '../../../../assets/images/default_male.png'
-import DefaultOther from '../../../../assets/images/default_other.png'
 import Button from '../../../../components/Button'
 import { PAGES_NAMES } from '../../../../navigation'
 import { COLORS, flow, styles as commonStyles } from '../../../../styles'
 import { LUNA_PRIMARY_COLOR } from '../../../../styles/colors'
 import { uploadAvatar } from '../scenario-actions'
+import { getLoaderImageForGender } from '../../../../common/utils'
 
 const options = {
 	title: I18n.t('flow_page.avatar.select_image'),
@@ -65,16 +63,7 @@ export class AvatarPage extends React.Component {
 	}
 
 	getDefaultImage = () => {
-		switch (this.props.profile.gidIs) {
-			case 1:
-				return DefaultMale
-			case 2:
-				return DefaultFemale
-			case 3:
-				return DefaultOther
-			default:
-				return DefaultMale
-		}
+		return getLoaderImageForGender(this.props.profile.gidIs)
 	}
 
 	render() {
