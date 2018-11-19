@@ -2,7 +2,9 @@ import {
 	SIGNIN_SUCCESS,
 	SIGNIN_ERROR,
 	SIGNUP_ERROR,
-	SIGNUP_SUCCESS
+	SIGNUP_SUCCESS,
+	RESET_PASSWORD_SUCCESS,
+	RESET_PASSWORD_ERROR
 } from './action-types'
 
 export function signupError(error) {
@@ -32,3 +34,12 @@ export function signinError(error) {
 		payload: error
 	}
 }
+
+export const resetPasswordSuccess = () => ({
+	type: RESET_PASSWORD_SUCCESS
+})
+
+export const resetPasswordError = error => ({
+	type: RESET_PASSWORD_ERROR,
+	payload: error
+})

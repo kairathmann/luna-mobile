@@ -8,12 +8,14 @@ import NameBirthdayPage from '../views/pages/flow/name-birthday/name-birthday-pa
 import TaglinePage from '../views/pages/flow/tagline/tagline-page'
 import LoginPage from '../views/pages/login/login-page'
 import SignupPage from '../views/pages/signup/signup-page'
+import ForgotPasswordPage from '../views/pages/forgot-password/forgot-password-page'
 import WelcomePage from '../views/pages/welcome/welcome-page'
 
 const PAGES_NAMES = {
 	WELCOME_PAGE: 'WELCOME_PAGE',
 	LOGIN_PAGE: 'LOGIN_PAGE',
 	SIGNUP_PAGE: 'SIGNUP_PAGE',
+	FORGOT_PASSWORD_PAGE: 'FORGOT_PASSWORD_PAGE',
 	FLOW_NAME_BIRTHDAY: 'FLOW_NAME_BIRTHDAY',
 	FLOW_GENDER_SEXUALITY: 'FLOW_GENDER_SEXUALITY',
 	FLOW_AGE_LIMIT: 'FLOW_AGE_LIMIT',
@@ -46,6 +48,12 @@ const AppStackNavigator = createStackNavigator({
 	},
 	SIGNUP_PAGE: {
 		screen: SignupPage,
+		navigationOptions: () => ({
+			...noNavbarStyle
+		})
+	},
+	FORGOT_PASSWORD_PAGE: {
+		screen: ForgotPasswordPage,
 		navigationOptions: () => ({
 			...noNavbarStyle
 		})

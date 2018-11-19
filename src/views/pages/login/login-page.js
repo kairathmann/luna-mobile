@@ -9,6 +9,7 @@ import I18n from '../../../../locales/i18n'
 import Button from '../../../components/Button/'
 import { auth, styles as commonStyles } from '../../../styles'
 import { login } from './scenario-actions'
+import { PAGES_NAMES } from '../../../navigation'
 
 const styles = auth
 
@@ -25,7 +26,9 @@ export class LoginPage extends React.Component {
 		this.setState({ [field]: event.nativeEvent.text })
 	}
 
-	handleForgetClick = () => {}
+	handleForgetClick = () => {
+		this.props.navigation.navigate(PAGES_NAMES.FORGOT_PASSWORD_PAGE)
+	}
 
 	handleSignin = () => {
 		this.setState({ validationEnabled: true }, () => {
