@@ -2,17 +2,14 @@ import { H3 } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
-import { Dimensions, Image, StatusBar, View } from 'react-native'
+import { View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { fetchRecommendations } from '../../recommendations/scenario-actions'
 import I18n from '../../../../../locales/i18n'
-import Background from '../../../../assets/images/luna_logo.png'
 import { PAGES_NAMES } from '../../../../navigation/pages'
-import { LUNA_BACKGROUND_COLOR } from '../../../../styles/colors'
+import LunaBackgroundImageView from '../../../../components/LunaBackgroundImageView'
 
 const LOAD_FEED_PAGE_DELAY = 5000
-
-const { width } = Dimensions.get('window')
 
 export class AlldonePage extends React.Component {
 	componentDidMount() {
@@ -24,13 +21,11 @@ export class AlldonePage extends React.Component {
 
 	render() {
 		return (
-			<View style={[styles.content, styles.allDoneContainer]}>
-				<StatusBar backgroundColor={LUNA_BACKGROUND_COLOR} />
-				<Image style={styles.image} source={Background} />
+			<LunaBackgroundImageView>
 				<View style={styles.textContainer}>
 					<H3 style={styles.prompt}>{I18n.t('flow_page.alldone.prompt')}</H3>
 				</View>
-			</View>
+			</LunaBackgroundImageView>
 		)
 	}
 }
@@ -41,26 +36,11 @@ AlldonePage.propTypes = {
 }
 
 const styles = EStyleSheet.create({
-	content: {
-		flex: 1
-	},
-	image: {
-		width: width - 32, // twice a margin
-		height: width - 32 // twice a margin,
-	},
-	allDoneContainer: {
-		width: '100%',
-		backgroundColor: LUNA_BACKGROUND_COLOR,
-		justifyContent: 'center',
-		alignItems: 'center'
-	},
 	textContainer: {
-		position: 'absolute',
+		justifyContent: 'center',
 		flex: 1
 	},
 	prompt: {
-		marginLeft: 32,
-		marginRight: 32,
 		color: 'white',
 		textAlign: 'center',
 		justifyContent: 'center',

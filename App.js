@@ -16,7 +16,8 @@ const store = configureStore()
 const width = Dimensions.get('window').width
 EStyleSheet.build({
 	$rem: width > 340 ? 18 : 16,
-	$primaryColor: COLORS.LUNA_PRIMARY_COLOR
+	$primaryColor: COLORS.LUNA_PRIMARY_COLOR,
+	$primaryBackgroundColor: COLORS.LUNA_BACKGROUND_COLOR
 })
 
 export default class App extends React.Component {

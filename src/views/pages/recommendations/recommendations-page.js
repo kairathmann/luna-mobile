@@ -1,15 +1,27 @@
 import React from 'react'
-import { Dimensions, Text, View } from 'react-native'
+import {
+	Dimensions,
+	RefreshControl,
+	ScrollView,
+	Text,
+	View
+} from 'react-native'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Button, Icon } from 'native-base'
+import { Button as NativeBaseButton, H3, Icon } from 'native-base'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import I18n from '../../../../locales/i18n'
-import { unmatch } from './scenario-actions'
+import {
+	fetchRecommendations,
+	switchToLoadingSkippedMatches,
+	unmatch
+} from './scenario-actions'
 import { styles as commonStyles } from '../../../styles'
 import { GENDER, ORIENTATION } from '../../../enums'
 import { isLandscape } from '../../../common/utils'
 import UserMatchView from '../../../components/UserMatchView'
+import LunaBackgroundImageView from '../../../components/LunaBackgroundImageView'
+import Button from '../../../components/Button'
 
 class RecommendationsPage extends React.Component {
 	constructor(props) {
@@ -39,8 +51,17 @@ class RecommendationsPage extends React.Component {
 		}
 	}
 
+	onShowSkippedMatchesButtonClick = () => {
+		this.props.showSkippedMatches()
+		this.props.fetchRecommendations()
+	}
+
+	onPullToRefresh = () => {
+		this.props.fetchRecommendations()
+	}
+
 	renderUnmatchButton = styleToAdd => (
-		<Button
+		<NativeBaseButton
 			rounded
 			icon
 			style={[styles.declineButton, styleToAdd]}
@@ -53,17 +74,17 @@ class RecommendationsPage extends React.Component {
 				name="close"
 				style={{ color: 'black', marginLeft: 0, marginRight: 0 }}
 			/>
-		</Button>
+		</NativeBaseButton>
 	)
 
 	renderMessageButton = () => (
-		<Button rounded icon style={styles.messageButton}>
+		<NativeBaseButton rounded icon style={styles.messageButton}>
 			<Icon
 				type="MaterialCommunityIcons"
 				name="email-outline"
 				style={{ color: 'white', marginLeft: 0, marginRight: 0 }}
 			/>
-		</Button>
+		</NativeBaseButton>
 	)
 
 	renderPortraitContent = () => (
@@ -78,6 +99,23 @@ class RecommendationsPage extends React.Component {
 				</View>
 			</View>
 		</React.Fragment>
+	)
+
+	renderNoMatchesMessage = () => (
+		<LunaBackgroundImageView>
+			<View style={styles.noMatchesViewContainer}>
+				<H3 style={styles.noMatchesText}>
+					{I18n.t('recommendations_page.no_matches_could_not_locate')}
+				</H3>
+				<H3 style={styles.noMatchesText}>
+					{I18n.t('recommendations_page.no_matches_check_later')}
+				</H3>
+				<Button
+					text={I18n.t('recommendations_page.no_matches_button_text')}
+					onPress={this.onShowSkippedMatchesButtonClick}
+				/>
+			</View>
+		</LunaBackgroundImageView>
 	)
 
 	renderLandscapeContent = () => (
@@ -106,22 +144,34 @@ class RecommendationsPage extends React.Component {
 
 	render() {
 		return (
-			<View style={commonStyles.content} onLayout={this.onLayout}>
-				{!this.props.isLoading &&
-					this.props.isFetchingRecommendationsError && (
-						<View style={styles.errorTextContainer}>
-							<Text style={[commonStyles.errorText, styles.errorText]}>
-								{I18n.t(
-									'recommendations_page.error_could_not_fetch_recommendations'
-								)}
-							</Text>
-						</View>
-					)}
-				{!this.props.isLoading &&
-					!this.props.isFetchingRecommendationsError &&
+			<ScrollView
+				contentContainerStyle={commonStyles.content}
+				onLayout={this.onLayout}
+				refreshControl={
+					<RefreshControl
+						refreshing={this.props.isLoading}
+						onRefresh={this.onPullToRefresh}
+					/>
+				}
+			>
+				{this.props.isFetchingRecommendationsError && (
+					<View style={styles.errorTextContainer}>
+						<Text style={[commonStyles.errorText, styles.errorText]}>
+							{I18n.t(
+								'recommendations_page.error_could_not_fetch_recommendations'
+							)}
+						</Text>
+					</View>
+				)}
+				{!this.props.isFetchingRecommendationsError &&
 					this.props.currentlyRenderRecommendation &&
 					this.renderContent()}
-			</View>
+				{!this.props.isLoading &&
+					!this.props.isFetchingRecommendationsError &&
+					this.props.matchesCount === 0 &&
+					!this.props.isShowingSkipped &&
+					this.renderNoMatchesMessage()}
+			</ScrollView>
 		)
 	}
 }
@@ -175,14 +225,31 @@ const styles = EStyleSheet.create({
 	},
 	errorText: {
 		fontSize: '1.2rem'
+	},
+	noMatchesViewContainer: {
+		flex: 1,
+		justifyContent: 'center'
+	},
+	noMatchesText: {
+		fontFamily: 'Lato-Regular',
+		color: 'white',
+		textAlign: 'center',
+		justifyContent: 'center',
+		alignItems: 'center',
+		fontSize: '1.1rem',
+		fontWeight: '500',
+		marginBottom: '1.5rem'
 	}
 })
 
 RecommendationsPage.propTypes = {
 	unmatchRecommendation: PropTypes.func.isRequired,
+	showSkippedMatches: PropTypes.func.isRequired,
+	fetchRecommendations: PropTypes.func.isRequired,
 	isLoading: PropTypes.bool.isRequired,
 	isFetchingRecommendationsError: PropTypes.bool.isRequired,
 	errorMessage: PropTypes.string,
+	matchesCount: PropTypes.number.isRequired,
 	currentlyRenderRecommendation: PropTypes.shape({
 		bio: PropTypes.string,
 		firstName: PropTypes.string.isRequired,
@@ -197,7 +264,8 @@ RecommendationsPage.propTypes = {
 		]).isRequired,
 		age: PropTypes.number.isRequired,
 		minBid: PropTypes.string.isRequired
-	})
+	}),
+	isShowingSkipped: PropTypes.bool.isRequired
 }
 
 const mapStateToProps = state => {
@@ -207,13 +275,18 @@ const mapStateToProps = state => {
 			state.recommendations.isFetchingRecommendationsError,
 		errorMessage: state.recommendations.errorMessage,
 		//TODO: Refactor later on to selectors or something similar
-		currentlyRenderRecommendation: state.recommendations.recommendations[0]
+		matchesCount: state.recommendations.recommendations.length,
+		//TODO: Refactor later on to selectors or something similar
+		currentlyRenderRecommendation: state.recommendations.recommendations[0],
+		isShowingSkipped: state.recommendations.isShowingSkipped
 	}
 }
 
 const mapDispatchToProps = dispatch => {
 	return {
-		unmatchRecommendation: userId => dispatch(unmatch(userId))
+		unmatchRecommendation: userId => dispatch(unmatch(userId)),
+		showSkippedMatches: () => dispatch(switchToLoadingSkippedMatches()),
+		fetchRecommendations: () => dispatch(fetchRecommendations())
 	}
 }
 

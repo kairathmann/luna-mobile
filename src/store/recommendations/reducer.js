@@ -3,6 +3,7 @@ import {
 	LOAD_RECOMMENDATIONS_SUCCESS,
 	LOAD_RECOMMENDATIONS_ERROR,
 	UNMATCH_RECOMMENDATION_SUCCESS,
+	SHOW_SKIPPED_RECOMMENDATIONS,
 	CLEAR_DATA
 } from './action-types'
 
@@ -10,7 +11,8 @@ const initialState = {
 	recommendations: [],
 	isLoading: false,
 	isFetchingRecommendationsError: false,
-	errorMessage: ''
+	errorMessage: '',
+	isShowingSkipped: false
 }
 
 export function recommendationsReducer(
@@ -46,6 +48,11 @@ export function recommendationsReducer(
 				recommendations: state.recommendations.filter(
 					person => person.hid !== payload
 				)
+			}
+		case SHOW_SKIPPED_RECOMMENDATIONS:
+			return {
+				...state,
+				isShowingSkipped: true
 			}
 		case CLEAR_DATA:
 			return {

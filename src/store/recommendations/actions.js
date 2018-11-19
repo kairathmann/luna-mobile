@@ -3,6 +3,7 @@ import {
 	LOAD_RECOMMENDATIONS_SUCCESS,
 	LOAD_RECOMMENDATIONS_ERROR,
 	UNMATCH_RECOMMENDATION_SUCCESS,
+	SHOW_SKIPPED_RECOMMENDATIONS,
 	CLEAR_DATA
 } from './action-types'
 
@@ -23,6 +24,10 @@ export const doneFetchingRecommendationsError = errorMessage => ({
 export const doneUnmatchingRecommendationSuccess = idOfUserBeingUnmatched => ({
 	type: UNMATCH_RECOMMENDATION_SUCCESS,
 	payload: idOfUserBeingUnmatched
+})
+
+export const showSkippedMatches = () => ({
+	type: SHOW_SKIPPED_RECOMMENDATIONS
 })
 
 export const clearData = () => ({

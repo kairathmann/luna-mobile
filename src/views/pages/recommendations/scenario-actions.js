@@ -8,29 +8,35 @@ import {
 	startFetchingRecommendations,
 	doneFetchingRecommendationsSuccess,
 	doneFetchingRecommendationsError,
-	doneUnmatchingRecommendationSuccess
+	doneUnmatchingRecommendationSuccess,
+	showSkippedMatches
 } from '../../../store/recommendations/actions'
 import { toastService } from '../../../services'
 
-export const fetchRecommendations = () => async dispatch => {
+const remapMatches = matches => {
+	return matches.map(person => {
+		const avatarUrlToPhotoUrl = avatarRelativeUrlToFullPhotoUrl(
+			person.avatarUrl
+		)
+		const photoUrlRewrittenToDefaultIfRequired = rewriteUrlImageForDefault(
+			avatarUrlToPhotoUrl,
+			person.gidIs
+		)
+		return {
+			...person,
+			avatarUrl: photoUrlRewrittenToDefaultIfRequired
+		}
+	})
+}
+
+export const fetchRecommendations = () => async (dispatch, getState) => {
 	try {
 		// TODO: Show global loader
 		dispatch(startFetchingRecommendations())
-		const response = await api.fetchRecommendations()
-		// TODO: The People property can be empty! In that case we should show view to repeat matches
-		const recommendations = response.data.data.people.map(person => {
-			const avatarUrlToPhotoUrl = avatarRelativeUrlToFullPhotoUrl(
-				person.avatarUrl
-			)
-			const photoUrlRewrittenToDefaultIfRequired = rewriteUrlImageForDefault(
-				avatarUrlToPhotoUrl,
-				person.gidIs
-			)
-			return {
-				...person,
-				avatarUrl: photoUrlRewrittenToDefaultIfRequired
-			}
-		})
+		const response = getState().recommendations.isShowingSkipped
+			? await api.fetchSkipped()
+			: await api.fetchRecommendations()
+		const recommendations = remapMatches(response.data.data.people)
 		dispatch(doneFetchingRecommendationsSuccess(recommendations))
 	} catch (err) {
 		getErrorDataFromNetworkException(err)
@@ -41,11 +47,21 @@ export const fetchRecommendations = () => async dispatch => {
 	}
 }
 
-export const unmatch = userid => async dispatch => {
+export const unmatch = userid => async (dispatch, getState) => {
 	try {
+		const isShowingSkippedMatches = getState().recommendations.isShowingSkipped
 		// TODO: Show global loader
-		await api.unmatch({ recipient_hid: userid })
-		dispatch(doneUnmatchingRecommendationSuccess(userid))
+		if (!isShowingSkippedMatches) {
+			await api.unmatch({ recipient_hid: userid })
+		}
+		await dispatch(doneUnmatchingRecommendationSuccess(userid))
+		if (getState().recommendations.recommendations.length === 0) {
+			const response = getState().recommendations.isShowingSkipped
+				? await api.fetchSkipped()
+				: await api.fetchRecommendations()
+			const recommendations = remapMatches(response.data.data.people)
+			dispatch(doneFetchingRecommendationsSuccess(recommendations))
+		}
 	} catch (err) {
 		const errorMessage = getErrorDataFromNetworkException(err)
 		toastService.showErrorToast(errorMessage, 'top')
@@ -53,4 +69,8 @@ export const unmatch = userid => async dispatch => {
 	} finally {
 		// TODO: Hide global loader
 	}
+}
+
+export const switchToLoadingSkippedMatches = () => dispatch => {
+	dispatch(showSkippedMatches())
 }
