@@ -13,7 +13,7 @@ import { PAGES_NAMES } from '../../../navigation'
 class WelcomePage extends React.Component {
 	componentDidMount() {
 		SplashScreen.hide()
-		this.props.navigation.navigate(PAGES_NAMES.PROFILE)
+		this.props.navigation.navigate(PAGES_NAMES.LOGIN_PAGE)
 	}
 
 	render() {

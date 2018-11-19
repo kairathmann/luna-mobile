@@ -4,8 +4,24 @@ import {
 	START_UPDATING_PROFILE,
 	SAVE_PROFILE_ERROR,
 	SAVE_PROFILE_SUCCESS,
-	PROFILE_START_LOCAL_LOADING
+	PROFILE_START_LOCAL_LOADING,
+	FETCH_PROFILE_SUCCESS,
+	FETCH_PROFILE_ERROR
 } from './action-types'
+
+export function fetchProfileSuccess(profile) {
+	return {
+		type: FETCH_PROFILE_SUCCESS,
+		payload: profile.data
+	}
+}
+
+export function fetchProfileError(error) {
+	return {
+		type: FETCH_PROFILE_ERROR,
+		payload: error
+	}
+}
 
 export function startUpdatingProfile() {
 	return {
