@@ -4,6 +4,7 @@ import android.app.Application;
 import com.AlexanderZaytsev.RNI18n.RNI18nPackage;
 import com.crashlytics.android.Crashlytics;
 import com.facebook.react.ReactApplication;
+import com.BV.LinearGradient.LinearGradientPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -30,7 +31,8 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
             return Arrays.<ReactPackage>asList(
                     new MainReactPackage(),
-            new ImagePickerPackage(),
+                    new LinearGradientPackage(),
+                    new ImagePickerPackage(),
                     new SplashScreenReactPackage(),
                     new RNLanguagesPackage(),
                     new RNI18nPackage(),
