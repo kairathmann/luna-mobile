@@ -18,7 +18,7 @@ import SignupPage from '../views/pages/signup/signup-page'
 import WelcomePage from '../views/pages/welcome/welcome-page'
 import RecommendationsPage from '../views/pages/recommendations/recommendations-page'
 import ProfilePage from '../views/pages/profile/profile-page'
-import ConversationsPage from '../views/pages/messages/messages-page'
+import ConversationsPage from '../views/pages/conversations/conversations-page'
 
 import { COLORS } from '../styles'
 import ProfilePageInactiveNavigationIcon from '../assets/images/nav-icon-profile.png'
