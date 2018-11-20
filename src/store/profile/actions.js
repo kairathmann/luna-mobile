@@ -12,7 +12,7 @@ import {
 export function fetchProfileSuccess(profile) {
 	return {
 		type: FETCH_PROFILE_SUCCESS,
-		payload: profile.data
+		payload: profile
 	}
 }
 

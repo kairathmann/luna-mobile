@@ -31,8 +31,8 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
             return Arrays.<ReactPackage>asList(
                     new MainReactPackage(),
-            new LinearGradientPackage(),
-            new ImagePickerPackage(),
+                    new LinearGradientPackage(),
+                    new ImagePickerPackage(),
                     new SplashScreenReactPackage(),
                     new RNLanguagesPackage(),
                     new RNI18nPackage(),

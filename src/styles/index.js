@@ -4,6 +4,10 @@ import * as COLORS from './colors'
 import flowStyles from './flowStyles'
 
 const styles = EStyleSheet.create({
+	content: {
+		flex: 1,
+		backgroundColor: 'white'
+	},
 	underline: {
 		textDecorationLine: 'underline'
 	},
