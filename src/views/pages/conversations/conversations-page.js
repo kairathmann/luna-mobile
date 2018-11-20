@@ -25,7 +25,11 @@ class ConversationsPage extends React.Component {
 				)}
 				{!this.props.isLoadingConversations &&
 					this.props.conversations.length > 0 && (
-						<ConversationsList conversations={this.props.conversations} />
+						<ConversationsList
+							conversations={this.props.conversations}
+							onRefresh={this.refreshConversations}
+							refreshing={this.props.isLoadingConversations}
+						/>
 					)}
 			</React.Fragment>
 		)

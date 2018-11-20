@@ -15,6 +15,8 @@ class ConversationsList extends React.PureComponent {
 				data={this.props.conversations}
 				keyExtractor={this._keyExtractor}
 				renderItem={this._renderItem}
+				refreshing={this.props.refreshing}
+				onRefresh={this.props.onRefresh}
 			/>
 		)
 	}
@@ -28,6 +30,8 @@ const styles = EStyleSheet.create({
 })
 
 ConversationsList.propTypes = {
+	refreshing: PropTypes.bool.isRequired,
+	onRefresh: PropTypes.func.isRequired,
 	conversations: PropTypes.arrayOf(
 		PropTypes.shape({
 			id: PropTypes.number.isRequired,
