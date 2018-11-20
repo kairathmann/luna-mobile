@@ -7,7 +7,14 @@ import ConversationListItem from '../ConversationListItem'
 
 class ConversationsList extends React.PureComponent {
 	_keyExtractor = item => `${item.id}`
-	_renderItem = ({ item }) => <ConversationListItem conversation={item} />
+	_renderItem = ({ item }) => (
+		<ConversationListItem
+			lastUpdate={item.lastUpdate}
+			subject={item.subject}
+			partnerAvatarSmall={item.partnerAvatarSmall}
+			partnerName={item.partnerName}
+		/>
+	)
 	render() {
 		return (
 			<FlatList

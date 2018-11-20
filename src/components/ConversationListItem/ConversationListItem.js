@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { Image, Text, View } from 'react-native'
-import { GENDER } from '../../enums'
 import { checkImageURL } from '../../common/utils'
 
 class ConversationListItem extends React.PureComponent {
@@ -12,19 +11,15 @@ class ConversationListItem extends React.PureComponent {
 				<View style={styles.imageContainer}>
 					<Image
 						style={styles.image}
-						source={checkImageURL(this.props.conversation.partnerAvatarSmall)}
+						source={checkImageURL(this.props.partnerAvatarSmall)}
 					/>
 				</View>
 				<View style={styles.textContainer}>
 					<View style={{ flexWrap: 'wrap' }}>
-						<Text style={styles.textUsername}>
-							{this.props.conversation.partnerName}
-						</Text>
+						<Text style={styles.textUsername}>{this.props.partnerName}</Text>
 					</View>
 					<View style={{ flexWrap: 'wrap' }}>
-						<Text style={styles.textLastMessage}>
-							{this.props.conversation.subject}
-						</Text>
+						<Text style={styles.textLastMessage}>{this.props.subject}</Text>
 					</View>
 				</View>
 				<View style={styles.textLastUpdatedContainer}>
@@ -85,23 +80,10 @@ const styles = EStyleSheet.create({
 })
 
 ConversationListItem.propTypes = {
-	conversation: PropTypes.shape({
-		id: PropTypes.number.isRequired,
-		lastMessageSenderHid: PropTypes.string.isRequired,
-		lastUpdate: PropTypes.string.isRequired,
-		partnerAvatarMedium: PropTypes.string.isRequired,
-		partnerAvatarSmall: PropTypes.string.isRequired,
-		partnerGender: PropTypes.oneOf([
-			GENDER.BOTH,
-			GENDER.FEMALE,
-			GENDER.MALE,
-			GENDER.OTHER
-		]).isRequired,
-		partnerHid: PropTypes.string.isRequired,
-		partnerName: PropTypes.string.isRequired,
-		pending: PropTypes.bool.isRequired,
-		subject: PropTypes.string.isRequired
-	}).isRequired
+	lastUpdate: PropTypes.string.isRequired,
+	partnerAvatarSmall: PropTypes.string.isRequired,
+	subject: PropTypes.string.isRequired,
+	partnerName: PropTypes.string.isRequired
 }
 
 export default ConversationListItem
