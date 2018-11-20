@@ -54,7 +54,7 @@ export class ProfilePage extends React.Component {
 	getAvatarImage = () => {
 		return this.props.profile.avatarUrl
 			? { uri: `${Config.APP_URL_BASE}/${this.props.profile.avatarUrl}` }
-			: this.getDefaultImage()
+			: this.getDefaultImage(this.props.profile.gidIs)
 	}
 
 	renderTitle = () => {
@@ -87,7 +87,7 @@ export class ProfilePage extends React.Component {
 	renderTagline = () => {
 		return (
 			<React.Fragment>
-				<H3>Tagline</H3>
+				<H3>{I18n.t('profile_page.tagline')}</H3>
 				<Text style={styles.tagline}>
 					{this.props.profile.tagline || I18n.t('profile_page.no_tagline')}
 				</Text>
@@ -102,11 +102,15 @@ export class ProfilePage extends React.Component {
 					{this.renderTagline()}
 				</View>
 				<Button style={styles.tokenButton} full onPress={() => {}}>
-					<Text style={styles.tokenButtonText}>Token</Text>
+					<Text style={styles.tokenButtonText}>
+						{I18n.t('profile_page.token')}
+					</Text>
 					<Image style={styles.biggerIcon} source={StarIcon} />
 				</Button>
 				<Button style={{ marginTop: 8 }} full danger onPress={() => {}}>
-					<Text style={styles.portraitLogoutText}>Logout</Text>
+					<Text style={styles.portraitLogoutText}>
+						{I18n.t('common.logout')}
+					</Text>
 				</Button>
 			</View>
 		)
@@ -116,6 +120,7 @@ export class ProfilePage extends React.Component {
 		const { width } = Dimensions.get('window')
 		return (
 			<HeaderImageScrollView
+				bounces={false}
 				maxOverlayOpacity={0.4}
 				minOverlayOpacity={0.1}
 				fadeOutForeground
@@ -154,7 +159,9 @@ export class ProfilePage extends React.Component {
 				<View style={styles.landscapeProfileDataContainer}>
 					<View>{this.renderTagline()}</View>
 					<Button style={styles.tokenButton} full onPress={() => {}}>
-						<Text style={styles.tokenButtonText}>Token</Text>
+						<Text style={styles.tokenButtonText}>
+							{I18n.t('profile_page.token')}
+						</Text>
 						<Image style={styles.biggerIcon} source={StarIcon} />
 					</Button>
 					<Button
@@ -163,7 +170,9 @@ export class ProfilePage extends React.Component {
 						bordered
 						onPress={() => {}}
 					>
-						<Text style={styles.landscapeLogoutButtonText}>Logout</Text>
+						<Text style={styles.landscapeLogoutButtonText}>
+							{I18n.t('common.logout')}
+						</Text>
 					</Button>
 				</View>
 			</View>
@@ -231,16 +240,16 @@ const styles = EStyleSheet.create({
 		flex: 1,
 		width: '100%',
 		backgroundColor: '#efefef',
-		paddingBottom: 8
+		paddingBottom: 64
 	},
 	portraitTaglineContainer: {
 		backgroundColor: 'white',
 		marginTop: 8,
 		padding: 16,
 		shadowColor: '#000',
-		shadowOffset: { width: 0, height: 2 },
+		shadowOffset: { width: 0, height: 0 },
 		shadowOpacity: 0.8,
-		shadowRadius: 2,
+		shadowRadius: 0,
 		elevation: 2
 	},
 	tagline: {
@@ -269,7 +278,12 @@ const styles = EStyleSheet.create({
 		paddingLeft: 16,
 		paddingRight: 16
 	},
-	landscapeAvatar: { borderRadius: 500, width: 240, height: 240 },
+	landscapeAvatar: {
+		backgroundColor: '#888',
+		borderRadius: 120,
+		width: 240,
+		height: 240
+	},
 	landscapeLogoutButton: {
 		marginTop: 8,
 		borderWidth: 2,
