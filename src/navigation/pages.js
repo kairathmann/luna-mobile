@@ -18,15 +18,15 @@ import SignupPage from '../views/pages/signup/signup-page'
 import WelcomePage from '../views/pages/welcome/welcome-page'
 import RecommendationsPage from '../views/pages/recommendations/recommendations-page'
 import ProfilePage from '../views/pages/profile/profile-page'
-import MessagesPage from '../views/pages/messages/messages-page'
+import ConversationsPage from '../views/pages/messages/messages-page'
 
 import { COLORS } from '../styles'
 import ProfilePageInactiveNavigationIcon from '../assets/images/nav-icon-profile.png'
 import ProfilePageActiveNavigationIcon from '../assets/images/nav-icon-profile-active.png'
 import RecommendationsPageInactiveNavigationIcon from '../assets/images/nav-icon-luna.png'
 import RecommendationsPageActiveNavigationIcon from '../assets/images/nav-icon-luna-active.png'
-import MessagesPageInactiveNavigationIcon from '../assets/images/nav-icon-messages.png'
-import MessagesPageActiveNavigationIcon from '../assets/images/nav-icon-messages-active.png'
+import ConversationsPageInactiveNavigationIcon from '../assets/images/nav-icon-messages.png'
+import ConversationsPageActiveNavigationIcon from '../assets/images/nav-icon-messages-active.png'
 
 const PAGES_NAMES = {
 	WELCOME_PAGE: 'WELCOME_PAGE',
@@ -35,7 +35,7 @@ const PAGES_NAMES = {
 	HOME_PAGE: 'HOME_PAGE',
 	PROFILE_PAGE: 'PROFILE_PAGE',
 	RECOMMENDATIONS_PAGE: 'RECOMMENDATIONS_PAGE',
-	MESSAGES_PAGE: 'MESSAGES_PAGE',
+	CONVERSATIONS_PAGE: 'CONVERSATIONS_PAGE',
 	FLOW_NAME_BIRTHDAY: 'FLOW_NAME_BIRTHDAY',
 	FLOW_GENDER_SEXUALITY: 'FLOW_GENDER_SEXUALITY',
 	FLOW_AGE_LIMIT: 'FLOW_AGE_LIMIT',
@@ -86,16 +86,16 @@ const HomePageBottomTabNavigation = createBottomTabNavigator(
 				)
 			})
 		},
-		MESSAGES_PAGE: {
-			screen: MessagesPage,
+		CONVERSATIONS_PAGE: {
+			screen: ConversationsPage,
 			navigationOptions: () => ({
 				title: '',
 				tabBarIcon: ({ focused }) => (
 					<Image
 						source={
 							focused
-								? MessagesPageActiveNavigationIcon
-								: MessagesPageInactiveNavigationIcon
+								? ConversationsPageActiveNavigationIcon
+								: ConversationsPageInactiveNavigationIcon
 						}
 					/>
 				)

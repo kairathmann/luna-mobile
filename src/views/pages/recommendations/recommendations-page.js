@@ -169,7 +169,6 @@ class RecommendationsPage extends React.Component {
 				{!this.props.isLoading &&
 					!this.props.isFetchingRecommendationsError &&
 					this.props.matchesCount === 0 &&
-					!this.props.isShowingSkipped &&
 					this.renderNoMatchesMessage()}
 			</ScrollView>
 		)
