@@ -39,8 +39,8 @@ export const fetchRecommendations = () => async (dispatch, getState) => {
 		const recommendations = remapMatches(response.data.data.people)
 		dispatch(doneFetchingRecommendationsSuccess(recommendations))
 	} catch (err) {
-		getErrorDataFromNetworkException(err)
-		dispatch(doneFetchingRecommendationsError(err))
+		const errorMessage = getErrorDataFromNetworkException(err)
+		dispatch(doneFetchingRecommendationsError(errorMessage))
 		// TODO: Better error handling
 	} finally {
 		// TODO: Hide global loader
