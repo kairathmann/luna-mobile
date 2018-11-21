@@ -19,10 +19,14 @@ class ConversationListItem extends React.PureComponent {
 				</View>
 				<View style={styles.textContainer}>
 					<View style={{ flexWrap: 'wrap' }}>
-						<Text style={styles.textUsername}>{this.props.partnerName}</Text>
+						<Text numberOfLines={3} style={styles.textUsername}>
+							{this.props.partnerName}
+						</Text>
 					</View>
 					<View style={{ flexWrap: 'wrap' }}>
-						<Text style={styles.textLastMessage}>{this.props.subject}</Text>
+						<Text numberOfLines={3} style={styles.textLastMessage}>
+							{this.props.subject}
+						</Text>
 					</View>
 				</View>
 				<View style={styles.textLastUpdatedContainer}>
