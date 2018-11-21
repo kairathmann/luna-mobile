@@ -2,6 +2,7 @@
 import api from '../../../api'
 import { getErrorDataFromNetworkException } from '../../../common/utils'
 import { signinError, signinSuccess } from '../../../store/auth/actions'
+import { startUpdatingProfile } from '../../../store/profile/actions'
 
 export function login({ email, password }) {
 	return async dispatch => {
@@ -17,4 +18,8 @@ export function login({ email, password }) {
 			// TODO: Hide global loader
 		}
 	}
+}
+
+export function startEditing() {
+	return startUpdatingProfile()
 }

@@ -18,6 +18,7 @@ import { ORIENTATION } from '../enums'
 
 import { COLORS } from '../styles'
 import { LUNA_PRIMARY_COLOR } from '../styles/colors'
+import EditPage from '../views/pages/edit/edit-page'
 import AgeLimitPage from '../views/pages/flow/age-limit/age-limit-page'
 import AlldonePage from '../views/pages/flow/alldone/alldone-page'
 import AvatarPage from '../views/pages/flow/avatar/avatar-page'
@@ -45,7 +46,8 @@ const PAGES_NAMES = {
 	FLOW_TAGLINE: 'FLOW_TAGLINE',
 	FLOW_AVATAR: 'FLOW_AVATAR',
 	FLOW_ALLDONE: 'FLOW_ALLDONE',
-	PROFILE: 'PROFILE'
+	PROFILE: 'PROFILE',
+	EDIT_PROFILE: 'EDIT_PROFILE'
 }
 
 const noNavbarStyle = {
@@ -90,6 +92,31 @@ const ProfilePageStackNavigation = createStackNavigator({
 				elevation: 0, //remove shadow on Android
 				shadowOpacity: 0 //remove shadow on iOS
 			}
+		})
+	},
+	EDIT_PROFILE: {
+		screen: EditPage,
+		navigationOptions: ({ navigation }) => ({
+			title: I18n.t('edit_page.title'),
+			headerTintColor: 'white',
+			headerStyle: { backgroundColor: LUNA_PRIMARY_COLOR },
+			headerRight: (
+				<Button
+					icon
+					transparent
+					disabled={navigation.getParam('disabled')}
+					style={{
+						marginRight: 4,
+						marginTop: 4,
+						opacity: navigation.getParam('disabled') ? 0.5 : 1.0
+					}}
+					onPress={navigation.getParam('saveProfile')}
+					title={'save'}
+					color="#fff"
+				>
+					<Icon name={'done-all'} color={'white'} style={{ color: 'white' }} />
+				</Button>
+			)
 		})
 	}
 })

@@ -4,7 +4,7 @@ import { en as login_page } from '../src/views/pages/login/locales'
 import { en as flow_page } from '../src/views/pages/flow/locales'
 
 import { en as profile_page } from '../src/views/pages/profile/locales'
-
+import { en as edit_page } from '../src/views/pages/edit/locales'
 import { en as recommendations_page } from '../src/views/pages/recommendations/locales'
 
 export default {
@@ -14,6 +14,7 @@ export default {
 	flow_page,
 	profile_page,
 	recommendations_page,
+	edit_page,
 	common: {
 		email: 'Email',
 		errors: {

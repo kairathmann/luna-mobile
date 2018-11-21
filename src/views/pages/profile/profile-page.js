@@ -14,6 +14,7 @@ import { getLoaderImageForGender, isLandscape } from '../../../common/utils'
 import { ORIENTATION } from '../../../enums'
 import { PAGES_NAMES } from '../../../navigation'
 import { LUNA_PRIMARY_COLOR } from '../../../styles/colors'
+import { startEditing } from '../profile/scenario-actions'
 
 export class ProfilePage extends React.Component {
 	constructor(props) {
@@ -46,15 +47,24 @@ export class ProfilePage extends React.Component {
 	}
 
 	_goToEditPage = () => {
-		this.props.navigation.navigate(PAGES_NAMES.LOGIN_PAGE)
+		this.props.startEditing()
+		this.props.navigation.navigate(PAGES_NAMES.EDIT_PROFILE)
 	}
 
 	getDefaultImage = getLoaderImageForGender
 
 	getAvatarImage = () => {
 		return this.props.profile.avatarUrl
-			? { uri: `${Config.APP_URL_BASE}/${this.props.profile.avatarUrl}` }
+			? this.processIfLocal()
 			: this.getDefaultImage(this.props.profile.gidIs)
+	}
+
+	processIfLocal = () => {
+		if (this.props.profile.localAvatar) {
+			return { uri: this.props.profile.avatarUrl }
+		} else {
+			return { uri: `${Config.APP_URL_BASE}/${this.props.profile.avatarUrl}` }
+		}
 	}
 
 	renderTitle = () => {
@@ -193,7 +203,8 @@ export class ProfilePage extends React.Component {
 
 ProfilePage.propTypes = {
 	navigation: PropTypes.object.isRequired,
-	profile: PropTypes.object.isRequired
+	profile: PropTypes.object.isRequired,
+	startEditing: PropTypes.func.isRequired
 }
 
 const styles = EStyleSheet.create({
@@ -303,8 +314,10 @@ const mapStateToProps = state => {
 	}
 }
 
-const mapDispatchToProps = () => {
-	return {}
+const mapDispatchToProps = dispatch => {
+	return {
+		startEditing: () => dispatch(startEditing())
+	}
 }
 
 export default connect(
