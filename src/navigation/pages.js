@@ -220,31 +220,6 @@ const AppStackNavigator = createStackNavigator({
 			header: null
 		})
 	},
-	// PROFILE: {
-	//   screen: ProfilePage,
-	//   navigationOptions: ({ navigation }) => ({
-	//     title: null,
-	//     headerTintColor: 'white',
-	//     headerTransparent: true,
-	//     headerRight: (
-	//       <Button
-	//         icon
-	//         transparent
-	//         style={ { marginRight: 4, marginTop: 4 } }
-	//         onPress={ navigation.getParam('goToEditPage') }
-	//         title={ 'edit' }
-	//         color="#fff"
-	//       >
-	//         <Icon name={ 'create' } color={ 'white' } style={ { color: 'white' } }/>
-	//       </Button>
-	//     ),
-	//     headerStyle: {
-	//       zIndex: 100,
-	//       elevation: 0, //remove shadow on Android
-	//       shadowOpacity: 0 //remove shadow on iOS
-	//     }
-	//   })
-	// },
 	HOME_PAGE: {
 		screen: HomePageBottomTabNavigation,
 		navigationOptions: () => ({
