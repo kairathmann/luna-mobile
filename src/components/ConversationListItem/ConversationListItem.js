@@ -1,11 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import EStyleSheet from 'react-native-extended-stylesheet'
+import Moment from 'react-moment'
 import { Image, Text, View } from 'react-native'
 import { checkImageURL } from '../../common/utils'
+import I18n from '../../../locales/i18n'
 
 class ConversationListItem extends React.PureComponent {
 	render() {
+		const zoneOffset = new Date().getTimezoneOffset()
 		return (
 			<View style={styles.container}>
 				<View style={styles.imageContainer}>
@@ -23,7 +26,15 @@ class ConversationListItem extends React.PureComponent {
 					</View>
 				</View>
 				<View style={styles.textLastUpdatedContainer}>
-					<Text style={styles.textLastUpdated}>24 hours ago</Text>
+					<Moment
+						style={styles.textLastUpdated}
+						locale={I18n.locale}
+						element={Text}
+						fromNow
+						subtract={{ minutes: zoneOffset }}
+					>
+						{this.props.lastUpdate}
+					</Moment>
 				</View>
 			</View>
 		)
