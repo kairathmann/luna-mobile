@@ -1,5 +1,6 @@
 import React from 'react'
 import { Text, RefreshControl, ScrollView, View } from 'react-native'
+import { Badge, H3, Text as NativeBaseText } from 'native-base'
 import PropTypes from 'prop-types'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import I18n from '../../../../locales/i18n'
@@ -19,6 +20,17 @@ class ConversationsPage extends React.Component {
 		this.props.fetchConversations('2a569236')
 	}
 
+	renderNewMessageCountView = newMessageCount => (
+		<View style={styles.newMessageContainer}>
+			<H3>{I18n.t('conversations_page.new_messages')}</H3>
+			<Badge style={styles.badge}>
+				<NativeBaseText style={styles.badgeText}>
+					{newMessageCount > 99 ? '99+' : newMessageCount}
+				</NativeBaseText>
+			</Badge>
+		</View>
+	)
+
 	render() {
 		return (
 			<ScrollView
@@ -36,7 +48,11 @@ class ConversationsPage extends React.Component {
 				{!this.props.isLoadingConversations &&
 					!this.props.isFetchingConversationsError &&
 					this.props.conversations.length > 0 && (
-						<ConversationsList conversations={this.props.conversations} />
+						<React.Fragment>
+							{this.props.newMessageCount > 0 &&
+								this.renderNewMessageCountView(this.props.newMessageCount)}
+							<ConversationsList conversations={this.props.conversations} />
+						</React.Fragment>
 					)}
 				{!this.props.isLoadingConversations &&
 					this.props.isFetchingConversationsError && (
@@ -50,7 +66,6 @@ class ConversationsPage extends React.Component {
 					)}
 			</ScrollView>
 		)
-		// {!this.props.isLoadingConversations && this.props.conversations.length === 0 && ()}
 	}
 }
 
@@ -58,6 +73,7 @@ ConversationsPage.propTypes = {
 	fetchConversations: PropTypes.func.isRequired,
 	isFetchingConversationsError: PropTypes.bool.isRequired,
 	isLoadingConversations: PropTypes.bool.isRequired,
+	newMessageCount: PropTypes.number.isRequired,
 	conversations: PropTypes.arrayOf(
 		PropTypes.shape({
 			id: PropTypes.number.isRequired,
@@ -87,6 +103,18 @@ const styles = EStyleSheet.create({
 	},
 	errorText: {
 		fontSize: '1.2rem'
+	},
+	newMessageContainer: {
+		alignItems: 'center',
+		flexDirection: 'row',
+		padding: '0.8rem'
+	},
+	badge: {
+		backgroundColor: '$lunaNotificationCircle',
+		marginLeft: '0.5rem'
+	},
+	badgeText: {
+		color: 'black'
 	}
 })
 
@@ -95,7 +123,10 @@ const mapStateToProps = state => {
 		isFetchingConversationsError:
 			state.conversations.isFetchingConversationsError,
 		isLoadingConversations: state.conversations.isLoading,
-		conversations: state.conversations.conversations
+		conversations: state.conversations.conversations,
+		newMessageCount: state.conversations.conversations.filter(
+			message => message.pending
+		).length
 	}
 }
 
