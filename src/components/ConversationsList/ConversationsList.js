@@ -13,6 +13,7 @@ class ConversationsList extends React.PureComponent {
 			subject={item.subject}
 			partnerAvatarSmall={item.partnerAvatarSmall}
 			partnerName={item.partnerName}
+			pending={item.pending}
 		/>
 	)
 	render() {

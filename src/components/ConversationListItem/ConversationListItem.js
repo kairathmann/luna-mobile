@@ -16,12 +16,15 @@ class ConversationListItem extends React.PureComponent {
 						style={styles.image}
 						source={checkImageURL(this.props.partnerAvatarSmall)}
 					/>
+					{this.props.pending && (
+						<View style={styles.notificationCircleContainer}>
+							<View style={styles.notificationCircle} />
+						</View>
+					)}
 				</View>
 				<View style={styles.textContainer}>
 					<View style={{ flexWrap: 'wrap' }}>
-						<Text numberOfLines={3} style={styles.textUsername}>
-							{this.props.partnerName}
-						</Text>
+						<Text style={styles.textUsername}>{this.props.partnerName}</Text>
 					</View>
 					<View style={{ flexWrap: 'wrap' }}>
 						<Text numberOfLines={3} style={styles.textLastMessage}>
@@ -64,6 +67,25 @@ const styles = EStyleSheet.create({
 		width: '4rem',
 		height: '4rem'
 	},
+	notificationCircleContainer: {
+		position: 'absolute',
+		top: 0,
+		left: 0,
+		right: '-0.5rem',
+		bottom: 0,
+		justifyContent: 'center',
+		alignItems: 'center'
+	},
+	notificationCircle: {
+		position: 'absolute',
+		right: 0,
+		width: '1rem',
+		height: '1rem',
+		borderRadius: '0.5rem',
+		borderWidth: '0.2rem',
+		borderColor: 'white',
+		backgroundColor: '$lunaNotificationCircle'
+	},
 	textContainer: {
 		width: 0,
 		marginLeft: '0.8rem',
@@ -99,7 +121,8 @@ ConversationListItem.propTypes = {
 	lastUpdate: PropTypes.string.isRequired,
 	partnerAvatarSmall: PropTypes.string.isRequired,
 	subject: PropTypes.string.isRequired,
-	partnerName: PropTypes.string.isRequired
+	partnerName: PropTypes.string.isRequired,
+	pending: PropTypes.bool.isRequired
 }
 
 export default ConversationListItem
