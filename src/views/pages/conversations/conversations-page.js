@@ -1,6 +1,8 @@
 import React from 'react'
-import { View } from 'react-native'
+import { Text, RefreshControl, ScrollView, View } from 'react-native'
 import PropTypes from 'prop-types'
+import EStyleSheet from 'react-native-extended-stylesheet'
+import I18n from '../../../../locales/i18n'
 import { connect } from 'react-redux'
 import { fetchConversations } from './scenario-actions'
 import { GENDER } from '../../../enums'
@@ -19,19 +21,34 @@ class ConversationsPage extends React.Component {
 
 	render() {
 		return (
-			<React.Fragment>
+			<ScrollView
+				contentContainerStyle={commonStyles.content}
+				refreshControl={
+					<RefreshControl
+						refreshing={this.props.isLoadingConversations}
+						onRefresh={this.refreshConversations}
+					/>
+				}
+			>
 				{this.props.isLoadingConversations && (
 					<View style={commonStyles.content} />
 				)}
 				{!this.props.isLoadingConversations &&
+					!this.props.isFetchingConversationsError &&
 					this.props.conversations.length > 0 && (
-						<ConversationsList
-							conversations={this.props.conversations}
-							onRefresh={this.refreshConversations}
-							refreshing={this.props.isLoadingConversations}
-						/>
+						<ConversationsList conversations={this.props.conversations} />
 					)}
-			</React.Fragment>
+				{!this.props.isLoadingConversations &&
+					this.props.isFetchingConversationsError && (
+						<View style={styles.errorTextContainer}>
+							<Text style={[commonStyles.errorText, styles.errorText]}>
+								{I18n.t(
+									'conversations_page.error_could_not_fetch_conversations'
+								)}
+							</Text>
+						</View>
+					)}
+			</ScrollView>
 		)
 		// {!this.props.isLoadingConversations && this.props.conversations.length === 0 && ()}
 	}
@@ -39,6 +56,7 @@ class ConversationsPage extends React.Component {
 
 ConversationsPage.propTypes = {
 	fetchConversations: PropTypes.func.isRequired,
+	isFetchingConversationsError: PropTypes.bool.isRequired,
 	isLoadingConversations: PropTypes.bool.isRequired,
 	conversations: PropTypes.arrayOf(
 		PropTypes.shape({
@@ -61,8 +79,21 @@ ConversationsPage.propTypes = {
 	).isRequired
 }
 
+const styles = EStyleSheet.create({
+	errorTextContainer: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center'
+	},
+	errorText: {
+		fontSize: '1.2rem'
+	}
+})
+
 const mapStateToProps = state => {
 	return {
+		isFetchingConversationsError:
+			state.conversations.isFetchingConversationsError,
 		isLoadingConversations: state.conversations.isLoading,
 		conversations: state.conversations.conversations
 	}

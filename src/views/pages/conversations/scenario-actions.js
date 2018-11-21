@@ -9,7 +9,6 @@ import {
 	doneFetchingConversationsSuccess,
 	doneFetchingConversationsError
 } from '../../../store/conversations/actions'
-import { toastService } from '../../../services'
 
 const remapConversations = conversations => {
 	return conversations.map(conversation => {
@@ -41,7 +40,6 @@ export const fetchConversations = targetHid => async dispatch => {
 	} catch (err) {
 		const errorMessage = getErrorDataFromNetworkException(err)
 		dispatch(doneFetchingConversationsError(errorMessage))
-		toastService.showErrorToast(errorMessage)
 		// TODO: Better error handling
 	} finally {
 		// TODO: Hide global loader or maybe not becasue we have the FlatList default loader when pull to refresh?

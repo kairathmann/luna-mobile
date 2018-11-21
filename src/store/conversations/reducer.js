@@ -8,6 +8,7 @@ import {
 const initialState = {
 	conversations: [],
 	isLoading: false,
+	isFetchingConversationsError: false,
 	loadingConversationsErrorMessage: ''
 }
 
@@ -17,12 +18,14 @@ export function conversationsReducer(state = initialState, { payload, type }) {
 			return {
 				...state,
 				isLoading: true,
+				isFetchingConversationsError: false,
 				loadingConversationsErrorMessage: ''
 			}
 		case LOAD_CONVERSATIONS_SUCCESS:
 			return {
 				...state,
 				isLoading: false,
+				isFetchingConversationsError: false,
 				loadingConversationsErrorMessage: '',
 				conversations: payload
 			}
@@ -30,6 +33,7 @@ export function conversationsReducer(state = initialState, { payload, type }) {
 			return {
 				...state,
 				isLoading: false,
+				isFetchingConversationsError: true,
 				loadingConversationsErrorMessage: payload
 			}
 		case CLEAR_DATA:
