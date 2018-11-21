@@ -61,6 +61,7 @@ const styles = EStyleSheet.create({
 		height: '4rem'
 	},
 	textContainer: {
+		width: 0,
 		marginLeft: '0.8rem',
 		flexGrow: 5.5,
 		paddingTop: '0.2rem'
