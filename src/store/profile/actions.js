@@ -6,7 +6,8 @@ import {
 	SAVE_PROFILE_SUCCESS,
 	PROFILE_START_LOCAL_LOADING,
 	FETCH_PROFILE_SUCCESS,
-	FETCH_PROFILE_ERROR
+	FETCH_PROFILE_ERROR,
+	CLEAR_DATA
 } from './action-types'
 
 export function fetchProfileSuccess(profile) {
@@ -58,5 +59,11 @@ export function saveProfileError(error) {
 	return {
 		type: SAVE_PROFILE_ERROR,
 		payload: error
+	}
+}
+
+export function clearData() {
+	return {
+		type: CLEAR_DATA
 	}
 }

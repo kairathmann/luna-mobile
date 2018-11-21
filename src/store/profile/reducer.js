@@ -5,7 +5,8 @@ import {
 	SAVE_PROFILE_SUCCESS,
 	PROFILE_START_LOCAL_LOADING,
 	START_UPDATING_PROFILE,
-	FETCH_PROFILE_SUCCESS
+	FETCH_PROFILE_SUCCESS,
+	CLEAR_DATA
 } from './action-types'
 
 const initialState = {
@@ -63,7 +64,8 @@ export function profileReducer(state = initialState, { payload, type }) {
 				isLoading: true,
 				error: ''
 			}
-
+		case CLEAR_DATA:
+			return initialState
 		default:
 			return state
 	}
