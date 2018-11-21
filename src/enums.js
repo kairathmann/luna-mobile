@@ -9,3 +9,10 @@ export const ORIENTATION = {
 	PORTRAIT: 1,
 	LANDSCAPE: 2
 }
+
+export const PROFILE_STATE = {
+	INCOMPLETE: 1,
+	ACTIVE: 2,
+	DISABLED: 3,
+	DELETED: 4
+}

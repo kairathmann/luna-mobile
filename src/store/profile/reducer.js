@@ -1,5 +1,6 @@
 import {
 	CANCEL_UPDATING_PROFILE,
+	CLEAR_DATA,
 	FETCH_PROFILE_SUCCESS,
 	FINISH_UPDATING_PROFILE,
 	PROFILE_START_LOCAL_LOADING,
@@ -81,7 +82,8 @@ export function profileReducer(state = initialState, { payload, type }) {
 				},
 				profileToEdit: {}
 			}
-
+		case CLEAR_DATA:
+			return initialState
 		default:
 			return state
 	}

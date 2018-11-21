@@ -2,7 +2,6 @@ import { Button, H3 } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Dimensions, Image, Text, View } from 'react-native'
-import Config from 'react-native-config'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import HeaderImageScrollView from 'react-native-image-header-scroll-view'
 import LinearGradient from 'react-native-linear-gradient'
@@ -10,11 +9,14 @@ import { Header } from 'react-navigation'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
 import StarIcon from '../../../assets/images/star-icon.png'
-import { getLoaderImageForGender, isLandscape } from '../../../common/utils'
+import {
+	avatarRelativeUrlToFullPhotoUrl,
+	getLoaderImageForGender,
+	isLandscape
+} from '../../../common/utils'
 import { ORIENTATION } from '../../../enums'
 import { PAGES_NAMES } from '../../../navigation'
-import { LUNA_PRIMARY_COLOR } from '../../../styles/colors'
-import { startEditing } from '../profile/scenario-actions'
+import { startEditing } from './scenario-actions'
 
 export class ProfilePage extends React.Component {
 	constructor(props) {
@@ -54,7 +56,8 @@ export class ProfilePage extends React.Component {
 	getDefaultImage = getLoaderImageForGender
 
 	getAvatarImage = () => {
-		return this.props.profile.avatarUrl
+		return this.props.profile.avatarUrl &&
+			!this.props.profile.avatarUrl.startsWith('hydra/img')
 			? this.processIfLocal()
 			: this.getDefaultImage(this.props.profile.gidIs)
 	}
@@ -63,7 +66,9 @@ export class ProfilePage extends React.Component {
 		if (this.props.profile.localAvatar) {
 			return { uri: this.props.profile.avatarUrl }
 		} else {
-			return { uri: `${Config.APP_URL_BASE}/${this.props.profile.avatarUrl}` }
+			return {
+				uri: avatarRelativeUrlToFullPhotoUrl(this.props.profile.avatarUrl)
+			}
 		}
 	}
 
@@ -208,23 +213,6 @@ ProfilePage.propTypes = {
 }
 
 const styles = EStyleSheet.create({
-	navTitleView: {
-		height: Header.HEIGHT,
-		justifyContent: 'center',
-		alignItems: 'center',
-		opacity: 1
-	},
-	navTitle: {
-		color: 'white',
-		fontSize: 18,
-		backgroundColor: 'transparent'
-	},
-	titleContainer: {
-		flex: 1,
-		alignSelf: 'stretch',
-		justifyContent: 'flex-end',
-		alignItems: 'center'
-	},
 	titleContainerGradient: {
 		flex: 1,
 		alignSelf: 'stretch',
@@ -298,9 +286,9 @@ const styles = EStyleSheet.create({
 	landscapeLogoutButton: {
 		marginTop: 8,
 		borderWidth: 2,
-		borderColor: LUNA_PRIMARY_COLOR
+		borderColor: '$primaryColor'
 	},
-	landscapeLogoutButtonText: { color: LUNA_PRIMARY_COLOR, fontWeight: 'bold' },
+	landscapeLogoutButtonText: { color: '$primaryColor', fontWeight: 'bold' },
 	landscapeProfileDataContainer: {
 		flex: 1,
 		justifyContent: 'center',
