@@ -1,5 +1,12 @@
 import api from '../../../api'
 import { getErrorDataFromNetworkException } from '../../../common/utils'
+
+import {
+	clearSignInError,
+	signinError,
+	signinSuccess
+} from '../../../store/auth/actions'
+
 import { PAGES_NAMES } from '../../../navigation'
 import { navigationService } from '../../../services'
 import { signinError, signinSuccess } from '../../../store/auth/actions'
@@ -34,3 +41,5 @@ export function login({ email, password }) {
 		}
 	}
 }
+
+export const clearError = () => dispatch => dispatch(clearSignInError())

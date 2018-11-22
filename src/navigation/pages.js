@@ -25,17 +25,19 @@ import GenderPreferencesPage from '../views/pages/flow/gender-preferences/gender
 import NameBirthdayPage from '../views/pages/flow/name-birthday/name-birthday-page'
 import TaglinePage from '../views/pages/flow/tagline/tagline-page'
 import LoginPage from '../views/pages/login/login-page'
-import MessagesPage from '../views/pages/messages/messages-page'
-import ProfilePage from '../views/pages/profile/profile-page'
 
-import RecommendationsPage from '../views/pages/recommendations/recommendations-page'
 import SignupPage from '../views/pages/signup/signup-page'
+import ForgotPasswordPage from '../views/pages/forgot-password/forgot-password-page'
 import WelcomePage from '../views/pages/welcome/welcome-page'
+import RecommendationsPage from '../views/pages/recommendations/recommendations-page'
+import ProfilePage from '../views/pages/profile/profile-page'
+import MessagesPage from '../views/pages/messages/messages-page'
 
 const PAGES_NAMES = {
 	WELCOME_PAGE: 'WELCOME_PAGE',
 	LOGIN_PAGE: 'LOGIN_PAGE',
 	SIGNUP_PAGE: 'SIGNUP_PAGE',
+	FORGOT_PASSWORD_PAGE: 'FORGOT_PASSWORD_PAGE',
 	HOME_PAGE: 'HOME_PAGE',
 	RECOMMENDATIONS_PAGE: 'RECOMMENDATIONS_PAGE',
 	MESSAGES_PAGE: 'MESSAGES_PAGE',
@@ -168,6 +170,12 @@ const AppStackNavigator = createStackNavigator({
 	},
 	SIGNUP_PAGE: {
 		screen: SignupPage,
+		navigationOptions: () => ({
+			...noNavbarStyle
+		})
+	},
+	FORGOT_PASSWORD_PAGE: {
+		screen: ForgotPasswordPage,
 		navigationOptions: () => ({
 			...noNavbarStyle
 		})

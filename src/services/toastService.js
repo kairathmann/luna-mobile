@@ -10,4 +10,14 @@ const showErrorToast = (message, position = 'bottom', duration = 5000) => {
 	})
 }
 
-export { showErrorToast }
+const showSuccessToast = (message, position = 'bottom', duration = 5000) => {
+	Toast.show({
+		text: message,
+		buttonText: 'OK',
+		duration: duration,
+		type: 'success',
+		position: position
+	})
+}
+
+export { showErrorToast, showSuccessToast }
