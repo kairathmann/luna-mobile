@@ -1,10 +1,11 @@
-import { pl as welcome_page } from '../src/views/pages/welcome/locales'
-import { pl as signup_page } from '../src/views/pages/signup/locales'
-import { pl as login_page } from '../src/views/pages/login/locales'
+import { pl as edit_page } from '../src/views/pages/edit/locales'
 import { pl as flow_page } from '../src/views/pages/flow/locales'
+import { pl as login_page } from '../src/views/pages/login/locales'
+import { pl as manage_page } from '../src/views/pages/manageprofile/locales'
 import { pl as profile_page } from '../src/views/pages/profile/locales'
 import { pl as recommendations_page } from '../src/views/pages/recommendations/locales'
-import { pl as edit_page } from '../src/views/pages/edit/locales'
+import { pl as signup_page } from '../src/views/pages/signup/locales'
+import { pl as welcome_page } from '../src/views/pages/welcome/locales'
 
 export default {
 	welcome_page,
@@ -12,6 +13,7 @@ export default {
 	login_page,
 	flow_page,
 	profile_page,
+	manage_page,
 	recommendations_page,
 	edit_page,
 	common: {

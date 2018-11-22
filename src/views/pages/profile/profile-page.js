@@ -46,6 +46,7 @@ export class ProfilePage extends React.Component {
 			goToEditPage: this._goToEditPage,
 			orientation: this.state.deviceOrientation
 		})
+		this._goToEditPage()
 	}
 
 	_goToEditPage = () => {

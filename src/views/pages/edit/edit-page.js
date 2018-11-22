@@ -76,6 +76,7 @@ export class EditPage extends React.Component {
 			saveProfile: this._saveChanges,
 			disabled: false
 		})
+		this.props.navigation.navigate(PAGES_NAMES.MANAGE_PROFILE)
 	}
 
 	_saveChanges = () => {

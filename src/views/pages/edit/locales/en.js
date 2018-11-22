@@ -1,4 +1,5 @@
 export default {
 	title: 'Edit profile',
-	welcome: 'Welcome'
+	welcome: 'Welcome',
+	manage_account: 'Delete/disable'
 }

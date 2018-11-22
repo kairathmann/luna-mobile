@@ -1,23 +1,66 @@
 import {
 	CANCEL_UPDATING_PROFILE,
+	CHANGE_PROFILE_STATUS_ERROR,
+	CHANGE_PROFILE_STATUS_SUCCESS,
 	CLEAR_DATA,
 	FETCH_PROFILE_SUCCESS,
 	FINISH_UPDATING_PROFILE,
 	PROFILE_START_LOCAL_LOADING,
 	SAVE_PROFILE_ERROR,
 	SAVE_PROFILE_SUCCESS,
-	START_UPDATING_PROFILE
+	START_CHANGE_PROFILE_STATUS,
+	START_UPDATING_PROFILE,
+	PREPARE_TO_CHANGE_STATUS
 } from './action-types'
 
 const initialState = {
 	profile: {},
 	profileToEdit: {},
 	error: '',
-	isLoading: false
+	isLoading: false,
+	status: {
+		isChanging: false,
+		error: ''
+	}
 }
 
 export function profileReducer(state = initialState, { payload, type }) {
 	switch (type) {
+		case CHANGE_PROFILE_STATUS_ERROR:
+			return {
+				...state,
+				status: {
+					isChanging: false,
+					error: payload
+				}
+			}
+		case CHANGE_PROFILE_STATUS_SUCCESS: {
+			return {
+				...state,
+				status: {
+					isChanging: false,
+					error: ''
+				}
+			}
+		}
+		case START_CHANGE_PROFILE_STATUS: {
+			return {
+				...state,
+				status: {
+					isChanging: true,
+					error: ''
+				}
+			}
+		}
+		case PREPARE_TO_CHANGE_STATUS: {
+			return {
+				...state,
+				status: {
+					isChanging: false,
+					error: ''
+				}
+			}
+		}
 		case FETCH_PROFILE_SUCCESS:
 			return {
 				...state,
