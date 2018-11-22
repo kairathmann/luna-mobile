@@ -12,6 +12,7 @@ import StarIcon from '../../../assets/images/star-icon.png'
 import {
 	avatarRelativeUrlToFullPhotoUrl,
 	getLoaderImageForGender,
+	isHydraImage,
 	isLandscape
 } from '../../../common/utils'
 import { ORIENTATION } from '../../../enums'
@@ -55,7 +56,7 @@ export class ProfilePage extends React.Component {
 
 	getAvatarImage = () => {
 		return this.props.profile.avatarUrl &&
-			!this.props.profile.avatarUrl.startsWith('hydra/img')
+			!isHydraImage(this.props.profile.avatarUrl)
 			? { uri: avatarRelativeUrlToFullPhotoUrl(this.props.profile.avatarUrl) }
 			: this.getDefaultImage(this.props.profile.gidIs)
 	}
