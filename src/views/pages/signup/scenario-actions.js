@@ -2,7 +2,11 @@ import { PAGES_NAMES } from '../../../navigation'
 import { navigationService } from '../../../services'
 import api from '../../../api'
 import { getErrorDataFromNetworkException } from '../../../common/utils'
-import { signupError, signupSuccess } from '../../../store/auth/actions'
+import {
+	clearSignUpError,
+	signupError,
+	signupSuccess
+} from '../../../store/auth/actions'
 
 export function signup({ email, password }) {
 	return async dispatch => {
@@ -18,3 +22,5 @@ export function signup({ email, password }) {
 		}
 	}
 }
+
+export const clearError = () => dispatch => dispatch(clearSignUpError())
