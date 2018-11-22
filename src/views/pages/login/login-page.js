@@ -14,12 +14,16 @@ const styles = auth
 
 export class LoginPage extends React.Component {
 	state = {
-		email: '',
-		password: '',
+		email: 'test+2@test.com',
+		password: 'qweqweqwe',
 		validationEnabled: false
 	}
 
 	inputs = {}
+
+	componentDidMount() {
+		this.handleSignin()
+	}
 
 	handleChange = (event, field) => {
 		this.setState({ [field]: event.nativeEvent.text })
