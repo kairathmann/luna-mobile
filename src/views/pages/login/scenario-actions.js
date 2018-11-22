@@ -1,15 +1,12 @@
 import api from '../../../api'
 import { getErrorDataFromNetworkException } from '../../../common/utils'
-
 import {
 	clearSignInError,
 	signinError,
 	signinSuccess
 } from '../../../store/auth/actions'
-
 import { PAGES_NAMES } from '../../../navigation'
 import { navigationService } from '../../../services'
-import { signinError, signinSuccess } from '../../../store/auth/actions'
 import { fetchProfileSuccess } from '../../../store/profile/actions'
 import { PROFILE_STATE } from '../../../enums'
 
