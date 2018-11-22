@@ -14,8 +14,7 @@ export function signup({ email, password }) {
 			// TODO: Show global loader
 			const result = await api.signup({ email, password })
 			dispatch(signupSuccess(result))
-			// TODO: uncomment when more screen will be ready
-			navigationService.navigate(PAGES_NAMES.FLOW_AVATAR)
+			navigationService.navigate(PAGES_NAMES.FLOW_NAME_BIRTHDAY)
 		} catch (error) {
 			dispatch(signupError(getErrorDataFromNetworkException(error)))
 		} finally {

@@ -31,6 +31,10 @@ class RecommendationsPage extends React.Component {
 		}
 	}
 
+	componentDidMount() {
+		this.props.fetchRecommendations()
+	}
+
 	getDeviceOrientation = () => {
 		const screenDimensions = Dimensions.get('screen')
 		return isLandscape(screenDimensions.width, screenDimensions.height)

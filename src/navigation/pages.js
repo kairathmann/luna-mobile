@@ -1,3 +1,4 @@
+import { Button, Icon } from 'native-base'
 /* eslint react/display-name: 0 */
 /* eslint react/prop-types: 0 */
 import React from 'react'
@@ -7,6 +8,16 @@ import {
 	createStackNavigator
 } from 'react-navigation'
 import I18n from '../../locales/i18n'
+import RecommendationsPageActiveNavigationIcon from '../assets/images/nav-icon-luna-active.png'
+import RecommendationsPageInactiveNavigationIcon from '../assets/images/nav-icon-luna.png'
+import MessagesPageActiveNavigationIcon from '../assets/images/nav-icon-messages-active.png'
+import MessagesPageInactiveNavigationIcon from '../assets/images/nav-icon-messages.png'
+import ProfilePageActiveNavigationIcon from '../assets/images/nav-icon-profile-active.png'
+import ProfilePageInactiveNavigationIcon from '../assets/images/nav-icon-profile.png'
+import { ORIENTATION } from '../enums'
+
+import { COLORS } from '../styles'
+import { LUNA_PRIMARY_COLOR } from '../styles/colors'
 import AgeLimitPage from '../views/pages/flow/age-limit/age-limit-page'
 import AlldonePage from '../views/pages/flow/alldone/alldone-page'
 import AvatarPage from '../views/pages/flow/avatar/avatar-page'
@@ -14,6 +25,7 @@ import GenderPreferencesPage from '../views/pages/flow/gender-preferences/gender
 import NameBirthdayPage from '../views/pages/flow/name-birthday/name-birthday-page'
 import TaglinePage from '../views/pages/flow/tagline/tagline-page'
 import LoginPage from '../views/pages/login/login-page'
+
 import SignupPage from '../views/pages/signup/signup-page'
 import ForgotPasswordPage from '../views/pages/forgot-password/forgot-password-page'
 import WelcomePage from '../views/pages/welcome/welcome-page'
@@ -21,21 +33,12 @@ import RecommendationsPage from '../views/pages/recommendations/recommendations-
 import ProfilePage from '../views/pages/profile/profile-page'
 import MessagesPage from '../views/pages/messages/messages-page'
 
-import { COLORS } from '../styles'
-import ProfilePageInactiveNavigationIcon from '../assets/images/nav-icon-profile.png'
-import ProfilePageActiveNavigationIcon from '../assets/images/nav-icon-profile-active.png'
-import RecommendationsPageInactiveNavigationIcon from '../assets/images/nav-icon-luna.png'
-import RecommendationsPageActiveNavigationIcon from '../assets/images/nav-icon-luna-active.png'
-import MessagesPageInactiveNavigationIcon from '../assets/images/nav-icon-messages.png'
-import MessagesPageActiveNavigationIcon from '../assets/images/nav-icon-messages-active.png'
-
 const PAGES_NAMES = {
 	WELCOME_PAGE: 'WELCOME_PAGE',
 	LOGIN_PAGE: 'LOGIN_PAGE',
 	SIGNUP_PAGE: 'SIGNUP_PAGE',
 	FORGOT_PASSWORD_PAGE: 'FORGOT_PASSWORD_PAGE',
 	HOME_PAGE: 'HOME_PAGE',
-	PROFILE_PAGE: 'PROFILE_PAGE',
 	RECOMMENDATIONS_PAGE: 'RECOMMENDATIONS_PAGE',
 	MESSAGES_PAGE: 'MESSAGES_PAGE',
 	FLOW_NAME_BIRTHDAY: 'FLOW_NAME_BIRTHDAY',
@@ -43,7 +46,8 @@ const PAGES_NAMES = {
 	FLOW_AGE_LIMIT: 'FLOW_AGE_LIMIT',
 	FLOW_TAGLINE: 'FLOW_TAGLINE',
 	FLOW_AVATAR: 'FLOW_AVATAR',
-	FLOW_ALLDONE: 'FLOW_ALLDONE'
+	FLOW_ALLDONE: 'FLOW_ALLDONE',
+	PROFILE: 'PROFILE'
 }
 
 const noNavbarStyle = {
@@ -55,10 +59,47 @@ const noNavbarStyle = {
 	}
 }
 
+const ProfilePageStackNavigation = createStackNavigator({
+	PROFILE: {
+		screen: ProfilePage,
+		navigationOptions: ({ navigation }) => ({
+			title: '',
+			headerTintColor: 'white',
+			headerTransparent: true,
+			headerRight: (
+				<Button
+					icon
+					transparent
+					style={{ marginRight: 4, marginTop: 4 }}
+					onPress={navigation.getParam('goToEditPage')}
+					title={'edit'}
+					color="#fff"
+				>
+					<Icon
+						name={'create'}
+						color={'white'}
+						style={{
+							color:
+								navigation.getParam('orientation') === ORIENTATION.LANDSCAPE
+									? LUNA_PRIMARY_COLOR
+									: 'white'
+						}}
+					/>
+				</Button>
+			),
+			headerStyle: {
+				zIndex: 100,
+				elevation: 0, //remove shadow on Android
+				shadowOpacity: 0 //remove shadow on iOS
+			}
+		})
+	}
+})
+
 const HomePageBottomTabNavigation = createBottomTabNavigator(
 	{
-		PROFILE_PAGE: {
-			screen: ProfilePage,
+		PROFILE: {
+			screen: ProfilePageStackNavigation,
 			navigationOptions: () => ({
 				title: '',
 				tabBarIcon: ({ focused }) => (
@@ -69,8 +110,7 @@ const HomePageBottomTabNavigation = createBottomTabNavigator(
 								: ProfilePageInactiveNavigationIcon
 						}
 					/>
-				),
-				header: null
+				)
 			})
 		},
 		RECOMMENDATIONS_PAGE: {
