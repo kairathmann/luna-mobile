@@ -5,10 +5,11 @@ import { Keyboard, Text, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { connect } from 'react-redux'
 import validator from 'validator'
+import { NavigationEvents } from 'react-navigation'
 import I18n from '../../../../locales/i18n'
 import Button from '../../../components/Button/'
 import { auth, styles as commonStyles } from '../../../styles'
-import { resetPassword } from './scenario-actions'
+import { clearError, resetPassword } from './scenario-actions'
 
 const styles = auth
 
@@ -32,10 +33,17 @@ export class ForgotPasswordPage extends React.Component {
 		})
 	}
 
+	clearErrorState = () => {
+		if (this.props.error) {
+			this.props.clearError()
+		}
+	}
+
 	render() {
 		const { email, validationEnabled } = this.state
 		return (
 			<View style={styles.content}>
+				<NavigationEvents onWillFocus={this.clearErrorState} />
 				<KeyboardAwareScrollView
 					keyboardShouldPersistTaps={'handled'}
 					enableOnAndroid={true}
@@ -78,6 +86,7 @@ export class ForgotPasswordPage extends React.Component {
 ForgotPasswordPage.propTypes = {
 	navigation: PropTypes.object.isRequired,
 	resetPassword: PropTypes.func.isRequired,
+	clearError: PropTypes.func.isRequired,
 	error: PropTypes.string
 }
 
@@ -89,6 +98,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
+		clearError: () => dispatch(clearError()),
 		resetPassword: email => dispatch(resetPassword(email))
 	}
 }

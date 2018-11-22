@@ -4,7 +4,10 @@ import {
 	SIGNUP_ERROR,
 	SIGNUP_SUCCESS,
 	RESET_PASSWORD_SUCCESS,
-	RESET_PASSWORD_ERROR
+	RESET_PASSWORD_ERROR,
+	CLEAR_SIGNIN_ERROR,
+	CLEAR_SIGNUP_ERROR,
+	CLEAR_RESET_PASSWORD_ERROR
 } from './action-types'
 
 const initialState = {
@@ -47,6 +50,21 @@ export function authReducer(state = initialState, { payload, type }) {
 			return {
 				...state,
 				resetPasswordError: payload
+			}
+		case CLEAR_SIGNIN_ERROR:
+			return {
+				...state,
+				signinError: ''
+			}
+		case CLEAR_SIGNUP_ERROR:
+			return {
+				...state,
+				signupError: ''
+			}
+		case CLEAR_RESET_PASSWORD_ERROR:
+			return {
+				...state,
+				resetPasswordError: ''
 			}
 		default:
 			return state
