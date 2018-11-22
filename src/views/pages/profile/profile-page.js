@@ -75,9 +75,7 @@ export class ProfilePage extends React.Component {
 						}
 					]}
 				>
-					{`${'Kamil Szmajnta vel makaron' || this.props.profile.firstName}, ${
-						this.props.profile.age
-					}`}
+					{`${this.props.profile.firstName}, ${this.props.profile.age}`}
 				</Text>
 				<View style={{ marginLeft: 32 }}>
 					<Text
