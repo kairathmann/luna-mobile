@@ -25,6 +25,12 @@ export class SignupPage extends React.Component {
 
 	inputs = {}
 
+	componentDidMount() {
+		this.setState({
+			password: 'qweqweqwe'
+		})
+	}
+
 	handleChange = (event, field) => {
 		this.setState({ [field]: event.nativeEvent.text }, this.validateForm)
 	}

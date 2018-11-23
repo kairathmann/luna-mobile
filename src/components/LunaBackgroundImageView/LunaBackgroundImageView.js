@@ -31,6 +31,8 @@ const styles = EStyleSheet.create({
 		alignItems: 'center'
 	},
 	image: {
+		minWidth: 256,
+		minHeight: 256,
 		marginLeft: 32,
 		marginRight: 32
 	}

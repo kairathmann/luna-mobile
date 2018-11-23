@@ -13,7 +13,7 @@ import { PROFILE_STATE } from '../../../enums'
 export function login({ email, password }) {
 	return async dispatch => {
 		try {
-			// TODO: Show global loader
+			navigationService.navigate(PAGES_NAMES.LOADER)
 			const loginResult = await api.signin({ email, password })
 			dispatch(signinSuccess(loginResult))
 			const profileResponse = await api.fetchSelf()
@@ -29,12 +29,11 @@ export function login({ email, password }) {
 					: PAGES_NAMES.FLOW_NAME_BIRTHDAY
 				navigationService.navigate(flowPageToNavigateTo)
 			} else {
-				navigationService.navigate(PAGES_NAMES.HOME_PAGE)
+				navigationService.navigate(PAGES_NAMES.PROFILE)
 			}
 		} catch (error) {
 			dispatch(signinError(getErrorDataFromNetworkException(error)))
-		} finally {
-			// TODO: Hide global loader
+			navigationService.navigate(PAGES_NAMES.LOGIN_PAGE)
 		}
 	}
 }

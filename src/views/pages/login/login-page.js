@@ -23,6 +23,18 @@ export class LoginPage extends React.Component {
 
 	inputs = {}
 
+	componentDidMount() {
+		this.setState(
+			{
+				email: 'test+2@test.com',
+				password: 'qweqweqwe'
+			},
+			() => {
+				this.handleSignin()
+			}
+		)
+	}
+
 	handleChange = (event, field) => {
 		this.setState({ [field]: event.nativeEvent.text })
 	}

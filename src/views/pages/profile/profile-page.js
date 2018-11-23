@@ -17,6 +17,7 @@ import {
 } from '../../../common/utils'
 import { ORIENTATION } from '../../../enums'
 import { PAGES_NAMES } from '../../../navigation'
+import { logout } from './scenario-actions'
 
 export class ProfilePage extends React.Component {
 	constructor(props) {
@@ -121,7 +122,12 @@ export class ProfilePage extends React.Component {
 					</Text>
 					<Image style={styles.biggerIcon} source={StarIcon} />
 				</Button>
-				<Button style={{ marginTop: 8 }} full danger onPress={() => {}}>
+				<Button
+					style={{ marginTop: 8 }}
+					full
+					danger
+					onPress={this.props.logout}
+				>
 					<Text style={styles.portraitLogoutText}>
 						{I18n.t('common.logout')}
 					</Text>
@@ -182,7 +188,7 @@ export class ProfilePage extends React.Component {
 						style={styles.landscapeLogoutButton}
 						full
 						bordered
-						onPress={() => {}}
+						onPress={this.props.logout}
 					>
 						<Text style={styles.landscapeLogoutButtonText}>
 							{I18n.t('common.logout')}
@@ -207,7 +213,8 @@ export class ProfilePage extends React.Component {
 
 ProfilePage.propTypes = {
 	navigation: PropTypes.object.isRequired,
-	profile: PropTypes.object.isRequired
+	profile: PropTypes.object.isRequired,
+	logout: PropTypes.func.isRequired
 }
 
 const styles = EStyleSheet.create({
@@ -303,8 +310,10 @@ const mapStateToProps = state => {
 	}
 }
 
-const mapDispatchToProps = () => {
-	return {}
+const mapDispatchToProps = dispatch => {
+	return {
+		logout: () => dispatch(logout())
+	}
 }
 
 export default connect(
