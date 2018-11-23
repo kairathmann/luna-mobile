@@ -12,6 +12,7 @@ import StarIcon from '../../../assets/images/star-icon.png'
 import {
 	avatarRelativeUrlToFullPhotoUrl,
 	getLoaderImageForGender,
+	isHydraImage,
 	isLandscape
 } from '../../../common/utils'
 import { ORIENTATION } from '../../../enums'
@@ -57,9 +58,9 @@ export class ProfilePage extends React.Component {
 
 	getAvatarImage = () => {
 		return this.props.profile.avatarUrl &&
-			!this.props.profile.avatarUrl.startsWith('hydra/img')
-			? this.processIfLocal()
-			: this.getDefaultImage(this.props.profile.gidIs)
+      !isHydraImage(this.props.profile.avatarUrl)
+        ? this.processIfLocal()
+        : this.getDefaultImage(this.props.profile.gidIs)
 	}
 
 	processIfLocal = () => {
@@ -77,20 +78,30 @@ export class ProfilePage extends React.Component {
 		return (
 			<View style={styles.centeredRow}>
 				<Text
-					style={[styles.imageTitle, { color: isLandscape ? '#222' : 'white' }]}
+					numberOfLines={isLandscape ? 2 : 1}
+					style={[
+						styles.imageTitle,
+						{
+							flex: 4,
+							maxWidth: isLandscape ? 256 : null,
+							color: isLandscape ? '#222' : 'white'
+						}
+					]}
 				>
 					{`${this.props.profile.firstName}, ${this.props.profile.age}`}
 				</Text>
-				<Text
-					style={[
-						styles.imageTitle,
-						{ marginLeft: 32, color: isLandscape ? '#222' : 'white' }
-					]}
-				>
-					{this.props.profile.balance
-						? Number(this.props.profile.balance.confirmed)
-						: 0}
-				</Text>
+				<View style={{ marginLeft: 32 }}>
+					<Text
+						style={[
+							styles.imageTitle,
+							{ color: isLandscape ? '#222' : 'white' }
+						]}
+					>
+						{this.props.profile.balance
+							? Number(this.props.profile.balance.confirmed)
+							: 0}
+					</Text>
+				</View>
 				<Image
 					style={[styles.smallIcon, { marginLeft: 4 }]}
 					source={StarIcon}
@@ -269,19 +280,22 @@ const styles = EStyleSheet.create({
 	landscapeContainer: {
 		flex: 1,
 		flexDirection: 'row',
+		alignContent: 'center',
 		alignItems: 'center',
 		justifyContent: 'center',
 		backgroundColor: '#efefef'
 	},
 	landscapeAvatarContainer: {
 		paddingLeft: 16,
-		paddingRight: 16
+		paddingRight: 16,
+		justifyContent: 'center',
+		alignItems: 'center'
 	},
 	landscapeAvatar: {
 		backgroundColor: '#888',
-		borderRadius: 120,
-		width: 240,
-		height: 240
+		borderRadius: 105,
+		width: 210,
+		height: 210
 	},
 	landscapeLogoutButton: {
 		marginTop: 8,
