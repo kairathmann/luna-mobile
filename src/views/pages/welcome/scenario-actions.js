@@ -22,7 +22,6 @@ export function startup() {
 				navigationService.navigate(PAGES_NAMES.HOME_PAGE)
 			}
 		} catch (error) {
-			console.log(error)
 			if (
 				I18n.t('common.errors.not_authenticated') ===
 				getErrorDataFromNetworkException(error)
