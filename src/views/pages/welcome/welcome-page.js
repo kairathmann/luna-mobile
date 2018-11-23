@@ -3,16 +3,17 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { Image, ImageBackground, ScrollView, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
-import SplashScreen from 'react-native-splash-screen'
+import connect from 'react-redux/es/connect/connect'
 import I18n from '../../../../locales/i18n'
 import WomanBackground from '../../../assets/images/woman-welcome-page-background.jpg'
 import LunaLogoText from '../../../assets/logos/luna-logo-with-text.png'
 import Button from '../../../components/Button'
 import { PAGES_NAMES } from '../../../navigation'
+import { startup } from './scenario-actions'
 
 class WelcomePage extends React.Component {
 	componentDidMount() {
-		SplashScreen.hide()
+		this.props.startup()
 	}
 
 	render() {
@@ -55,7 +56,8 @@ class WelcomePage extends React.Component {
 }
 
 WelcomePage.propTypes = {
-	navigation: PropTypes.object
+	navigation: PropTypes.object,
+	startup: PropTypes.func.isRequired
 }
 
 const styles = EStyleSheet.create({
@@ -96,4 +98,13 @@ const styles = EStyleSheet.create({
 	}
 })
 
-export default WelcomePage
+const mapDispatchToProps = dispatch => {
+	return {
+		startup: () => dispatch(startup())
+	}
+}
+
+export default connect(
+	null,
+	mapDispatchToProps
+)(WelcomePage)
