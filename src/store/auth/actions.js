@@ -7,8 +7,15 @@ import {
 	RESET_PASSWORD_ERROR,
 	CLEAR_SIGNIN_ERROR,
 	CLEAR_SIGNUP_ERROR,
-	CLEAR_RESET_PASSWORD_ERROR
+	CLEAR_RESET_PASSWORD_ERROR,
+	CLEAR_DATA
 } from './action-types'
+
+export function logoutUser() {
+	return {
+		type: CLEAR_DATA
+	}
+}
 
 export function signupError(error) {
 	return {

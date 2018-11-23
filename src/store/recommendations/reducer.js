@@ -20,6 +20,8 @@ export function recommendationsReducer(
 	{ payload, type }
 ) {
 	switch (type) {
+		case CLEAR_DATA:
+			return initialState
 		case LOAD_RECOMMENDATIONS_PROGRESS:
 			return {
 				...state,
@@ -53,10 +55,6 @@ export function recommendationsReducer(
 			return {
 				...state,
 				isShowingSkipped: true
-			}
-		case CLEAR_DATA:
-			return {
-				initialState
 			}
 		default:
 			return state

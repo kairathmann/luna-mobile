@@ -7,7 +7,8 @@ import {
 	RESET_PASSWORD_ERROR,
 	CLEAR_SIGNIN_ERROR,
 	CLEAR_SIGNUP_ERROR,
-	CLEAR_RESET_PASSWORD_ERROR
+	CLEAR_RESET_PASSWORD_ERROR,
+	CLEAR_DATA
 } from './action-types'
 
 const initialState = {
@@ -20,6 +21,8 @@ const initialState = {
 
 export function authReducer(state = initialState, { payload, type }) {
 	switch (type) {
+		case CLEAR_DATA:
+			return initialState
 		case SIGNUP_ERROR:
 			return {
 				...state,
