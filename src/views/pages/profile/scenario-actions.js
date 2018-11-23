@@ -8,12 +8,15 @@ import { clearData as clearProfile } from '../../../store/profile/actions'
 export function logout() {
 	return async dispatch => {
 		try {
+			navigationService.navigate(PAGES_NAMES.LOADER)
 			await api.logout()
 		} finally {
-			navigationService.navigate(PAGES_NAMES.WELCOME_PAGE)
-			dispatch(clearRecommendations())
-			dispatch(clearProfile())
-			dispatch(logoutUser())
+			setTimeout(() => {
+				navigationService.navigate(PAGES_NAMES.WELCOME_PAGE)
+				dispatch(clearRecommendations())
+				dispatch(clearProfile())
+				dispatch(logoutUser())
+			}, 2500)
 		}
 	}
 }
