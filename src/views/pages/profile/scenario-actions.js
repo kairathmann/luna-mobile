@@ -11,12 +11,10 @@ export function logout() {
 			navigationService.navigate(PAGES_NAMES.LOADER)
 			await api.logout()
 		} finally {
-			setTimeout(() => {
-				navigationService.navigate(PAGES_NAMES.WELCOME_PAGE)
-				dispatch(clearRecommendations())
-				dispatch(clearProfile())
-				dispatch(logoutUser())
-			}, 2500)
+			navigationService.navigate(PAGES_NAMES.WELCOME_PAGE)
+			dispatch(clearRecommendations())
+			dispatch(clearProfile())
+			dispatch(logoutUser())
 		}
 	}
 }
