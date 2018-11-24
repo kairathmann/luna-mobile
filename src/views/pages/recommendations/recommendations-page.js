@@ -1,3 +1,5 @@
+import { Button as NativeBaseButton, H3, Icon } from 'native-base'
+import PropTypes from 'prop-types'
 import React from 'react'
 import {
 	Dimensions,
@@ -6,22 +8,20 @@ import {
 	Text,
 	View
 } from 'react-native'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { Button as NativeBaseButton, H3, Icon } from 'native-base'
 import EStyleSheet from 'react-native-extended-stylesheet'
+import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
+import { isLandscape } from '../../../common/utils'
+import Button from '../../../components/Button'
+import LunaBackgroundImageView from '../../../components/LunaBackgroundImageView'
+import UserMatchView from '../../../components/UserMatchView'
+import { GENDER, ORIENTATION } from '../../../enums'
+import { styles as commonStyles } from '../../../styles'
 import {
 	fetchRecommendations,
 	switchToLoadingSkippedMatches,
 	unmatch
 } from './scenario-actions'
-import { styles as commonStyles } from '../../../styles'
-import { GENDER, ORIENTATION } from '../../../enums'
-import { isLandscape } from '../../../common/utils'
-import UserMatchView from '../../../components/UserMatchView'
-import LunaBackgroundImageView from '../../../components/LunaBackgroundImageView'
-import Button from '../../../components/Button'
 
 class RecommendationsPage extends React.Component {
 	constructor(props) {
@@ -173,7 +173,6 @@ class RecommendationsPage extends React.Component {
 				{!this.props.isLoading &&
 					!this.props.isFetchingRecommendationsError &&
 					this.props.matchesCount === 0 &&
-					!this.props.isShowingSkipped &&
 					this.renderNoMatchesMessage()}
 			</ScrollView>
 		)
