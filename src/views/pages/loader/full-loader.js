@@ -20,7 +20,8 @@ class FullLoader extends React.Component {
 		Animated.timing(this.spinValue, {
 			toValue: 1,
 			duration: 2000,
-			easing: Easing.inOut(Easing.cubic)
+			easing: Easing.inOut(Easing.cubic),
+			useNativeDriver: true
 		}).start(() => this.spin())
 	}
 

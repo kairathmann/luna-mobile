@@ -2,7 +2,9 @@ import {
 	LOAD_RECOMMENDATIONS_PROGRESS,
 	LOAD_RECOMMENDATIONS_SUCCESS,
 	LOAD_RECOMMENDATIONS_ERROR,
+	UNMATCH_RECOMMENDATION_PROGRESS,
 	UNMATCH_RECOMMENDATION_SUCCESS,
+	UNMATCH_RECOMMENDATION_FINISH,
 	SHOW_SKIPPED_RECOMMENDATIONS,
 	CLEAR_DATA
 } from './action-types'
@@ -21,9 +23,17 @@ export const doneFetchingRecommendationsError = errorMessage => ({
 	payload: errorMessage
 })
 
+export const startUnmatching = () => ({
+	type: UNMATCH_RECOMMENDATION_PROGRESS
+})
+
 export const doneUnmatchingRecommendationSuccess = idOfUserBeingUnmatched => ({
 	type: UNMATCH_RECOMMENDATION_SUCCESS,
 	payload: idOfUserBeingUnmatched
+})
+
+export const doneUnmatchingRecommendation = () => ({
+	type: UNMATCH_RECOMMENDATION_FINISH
 })
 
 export const showSkippedMatches = () => ({

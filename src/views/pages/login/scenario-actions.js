@@ -29,7 +29,7 @@ export function login({ email, password }) {
 					: PAGES_NAMES.FLOW_NAME_BIRTHDAY
 				navigationService.navigate(flowPageToNavigateTo)
 			} else {
-				navigationService.navigate(PAGES_NAMES.PROFILE)
+				navigationService.navigate(PAGES_NAMES.HOME_PAGE)
 			}
 		} catch (error) {
 			dispatch(signinError(getErrorDataFromNetworkException(error)))
