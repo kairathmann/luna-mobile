@@ -8,7 +8,9 @@ import { toastService } from '../../../services'
 import {
 	doneFetchingRecommendationsError,
 	doneFetchingRecommendationsSuccess,
+	startUnmatching,
 	doneUnmatchingRecommendationSuccess,
+	doneUnmatchingRecommendation,
 	showSkippedMatches,
 	startFetchingRecommendations
 } from '../../../store/recommendations/actions'
@@ -45,6 +47,7 @@ export const fetchRecommendations = () => async (dispatch, getState) => {
 
 export const unmatch = userId => async (dispatch, getState) => {
 	try {
+		dispatch(startUnmatching())
 		const isShowingSkippedMatches = getState().recommendations.isShowingSkipped
 		if (!isShowingSkippedMatches) {
 			await api.unmatch({ recipient_hid: userId })
@@ -60,6 +63,8 @@ export const unmatch = userId => async (dispatch, getState) => {
 	} catch (err) {
 		const errorMessage = getErrorDataFromNetworkException(err)
 		toastService.showErrorToast(errorMessage, 'top')
+	} finally {
+		dispatch(doneUnmatchingRecommendation())
 	}
 }
 
