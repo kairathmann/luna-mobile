@@ -14,7 +14,7 @@ import ConversationsList from '../../../components/ConversationsList'
 class ConversationsPage extends React.Component {
 	refreshConversations = () => {
 		// REFACTOR AS SOON AS ANDRZEJS CHANGES WITH PROFILE LOADING ARE MERGED
-		this.props.fetchConversations('2a569236')
+		this.props.fetchConversations(this.props.targetHid)
 	}
 
 	renderNewMessageCountView = newMessageCount => (
@@ -90,7 +90,8 @@ ConversationsPage.propTypes = {
 			pending: PropTypes.bool.isRequired,
 			subject: PropTypes.string.isRequired
 		})
-	).isRequired
+	).isRequired,
+	targetHid: PropTypes.string.isRequired
 }
 
 const styles = EStyleSheet.create({
@@ -128,7 +129,8 @@ const mapStateToProps = state => {
 		conversations: state.conversations.conversations,
 		newMessageCount: state.conversations.conversations.filter(
 			message => message.pending
-		).length
+		).length,
+		targetHid: state.profile.profile.targetHid
 	}
 }
 
