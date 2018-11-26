@@ -1,7 +1,5 @@
 import SplashScreen from 'react-native-splash-screen'
-import I18n from '../../../../locales/i18n'
 import api from '../../../api'
-import { getErrorDataFromNetworkException } from '../../../common/utils'
 import { PROFILE_STATE } from '../../../enums'
 import { PAGES_NAMES } from '../../../navigation'
 import { navigationService } from '../../../services'
@@ -22,13 +20,7 @@ export function startup() {
 				navigationService.navigate(PAGES_NAMES.HOME_PAGE)
 			}
 		} catch (error) {
-			console.log(error)
-			if (
-				I18n.t('common.errors.not_authenticated') ===
-				getErrorDataFromNetworkException(error)
-			) {
-				navigationService.navigate(PAGES_NAMES.WELCOME_PAGE)
-			}
+			navigationService.navigate(PAGES_NAMES.WELCOME_PAGE)
 		} finally {
 			SplashScreen.hide()
 		}
