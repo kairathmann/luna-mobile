@@ -1,16 +1,22 @@
 import { H3 } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
+import { connect } from 'react-redux'
 import { View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import I18n from '../../../../../locales/i18n'
 import { PAGES_NAMES } from '../../../../navigation/pages'
 import LunaBackgroundImageView from '../../../../components/LunaBackgroundImageView'
+import { conversationsListTimerService } from '../../../../services'
 
 const LOAD_FEED_PAGE_DELAY = 5000
 
 export class AlldonePage extends React.Component {
 	componentDidMount() {
+		conversationsListTimerService.initializeService(
+			this.props.dispatch,
+			this.props.targetHid
+		)
 		setTimeout(() => {
 			this.props.navigation.navigate(PAGES_NAMES.HOME_PAGE)
 		}, LOAD_FEED_PAGE_DELAY)
@@ -29,7 +35,8 @@ export class AlldonePage extends React.Component {
 
 AlldonePage.propTypes = {
 	navigation: PropTypes.object.isRequired,
-	fetchRecommendations: PropTypes.func.isRequired
+	dispatch: PropTypes.func.isRequired,
+	targetHid: PropTypes.string.isRequired
 }
 
 const styles = EStyleSheet.create({
@@ -46,4 +53,15 @@ const styles = EStyleSheet.create({
 	}
 })
 
-export default AlldonePage
+const mapStateToProps = state => ({
+	targetHid: state.profile.profile.targetHid
+})
+
+const mapDispatchToProps = dispatch => ({
+	dispatch
+})
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(AlldonePage)
