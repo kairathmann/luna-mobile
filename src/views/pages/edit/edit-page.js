@@ -63,10 +63,19 @@ export class EditPage extends React.Component {
 			sexuality: props.profile.gidSeeking || 2,
 			ageMax: props.profile.seekingAgeTo || MAX_AGE,
 			ageMin: props.profile.seekingAgeFrom || MIN_AGE,
+			localAvatar: props.profile.localAvatar || false,
 			minTouched: false,
 			maxTouched: false,
 			sliderWidth: this.calculateWidthOfMultiSlider(),
 			tagline: this.props.profile.tagline || ''
+		}
+	}
+
+	UNSAFE_componentWillReceiveProps(nextProps) {
+		if (this.props.isLoading !== nextProps.isLoading) {
+			nextProps.navigation.setParams({
+				disabled: nextProps.isLoading || this.state.name === ''
+			})
 		}
 	}
 
@@ -77,20 +86,7 @@ export class EditPage extends React.Component {
 		})
 	}
 
-	static getDerivedStateFromProps(props, state) {
-		if (this.props) {
-			this.props.navigation.setParams({
-				disabled: props.isLoading || state.name === ''
-			})
-		}
-
-		return null
-	}
-
 	_saveChanges = () => {
-		this.props.navigation.setParams({
-			disabled: this.props.isLoading
-		})
 		this.props.saveChanges(
 			{
 				firstName: this.state.name,
@@ -175,15 +171,17 @@ export class EditPage extends React.Component {
 	}
 
 	getAvatarUrl = () => {
-		const { avatarChanged, newAvatar } = this.state
+		const { avatarChanged, newAvatar, localAvatar } = this.state
 		const {
 			profile: { avatarUrl }
 		} = this.props
 		if (avatarChanged) {
 			return { uri: newAvatar }
+		} else if (localAvatar) {
+			return { uri: avatarUrl }
 		} else {
 			return avatarUrl
-				? avatarRelativeUrlToFullPhotoUrl(avatarUrl)
+				? { uri: avatarRelativeUrlToFullPhotoUrl(avatarUrl) }
 				: this.getDefaultImage()
 		}
 	}

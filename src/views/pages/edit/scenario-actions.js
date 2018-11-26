@@ -10,9 +10,10 @@ import {
 } from '../../../store/profile/actions'
 
 export function uploadChanges(changes, avatar) {
+	console.log({ changes, avatar })
 	return async dispatch => {
 		try {
-			let profileToSave = { ...changes, localAvatar: false }
+			let profileToSave = { ...changes }
 			dispatch(startLocalLoading())
 			await api.updateProfile(changes)
 			if (avatar) {
@@ -29,7 +30,7 @@ export function uploadChanges(changes, avatar) {
 				})
 				profileToSave = {
 					...profileToSave,
-					avatar: avatar.uri,
+					avatarUrl: avatar.uri,
 					localAvatar: true
 				}
 			}
