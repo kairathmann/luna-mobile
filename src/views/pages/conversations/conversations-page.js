@@ -10,9 +10,13 @@ import { fetchConversations } from './scenario-actions'
 import { GENDER } from '../../../enums'
 import { styles as commonStyles, notificationsStyles } from '../../../styles'
 import ConversationsList from '../../../components/ConversationsList'
+import { conversationsListTimerService } from '../../../services'
 
 class ConversationsPage extends React.Component {
 	refreshConversations = () => {
+		// when conversations view got refreshed due to entry on view or manual pull to refresh
+		// then reset the timer
+		conversationsListTimerService.resetTimer()
 		this.props.fetchConversations(this.props.targetHid)
 	}
 
