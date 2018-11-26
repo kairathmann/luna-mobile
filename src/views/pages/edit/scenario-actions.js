@@ -10,7 +10,6 @@ import {
 } from '../../../store/profile/actions'
 
 export function uploadChanges(changes, avatar) {
-	console.log({ changes, avatar })
 	return async dispatch => {
 		try {
 			let profileToSave = { ...changes }
