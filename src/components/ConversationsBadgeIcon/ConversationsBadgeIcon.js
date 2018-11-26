@@ -9,7 +9,7 @@ const ConversationsBadgeIcon = ({ unreadConcersationsCount }) => (
 		{unreadConcersationsCount > 0 && (
 			<Badge style={notificationsStyles.badgeOnAsNavigationIcon}>
 				<Text style={notificationsStyles.badgeText}>
-					{unreadConcersationsCount}
+					{unreadConcersationsCount > 99 ? '99' : unreadConcersationsCount}
 				</Text>
 			</Badge>
 		)}
