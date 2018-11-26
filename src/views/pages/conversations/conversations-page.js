@@ -31,7 +31,7 @@ class ConversationsPage extends React.Component {
 	render() {
 		return (
 			<ScrollView
-				contentContainerStyle={commonStyles.content}
+				contentContainerStyle={styles.scrollViewContainer}
 				refreshControl={
 					<RefreshControl
 						refreshing={this.props.isLoadingConversations}
@@ -94,6 +94,10 @@ ConversationsPage.propTypes = {
 }
 
 const styles = EStyleSheet.create({
+	scrollViewContainer: {
+		backgroundColor: 'white',
+		flexGrow: 1
+	},
 	errorTextContainer: {
 		flex: 1,
 		justifyContent: 'center',
