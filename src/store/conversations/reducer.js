@@ -37,9 +37,7 @@ export function conversationsReducer(state = initialState, { payload, type }) {
 				loadingConversationsErrorMessage: payload
 			}
 		case CLEAR_DATA:
-			return {
-				initialState
-			}
+			return initialState
 		default:
 			return state
 	}

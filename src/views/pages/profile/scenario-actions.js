@@ -4,6 +4,7 @@ import { navigationService } from '../../../services'
 import { logoutUser } from '../../../store/auth/actions'
 import { clearData as clearProfile } from '../../../store/profile/actions'
 import { clearData as clearRecommendations } from '../../../store/recommendations/actions'
+import { clearData as clearConversations } from '../../../store/conversations/actions'
 import { conversationsListTimerService } from '../../../services'
 
 export function logout() {
@@ -16,6 +17,7 @@ export function logout() {
 			navigationService.navigate(PAGES_NAMES.WELCOME_PAGE)
 			dispatch(clearRecommendations())
 			dispatch(clearProfile())
+			dispatch(clearConversations())
 			dispatch(logoutUser())
 		}
 	}
