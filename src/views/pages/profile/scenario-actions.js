@@ -16,8 +16,8 @@ export function logout() {
 		} finally {
 			navigationService.navigate(PAGES_NAMES.WELCOME_PAGE)
 			dispatch(clearRecommendations())
-			dispatch(clearProfile())
 			dispatch(clearConversations())
+			dispatch(clearProfile())
 			dispatch(logoutUser())
 		}
 	}
