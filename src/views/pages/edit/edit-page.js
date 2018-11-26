@@ -1,5 +1,5 @@
 import MultiSlider from '@ptomasroos/react-native-multi-slider'
-import moment from 'moment'
+// import moment from 'moment'
 import {
 	Form,
 	H3,
@@ -20,13 +20,14 @@ import {
 	TouchableOpacity,
 	View
 } from 'react-native'
-import Config from 'react-native-config'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import ImagePicker from 'react-native-image-picker'
-import DateTimePicker from 'react-native-modal-datetime-picker'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
-import { getLoaderImageForGender } from '../../../common/utils'
+import {
+	avatarRelativeUrlToFullPhotoUrl,
+	getLoaderImageForGender
+} from '../../../common/utils'
 import { GENDER } from '../../../enums'
 import { styles as commonStyles } from '../../../styles'
 import * as COLORS from '../../../styles/colors'
@@ -41,9 +42,9 @@ const options = {
 	}
 }
 
-const maxDate = moment()
-	.subtract(18, 'years')
-	.toDate()
+// const maxDate = moment()
+// 	.subtract(18, 'years')
+// 	.toDate()
 const MAX_AGE = 100
 const MIN_AGE = 18
 const EXTRA_MARGIN = 16
@@ -76,9 +77,15 @@ export class EditPage extends React.Component {
 		})
 	}
 
+	static getDerivedStateFromProps(props, state) {
+		this.props.navigation.setParams({
+			disabled: props.isLoading || state.name === ''
+		})
+	}
+
 	_saveChanges = () => {
 		this.props.navigation.setParams({
-			disabled: true
+			disabled: this.props.isLoading
 		})
 		this.props.saveChanges(
 			{
@@ -128,9 +135,16 @@ export class EditPage extends React.Component {
 	handleChange = (event, field) => {
 		this.setState({ [field]: event.nativeEvent.text }, () => {
 			this.props.navigation.setParams({
-				disabled: this.state.name === ''
+				disabled: this.props.isLoading || this.state.name === ''
 			})
 		})
+	}
+
+	handleChangeTagline = (event, field) => {
+		const text = event.nativeEvent.text
+		if (text.length <= 50) {
+			this.setState({ [field]: event.nativeEvent.text })
+		}
 	}
 
 	handleChangeSelect = (value, field) => {
@@ -165,7 +179,7 @@ export class EditPage extends React.Component {
 			return { uri: newAvatar }
 		} else {
 			return avatarUrl
-				? { uri: `${Config.APP_URL_BASE}/${avatarUrl}` }
+				? avatarRelativeUrlToFullPhotoUrl(avatarUrl)
 				: this.getDefaultImage()
 		}
 	}
@@ -196,7 +210,7 @@ export class EditPage extends React.Component {
 	}
 
 	renderBirthdayAndNameForm = () => {
-		const { pickerOpened, birthday, name } = this.state
+		const { name } = this.state
 		return (
 			<Form>
 				<Item floatingLabel last>
@@ -211,27 +225,27 @@ export class EditPage extends React.Component {
 						}}
 					/>
 				</Item>
-				<Item stackedLabel style={styles.birthdayContainer} last>
-					<Label>{I18n.t('flow_page.name_birthday.birthday')}</Label>
-					<TouchableOpacity
-						style={styles.birthdayButton}
-						onPress={this.showDateTimePicker}
-					>
-						<Text style={styles.birthdayText}>
-							{birthday !== ''
-								? moment(birthday).format('DD-MM-YYYY')
-								: 'DD-MM-YYYY'}
-						</Text>
-					</TouchableOpacity>
-					<DateTimePicker
-						maximumDate={maxDate}
-						isVisible={pickerOpened}
-						confirmTextStyle={styles.datePickerButton}
-						cancelTextStyle={styles.datePickerButton}
-						onConfirm={this.handleDatePicked}
-						onCancel={this.hideDateTimePicker}
-					/>
-				</Item>
+				{/*<Item stackedLabel style={styles.birthdayContainer} last>*/}
+				{/*<Label>{I18n.t('flow_page.name_birthday.birthday')}</Label>*/}
+				{/*<TouchableOpacity*/}
+				{/*style={styles.birthdayButton}*/}
+				{/*onPress={this.showDateTimePicker}*/}
+				{/*>*/}
+				{/*<Text style={styles.birthdayText}>*/}
+				{/*{birthday !== ''*/}
+				{/*? moment(birthday).format('DD-MM-YYYY')*/}
+				{/*: 'DD-MM-YYYY'}*/}
+				{/*</Text>*/}
+				{/*</TouchableOpacity>*/}
+				{/*<DateTimePicker*/}
+				{/*maximumDate={maxDate}*/}
+				{/*isVisible={pickerOpened}*/}
+				{/*confirmTextStyle={styles.datePickerButton}*/}
+				{/*cancelTextStyle={styles.datePickerButton}*/}
+				{/*onConfirm={this.handleDatePicked}*/}
+				{/*onCancel={this.hideDateTimePicker}*/}
+				{/*/>*/}
+				{/*</Item>*/}
 			</Form>
 		)
 	}
@@ -333,7 +347,6 @@ export class EditPage extends React.Component {
 		const { tagline } = this.state
 		return (
 			<React.Fragment>
-				<Text>{I18n.t('flow_page.tagline.tagline')}</Text>
 				<Form>
 					<Item floatingLabel last>
 						<Label>{I18n.t('flow_page.tagline.inputLabel')}</Label>
@@ -341,12 +354,8 @@ export class EditPage extends React.Component {
 							numberOfLines={3}
 							multiline={true}
 							blurOnSubmit={false}
-							onChange={val => this.handleChange(val, 'tagline')}
+							onChange={val => this.handleChangeTagline(val, 'tagline')}
 							value={tagline}
-							returnKeyType={'done'}
-							onSubmitEditing={() => {
-								this.handleNext()
-							}}
 						/>
 					</Item>
 				</Form>
@@ -364,23 +373,21 @@ export class EditPage extends React.Component {
 
 	render() {
 		return (
-			<React.Fragment>
-				<ScrollView style={{ padding: 8 }}>
-					<H3 style={styles.welcomePrompt}>
-						{`${I18n.t('edit_page.welcome')} ${this.state.name}`}{' '}
-					</H3>
-					{this.props.errorText && (
-						<Text style={commonStyles.errorText}>{this.props.errorText}</Text>
-					)}
-					{this.renderAvatar()}
-					{/*TODO: should be hidden as API does not return birthdate*/}
-					{/*{ this.renderBirthdayAndNameForm() }*/}
-					{this.renderGender()}
-					{/*TODO: should be hidden as API does not return seeking_age_from and seeking_age_to*/}
-					{/*{ this.renderAgeLimits() }*/}
-					{this.renderTagline()}
-				</ScrollView>
-			</React.Fragment>
+			<ScrollView style={{ padding: 8 }}>
+				<H3 style={styles.welcomePrompt}>
+					{`${I18n.t('edit_page.welcome')} ${this.state.name}`}{' '}
+				</H3>
+				{this.props.errorText && (
+					<Text style={commonStyles.errorText}>{this.props.errorText}</Text>
+				)}
+				{this.renderAvatar()}
+				{/*TODO: should be hidden as API does not return birthdate*/}
+				{this.renderBirthdayAndNameForm()}
+				{this.renderGender()}
+				{/*TODO: should be hidden as API does not return seeking_age_from and seeking_age_to*/}
+				{/*{ this.renderAgeLimits() }*/}
+				{this.renderTagline()}
+			</ScrollView>
 		)
 	}
 }
@@ -484,7 +491,7 @@ const styles = EStyleSheet.create({
 		paddingBottom: 16
 	},
 	taglineCounterLimit: {
-		color: LUNA_PRIMARY_COLOR
+		color: '$primaryColor'
 	}
 })
 
@@ -492,7 +499,7 @@ const mapStateToProps = state => {
 	return {
 		profile: state.profile.profileToEdit,
 		isLoading: state.profile.isLoading,
-		error: state.profile.error
+		errorText: state.profile.error
 	}
 }
 
