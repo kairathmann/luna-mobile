@@ -13,7 +13,6 @@ import ConversationsList from '../../../components/ConversationsList'
 
 class ConversationsPage extends React.Component {
 	refreshConversations = () => {
-		// REFACTOR AS SOON AS ANDRZEJS CHANGES WITH PROFILE LOADING ARE MERGED
 		this.props.fetchConversations(this.props.targetHid)
 	}
 
