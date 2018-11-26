@@ -70,6 +70,7 @@ export class TaglinePage extends React.Component {
 								numberOfLines={3}
 								multiline={true}
 								blurOnSubmit={false}
+								maxLength={MAX_LENGTH}
 								onChange={val => this.handleChange(val, 'tagline')}
 								value={tagline}
 								returnKeyType={'done'}

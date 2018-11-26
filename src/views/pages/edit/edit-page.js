@@ -22,6 +22,7 @@ import {
 } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import ImagePicker from 'react-native-image-picker'
+import { NavigationEvents } from 'react-navigation'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
 import {
@@ -350,6 +351,7 @@ export class EditPage extends React.Component {
 						<Label>{I18n.t('flow_page.tagline.inputLabel')}</Label>
 						<Input
 							numberOfLines={3}
+							maxLength={MAX_LENGTH}
 							multiline={true}
 							blurOnSubmit={false}
 							onChange={val => this.handleChangeTagline(val, 'tagline')}
@@ -371,19 +373,27 @@ export class EditPage extends React.Component {
 
 	render() {
 		return (
-			<ScrollView style={{ padding: 8 }}>
-				<H3 style={styles.welcomePrompt}>
-					{`${I18n.t('edit_page.welcome')} ${this.state.name}`}{' '}
-				</H3>
-				<Text style={commonStyles.errorText}>{this.props.errorText}</Text>
-				{this.renderAvatar()}
-				{/*TODO: should be hidden as API does not return birthdate*/}
-				{this.renderBirthdayAndNameForm()}
-				{this.renderGender()}
-				{/*TODO: should be hidden as API does not return seeking_age_from and seeking_age_to*/}
-				{/*{ this.renderAgeLimits() }*/}
-				{this.renderTagline()}
-			</ScrollView>
+			<React.Fragment>
+				<NavigationEvents
+					onDidBlur={props => {
+						this.props.navigation.goBack(null)
+						this.props.navigation.navigate(props.action)
+					}}
+				/>
+				<ScrollView style={{ padding: 8 }}>
+					<H3 style={styles.welcomePrompt}>
+						{`${I18n.t('edit_page.welcome')} ${this.state.name}`}{' '}
+					</H3>
+					<Text style={commonStyles.errorText}>{this.props.errorText}</Text>
+					{this.renderAvatar()}
+					{/*TODO: should be hidden as API does not return birthdate*/}
+					{this.renderBirthdayAndNameForm()}
+					{this.renderGender()}
+					{/*TODO: should be hidden as API does not return seeking_age_from and seeking_age_to*/}
+					{/*{ this.renderAgeLimits() }*/}
+					{this.renderTagline()}
+				</ScrollView>
+			</React.Fragment>
 		)
 	}
 }
