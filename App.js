@@ -6,7 +6,7 @@ import { Root } from 'native-base'
 import 'moment/locale/pl'
 import 'moment/locale/de'
 import configureApi from './src/config/config'
-import { AppStackNavigator } from './src/navigation'
+import { RootStack } from './src/navigation'
 import { navigationService } from './src/services'
 import configureStore from './src/store'
 
@@ -28,7 +28,7 @@ export default class App extends React.Component {
 		return (
 			<Provider store={store}>
 				<Root>
-					<AppStackNavigator
+					<RootStack
 						ref={navigatorRef => {
 							navigationService.setTopLevelNavigator(navigatorRef)
 						}}

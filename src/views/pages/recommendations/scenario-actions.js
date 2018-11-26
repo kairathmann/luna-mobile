@@ -4,14 +4,16 @@ import {
 	getErrorDataFromNetworkException,
 	rewriteUrlImageForDefault
 } from '../../../common/utils'
-import {
-	startFetchingRecommendations,
-	doneFetchingRecommendationsSuccess,
-	doneFetchingRecommendationsError,
-	doneUnmatchingRecommendationSuccess,
-	showSkippedMatches
-} from '../../../store/recommendations/actions'
 import { toastService } from '../../../services'
+import {
+	doneFetchingRecommendationsError,
+	doneFetchingRecommendationsSuccess,
+	startUnmatching,
+	doneUnmatchingRecommendationSuccess,
+	doneUnmatchingRecommendation,
+	showSkippedMatches,
+	startFetchingRecommendations
+} from '../../../store/recommendations/actions'
 
 const remapMatches = matches => {
 	return matches.map(person => {
@@ -31,7 +33,6 @@ const remapMatches = matches => {
 
 export const fetchRecommendations = () => async (dispatch, getState) => {
 	try {
-		// TODO: Show global loader
 		dispatch(startFetchingRecommendations())
 		const response = getState().recommendations.isShowingSkipped
 			? await api.fetchSkipped()
@@ -41,20 +42,17 @@ export const fetchRecommendations = () => async (dispatch, getState) => {
 	} catch (err) {
 		const errorMessage = getErrorDataFromNetworkException(err)
 		dispatch(doneFetchingRecommendationsError(errorMessage))
-		// TODO: Better error handling
-	} finally {
-		// TODO: Hide global loader
 	}
 }
 
-export const unmatch = userid => async (dispatch, getState) => {
+export const unmatch = userId => async (dispatch, getState) => {
 	try {
+		dispatch(startUnmatching())
 		const isShowingSkippedMatches = getState().recommendations.isShowingSkipped
-		// TODO: Show global loader
 		if (!isShowingSkippedMatches) {
-			await api.unmatch({ recipient_hid: userid })
+			await api.unmatch({ recipient_hid: userId })
 		}
-		await dispatch(doneUnmatchingRecommendationSuccess(userid))
+		await dispatch(doneUnmatchingRecommendationSuccess(userId))
 		if (getState().recommendations.recommendations.length === 0) {
 			const response = getState().recommendations.isShowingSkipped
 				? await api.fetchSkipped()
@@ -65,9 +63,8 @@ export const unmatch = userid => async (dispatch, getState) => {
 	} catch (err) {
 		const errorMessage = getErrorDataFromNetworkException(err)
 		toastService.showErrorToast(errorMessage, 'top')
-		// TODO: Better error handling
 	} finally {
-		// TODO: Hide global loader
+		dispatch(doneUnmatchingRecommendation())
 	}
 }
 
