@@ -1,8 +1,8 @@
-import { Button, Icon } from 'native-base'
 /* eslint react/display-name: 0 */
 /* eslint react/prop-types: 0 */
+import { Button, Icon } from 'native-base'
 import React from 'react'
-import { Image } from 'react-native'
+import { Image, ImageBackground } from 'react-native'
 import {
 	createBottomTabNavigator,
 	createStackNavigator
@@ -33,6 +33,8 @@ import WelcomePage from '../views/pages/welcome/welcome-page'
 import RecommendationsPage from '../views/pages/recommendations/recommendations-page'
 import ProfilePage from '../views/pages/profile/profile-page'
 import ConversationsPage from '../views/pages/conversations/conversations-page'
+
+import ConversationsBadgeIcon from '../components/ConversationsBadgeIcon'
 
 const PAGES_NAMES = {
 	WELCOME_PAGE: 'WELCOME_PAGE',
@@ -135,13 +137,19 @@ const HomePageBottomTabNavigation = createBottomTabNavigator(
 			navigationOptions: () => ({
 				title: '',
 				tabBarIcon: ({ focused }) => (
-					<Image
+					<ImageBackground
+						style={{
+							width: 37,
+							height: 34
+						}}
 						source={
 							focused
 								? ConversationsPageActiveNavigationIcon
 								: ConversationsPageInactiveNavigationIcon
 						}
-					/>
+					>
+						<ConversationsBadgeIcon />
+					</ImageBackground>
 				)
 			})
 		}

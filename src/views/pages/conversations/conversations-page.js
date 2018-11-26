@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 import { NavigationEvents } from 'react-navigation'
 import { fetchConversations } from './scenario-actions'
 import { GENDER } from '../../../enums'
-import { styles as commonStyles } from '../../../styles'
+import { styles as commonStyles, notificationsStyles } from '../../../styles'
 import ConversationsList from '../../../components/ConversationsList'
 
 class ConversationsPage extends React.Component {
@@ -20,8 +20,8 @@ class ConversationsPage extends React.Component {
 	renderNewMessageCountView = newMessageCount => (
 		<View style={styles.newMessageContainer}>
 			<H3>{I18n.t('conversations_page.new_messages')}</H3>
-			<Badge style={styles.badge}>
-				<NativeBaseText style={styles.badgeText}>
+			<Badge style={notificationsStyles.badge}>
+				<NativeBaseText style={notificationsStyles.badgeText}>
 					{newMessageCount > 99 ? '99+' : newMessageCount}
 				</NativeBaseText>
 			</Badge>
@@ -111,13 +111,6 @@ const styles = EStyleSheet.create({
 		alignItems: 'center',
 		flexDirection: 'row',
 		padding: '0.8rem'
-	},
-	badge: {
-		backgroundColor: '$lunaNotificationCircle',
-		marginLeft: '0.5rem'
-	},
-	badgeText: {
-		color: 'black'
 	}
 })
 
