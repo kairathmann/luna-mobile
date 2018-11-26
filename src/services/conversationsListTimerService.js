@@ -3,13 +3,21 @@ import { doneFetchingConversationsSuccess } from '../store/conversations/actions
 let timerInstance = ''
 let dispatchInstance = ''
 let userTargetHid = ''
-const UPDATE_INTERVAL_IN_MILISECONDS = 30000
+const UPDATE_INTERVAL_IN_MILISECONDS =
+	process.env.NODE_ENV === 'development' ? 15000 : 60000
 
-const initializeService = (dispatch, userId) => {
+const initializeService = async (dispatch, userId) => {
 	stopTimer()
 	dispatchInstance = dispatch
 	userTargetHid = userId
-	launchTimer()
+	try {
+		const conversations = await fetchConversations(userTargetHid)
+		dispatchInstance(doneFetchingConversationsSuccess(conversations))
+		launchTimer()
+	} catch {
+		// if loading failed then don't set another timeout
+		clearTimeout(timerInstance)
+	}
 }
 
 const launchTimer = () => {
