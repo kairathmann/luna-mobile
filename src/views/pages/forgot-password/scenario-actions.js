@@ -1,5 +1,7 @@
 import api from '../../../api'
 import { getErrorDataFromNetworkException } from '../../../common/utils'
+import { PAGES_NAMES } from '../../../navigation'
+import { navigationService } from '../../../services'
 import {
 	resetPasswordError,
 	resetPasswordSuccess,
@@ -10,7 +12,7 @@ import { toastService } from '../../../services'
 
 export const resetPassword = email => async dispatch => {
 	try {
-		// TODO: Show global loader
+		navigationService.navigate(PAGES_NAMES.LOADER)
 		await api.forgotPassword({ email })
 		dispatch(resetPasswordSuccess())
 		toastService.showSuccessToast(
@@ -20,7 +22,7 @@ export const resetPassword = email => async dispatch => {
 	} catch (error) {
 		dispatch(resetPasswordError(getErrorDataFromNetworkException(error)))
 	} finally {
-		// TODO: Hide global loader
+		navigationService.navigate(PAGES_NAMES.FORGOT_PASSWORD_PAGE)
 	}
 }
 

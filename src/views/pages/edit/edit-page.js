@@ -78,9 +78,13 @@ export class EditPage extends React.Component {
 	}
 
 	static getDerivedStateFromProps(props, state) {
-		this.props.navigation.setParams({
-			disabled: props.isLoading || state.name === ''
-		})
+		if (this.props) {
+			this.props.navigation.setParams({
+				disabled: props.isLoading || state.name === ''
+			})
+		}
+
+		return null
 	}
 
 	_saveChanges = () => {
@@ -219,10 +223,6 @@ export class EditPage extends React.Component {
 						blurOnSubmit={false}
 						onChange={val => this.handleChange(val, 'name')}
 						value={name}
-						returnKeyType={'next'}
-						onSubmitEditing={() => {
-							this.showDateTimePicker()
-						}}
 					/>
 				</Item>
 				{/*<Item stackedLabel style={styles.birthdayContainer} last>*/}
@@ -377,9 +377,7 @@ export class EditPage extends React.Component {
 				<H3 style={styles.welcomePrompt}>
 					{`${I18n.t('edit_page.welcome')} ${this.state.name}`}{' '}
 				</H3>
-				{this.props.errorText && (
-					<Text style={commonStyles.errorText}>{this.props.errorText}</Text>
-				)}
+				<Text style={commonStyles.errorText}>{this.props.errorText}</Text>
 				{this.renderAvatar()}
 				{/*TODO: should be hidden as API does not return birthdate*/}
 				{this.renderBirthdayAndNameForm()}

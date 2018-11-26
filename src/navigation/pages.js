@@ -25,14 +25,15 @@ import AvatarPage from '../views/pages/flow/avatar/avatar-page'
 import GenderPreferencesPage from '../views/pages/flow/gender-preferences/gender-preferences-page'
 import NameBirthdayPage from '../views/pages/flow/name-birthday/name-birthday-page'
 import TaglinePage from '../views/pages/flow/tagline/tagline-page'
+import ForgotPasswordPage from '../views/pages/forgot-password/forgot-password-page'
+import FullLoader from '../views/pages/loader/full-loader'
 import LoginPage from '../views/pages/login/login-page'
+import MessagesPage from '../views/pages/messages/messages-page'
+import ProfilePage from '../views/pages/profile/profile-page'
+import RecommendationsPage from '../views/pages/recommendations/recommendations-page'
 
 import SignupPage from '../views/pages/signup/signup-page'
-import ForgotPasswordPage from '../views/pages/forgot-password/forgot-password-page'
 import WelcomePage from '../views/pages/welcome/welcome-page'
-import RecommendationsPage from '../views/pages/recommendations/recommendations-page'
-import ProfilePage from '../views/pages/profile/profile-page'
-import MessagesPage from '../views/pages/messages/messages-page'
 
 const PAGES_NAMES = {
 	WELCOME_PAGE: 'WELCOME_PAGE',
@@ -49,7 +50,8 @@ const PAGES_NAMES = {
 	FLOW_AVATAR: 'FLOW_AVATAR',
 	FLOW_ALLDONE: 'FLOW_ALLDONE',
 	PROFILE: 'PROFILE',
-	EDIT_PROFILE: 'EDIT_PROFILE'
+	EDIT_PROFILE: 'EDIT_PROFILE',
+	LOADER: 'LOADER'
 }
 
 const noNavbarStyle = {
@@ -263,4 +265,19 @@ const AppStackNavigator = createStackNavigator({
 	}
 })
 
-export { PAGES_NAMES, AppStackNavigator }
+const RootStack = createStackNavigator(
+	{
+		Main: {
+			screen: AppStackNavigator
+		},
+		LOADER: {
+			screen: FullLoader
+		}
+	},
+	{
+		mode: 'modal',
+		headerMode: 'none'
+	}
+)
+
+export { PAGES_NAMES, RootStack }

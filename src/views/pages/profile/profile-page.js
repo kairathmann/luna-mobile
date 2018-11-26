@@ -2,13 +2,13 @@ import { Button, H3 } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Dimensions, Image, Text, View } from 'react-native'
-import EStyleSheet from 'react-native-extended-stylesheet'
 import HeaderImageScrollView from 'react-native-image-header-scroll-view'
 import LinearGradient from 'react-native-linear-gradient'
 import { Header } from 'react-navigation'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
 import StarIcon from '../../../assets/images/star-icon.png'
+import EStyleSheet from 'react-native-extended-stylesheet'
 import {
 	avatarRelativeUrlToFullPhotoUrl,
 	getLoaderImageForGender,
@@ -17,7 +17,7 @@ import {
 } from '../../../common/utils'
 import { ORIENTATION } from '../../../enums'
 import { PAGES_NAMES } from '../../../navigation'
-import { startEditing } from './scenario-actions'
+import { logout, startEditing } from './scenario-actions'
 
 export class ProfilePage extends React.Component {
 	constructor(props) {
@@ -58,9 +58,9 @@ export class ProfilePage extends React.Component {
 
 	getAvatarImage = () => {
 		return this.props.profile.avatarUrl &&
-      !isHydraImage(this.props.profile.avatarUrl)
-        ? this.processIfLocal()
-        : this.getDefaultImage(this.props.profile.gidIs)
+			!isHydraImage(this.props.profile.avatarUrl)
+			? this.processIfLocal()
+			: this.getDefaultImage(this.props.profile.gidIs)
 	}
 
 	processIfLocal = () => {
@@ -133,7 +133,12 @@ export class ProfilePage extends React.Component {
 					</Text>
 					<Image style={styles.biggerIcon} source={StarIcon} />
 				</Button>
-				<Button style={{ marginTop: 8 }} full danger onPress={() => {}}>
+				<Button
+					style={{ marginTop: 8 }}
+					full
+					danger
+					onPress={this.props.logout}
+				>
 					<Text style={styles.portraitLogoutText}>
 						{I18n.t('common.logout')}
 					</Text>
@@ -194,7 +199,7 @@ export class ProfilePage extends React.Component {
 						style={styles.landscapeLogoutButton}
 						full
 						bordered
-						onPress={() => {}}
+						onPress={this.props.logout}
 					>
 						<Text style={styles.landscapeLogoutButtonText}>
 							{I18n.t('common.logout')}
@@ -220,7 +225,8 @@ export class ProfilePage extends React.Component {
 ProfilePage.propTypes = {
 	navigation: PropTypes.object.isRequired,
 	profile: PropTypes.object.isRequired,
-	startEditing: PropTypes.func.isRequired
+	startEditing: PropTypes.func.isRequired,
+	logout: PropTypes.func.isRequired
 }
 
 const styles = EStyleSheet.create({
@@ -318,7 +324,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		startEditing: () => dispatch(startEditing())
+		startEditing: () => dispatch(startEditing()),
+		logout: () => dispatch(logout())
 	}
 }
 
