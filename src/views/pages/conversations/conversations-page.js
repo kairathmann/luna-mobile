@@ -1,5 +1,11 @@
 import React from 'react'
-import { Text, RefreshControl, ScrollView, View } from 'react-native'
+import {
+	ImageBackground,
+	Text,
+	RefreshControl,
+	ScrollView,
+	View
+} from 'react-native'
 import { Badge, H3, Text as NativeBaseText } from 'native-base'
 import PropTypes from 'prop-types'
 import EStyleSheet from 'react-native-extended-stylesheet'
@@ -63,6 +69,19 @@ class ConversationsPage extends React.Component {
 									'conversations_page.error_could_not_fetch_conversations'
 								)}
 							</Text>
+						</View>
+					)}
+				{!this.props.isLoadingConversations &&
+					!this.props.isLoadingConversations &&
+					this.props.conversations.length === 0 && (
+						<View
+							style={{
+								flex: 1,
+								justifyContent: 'center',
+								alignItems: 'center'
+							}}
+						>
+							<ImageBackground />
 						</View>
 					)}
 			</ScrollView>
