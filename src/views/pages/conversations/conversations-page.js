@@ -5,16 +5,13 @@ import PropTypes from 'prop-types'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import I18n from '../../../../locales/i18n'
 import { connect } from 'react-redux'
+import { NavigationEvents } from 'react-navigation'
 import { fetchConversations } from './scenario-actions'
 import { GENDER } from '../../../enums'
 import { styles as commonStyles } from '../../../styles'
 import ConversationsList from '../../../components/ConversationsList'
 
 class ConversationsPage extends React.Component {
-	componentDidMount() {
-		this.refreshConversations()
-	}
-
 	refreshConversations = () => {
 		// REFACTOR AS SOON AS ANDRZEJS CHANGES WITH PROFILE LOADING ARE MERGED
 		this.props.fetchConversations('2a569236')
@@ -42,6 +39,7 @@ class ConversationsPage extends React.Component {
 					/>
 				}
 			>
+				<NavigationEvents onWillFocus={this.refreshConversations} />
 				{this.props.isLoadingConversations && (
 					<View style={commonStyles.content} />
 				)}
