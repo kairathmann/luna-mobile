@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 import { NavigationEvents } from 'react-navigation'
 import { fetchConversations } from './scenario-actions'
 import { GENDER } from '../../../enums'
-import { styles as commonStyles, notificationsStyles } from '../../../styles'
+import { styles as commonStyles, notifications } from '../../../styles'
 import ConversationsList from '../../../components/ConversationsList'
 import { conversationsListTimerService } from '../../../services'
 import PalmTree from '../../../assets/images/palm-tree.png'
@@ -24,8 +24,8 @@ class ConversationsPage extends React.Component {
 	renderNewMessageCountView = newMessageCount => (
 		<View style={styles.newMessageContainer}>
 			<H3>{I18n.t('conversations_page.new_messages')}</H3>
-			<Badge style={notificationsStyles.badge}>
-				<NativeBaseText style={notificationsStyles.badgeText}>
+			<Badge style={notifications.badge}>
+				<NativeBaseText style={notifications.badgeText}>
 					{newMessageCount > 99 ? '99' : newMessageCount}
 				</NativeBaseText>
 			</Badge>
