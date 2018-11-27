@@ -30,7 +30,6 @@ import {
 	isHydraImage
 } from '../../../common/utils'
 import { GENDER } from '../../../enums'
-import { styles as commonStyles } from '../../../styles'
 import * as COLORS from '../../../styles/colors'
 import { LUNA_PRIMARY_COLOR } from '../../../styles/colors'
 import { uploadChanges } from './scenario-actions'
@@ -378,7 +377,6 @@ export class EditPage extends React.Component {
 					<H3 style={styles.welcomePrompt}>
 						{`${I18n.t('edit_page.welcome')} ${this.state.name}`}{' '}
 					</H3>
-					<Text style={commonStyles.errorText}>{this.props.errorText}</Text>
 					{this.renderAvatar()}
 					{/*TODO: should be hidden as API does not return birthdate*/}
 					{this.renderBirthdayAndNameForm()}
@@ -396,7 +394,6 @@ EditPage.propTypes = {
 	navigation: PropTypes.object.isRequired,
 	profile: PropTypes.object.isRequired,
 	saveChanges: PropTypes.func.isRequired,
-	errorText: PropTypes.string,
 	isLoading: PropTypes.bool
 }
 
@@ -498,8 +495,7 @@ const styles = EStyleSheet.create({
 const mapStateToProps = state => {
 	return {
 		profile: state.profile.profileToEdit,
-		isLoading: state.profile.isLoading,
-		errorText: state.profile.error
+		isLoading: state.profile.isLoading
 	}
 }
 

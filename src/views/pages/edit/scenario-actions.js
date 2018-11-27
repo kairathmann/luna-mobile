@@ -1,7 +1,7 @@
 import api from '../../../api'
 import { getErrorDataFromNetworkException } from '../../../common/utils'
 import { PAGES_NAMES } from '../../../navigation'
-import { navigationService } from '../../../services'
+import { navigationService, toastService } from '../../../services'
 import {
 	finishUpdatingProfile,
 	saveProfileError,
@@ -37,9 +37,9 @@ export function uploadChanges(changes, avatar) {
 			dispatch(finishUpdatingProfile())
 			navigationService.navigate(PAGES_NAMES.PROFILE)
 		} catch (error) {
-			dispatch(saveProfileError(getErrorDataFromNetworkException(error)))
-		} finally {
-			// TODO: Hide global loader
+			const errorMessage = getErrorDataFromNetworkException(error)
+			toastService.showErrorToast(errorMessage, 'top')
+			dispatch(saveProfileError(errorMessage))
 		}
 	}
 }
