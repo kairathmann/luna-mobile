@@ -376,6 +376,7 @@ export class EditPage extends React.Component {
 			<React.Fragment>
 				<NavigationEvents
 					onDidBlur={props => {
+						console.log({ props })
 						this.props.navigation.goBack(null)
 						this.props.navigation.navigate(props.action)
 					}}
