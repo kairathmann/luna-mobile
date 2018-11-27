@@ -49,7 +49,9 @@ const PAGES_NAMES = {
 	FLOW_AVATAR: 'FLOW_AVATAR',
 	FLOW_ALLDONE: 'FLOW_ALLDONE',
 	PROFILE: 'PROFILE',
-	LOADER: 'LOADER'
+	LOADER: 'LOADER',
+	MESSAGE: 'MESSAGE_PAGE',
+	SINGLE_MESSAGE_PAGE: 'SINGLE_MESSAGE_PAGE'
 }
 
 const noNavbarStyle = {
@@ -60,6 +62,21 @@ const noNavbarStyle = {
 		shadowOpacity: 0 //remove shadow on iOS
 	}
 }
+
+const MessagePageStackNavigation = createStackNavigator({
+	MESSAGES_PAGE: {
+		screen: MessagesPage,
+		navigationOptions: () => ({
+			title: ''
+		})
+	},
+	SINGLE_MESSAGE_PAGE: {
+		screen: MessagesPage,
+		navigationOptions: () => ({
+			title: ''
+		})
+	}
+})
 
 const ProfilePageStackNavigation = createStackNavigator({
 	PROFILE: {
@@ -131,7 +148,7 @@ const HomePageBottomTabNavigation = createBottomTabNavigator(
 			})
 		},
 		MESSAGES_PAGE: {
-			screen: MessagesPage,
+			screen: MessagePageStackNavigation,
 			navigationOptions: () => ({
 				title: '',
 				tabBarIcon: ({ focused }) => (
