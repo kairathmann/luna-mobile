@@ -26,7 +26,7 @@ class ConversationsPage extends React.Component {
 			<H3>{I18n.t('conversations_page.new_messages')}</H3>
 			<Badge style={notifications.badge}>
 				<NativeBaseText style={notifications.badgeText}>
-					{newMessageCount > 99 ? '99' : newMessageCount}
+					{newMessageCount > 9 ? '+9' : newMessageCount}
 				</NativeBaseText>
 			</Badge>
 		</View>
