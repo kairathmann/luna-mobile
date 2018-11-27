@@ -18,6 +18,7 @@ import EStyleSheet from 'react-native-extended-stylesheet'
 import connect from 'react-redux/es/connect/connect'
 import I18n from '../../../../locales/i18n'
 import Button from '../../../components/Button/Button'
+import { REASONS } from '../../../enums'
 import { styles as commonStyles } from '../../../styles'
 import { LUNA_PRIMARY_COLOR } from '../../../styles/colors'
 import {
@@ -26,28 +27,7 @@ import {
 	startManaging
 } from './scenario-actions'
 
-const options = [
-	{
-		slug: 'met_someone_here',
-		index: 0
-	},
-	{
-		slug: 'met_someone_elsewhere',
-		index: 1
-	},
-	{
-		slug: 'prefer_another_app',
-		index: 2
-	},
-	{
-		slug: 'no_people_around',
-		index: 3
-	},
-	{
-		slug: 'no_interesting_people',
-		index: 4
-	}
-]
+const MAX_LENGTH = 500
 
 export class ManageReasonPage extends React.Component {
 	state = {
@@ -116,7 +96,7 @@ export class ManageReasonPage extends React.Component {
 						{I18n.t('manage_page.care_tell_why')}
 					</H3>
 					<View>
-						{options.map(reason => (
+						{REASONS.map(reason => (
 							<ListItem
 								onPress={() => this.handleSelect(reason)}
 								key={`reason-key-${reason.index}`}
@@ -137,12 +117,19 @@ export class ManageReasonPage extends React.Component {
 							<Label>{I18n.t('manage_page.additional_reason')}</Label>
 							<Input
 								numberOfLines={3}
+								maxLength={MAX_LENGTH}
 								multiline={true}
 								blurOnSubmit={false}
 								onChange={val => this.handleChange(val, 'extraReason')}
 								value={extraReason}
 							/>
 						</Item>
+						<Text
+							style={[
+								styles.counter,
+								extraReason.length === MAX_LENGTH ? styles.counterLimit : {}
+							]}
+						>{`${extraReason.length}/${MAX_LENGTH}`}</Text>
 					</Form>
 					<Button
 						disabled={password.length === 0}
@@ -183,6 +170,15 @@ const styles = EStyleSheet.create({
 		marginBottom: 8,
 		textAlign: 'center',
 		fontWeight: '300'
+	},
+	counter: {
+		textAlign: 'right',
+		marginTop: 8,
+		marginBottom: 8,
+		paddingBottom: 16
+	},
+	counterLimit: {
+		color: '$primaryColor'
 	}
 })
 

@@ -28,7 +28,8 @@ export default {
 			wrong_password: 'Provided password is not correct',
 			server_error:
 				'_PL_Something is wrong at our side. Please try again later.',
-			not_authenticated: 'You are logged out'
+			not_authenticated: 'You are logged out',
+			deleted_user: '_PL_There is no user like that'
 		},
 		male: 'Male',
 		female: 'Female',

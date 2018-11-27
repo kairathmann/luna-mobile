@@ -8,6 +8,7 @@ import {
 	prepareToChangeProfileStatus,
 	startChangeProfileStatus
 } from '../../../store/profile/actions'
+import { logout } from '../profile/scenario-actions'
 
 export function deleteAccount({ reasons, comment, password }) {
 	return async dispatch =>
@@ -27,10 +28,11 @@ async function performChangeStatus(dispatch, state, data) {
 	try {
 		dispatch(startChangeProfileStatus())
 		await api.manageProfileState(state, data)
-		// dispatch(logout())
 		dispatch(changeProfileStatusSuccess())
-		navigationService.navigate(PAGES_NAMES.WELCOME_PAGE)
+		dispatch(logout())
 	} catch (error) {
 		dispatch(changeProfileStatusFailed(getErrorDataFromNetworkException(error)))
+	} finally {
+		navigationService.navigate(PAGES_NAMES.WELCOME_PAGE)
 	}
 }
