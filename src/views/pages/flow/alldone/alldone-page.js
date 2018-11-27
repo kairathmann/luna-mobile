@@ -7,16 +7,13 @@ import EStyleSheet from 'react-native-extended-stylesheet'
 import I18n from '../../../../../locales/i18n'
 import { PAGES_NAMES } from '../../../../navigation/pages'
 import LunaBackgroundImageView from '../../../../components/LunaBackgroundImageView'
-import { conversationsListTimerService } from '../../../../services'
+import { startConversationsUpdateService } from './scenario-actions'
 
 const LOAD_FEED_PAGE_DELAY = 5000
 
 export class AlldonePage extends React.Component {
 	componentDidMount() {
-		conversationsListTimerService.initializeService(
-			this.props.dispatch,
-			this.props.targetHid
-		)
+		this.props.startConversationsUpdateService(this.props.targetHid)
 		setTimeout(() => {
 			this.props.navigation.navigate(PAGES_NAMES.HOME_PAGE)
 		}, LOAD_FEED_PAGE_DELAY)
@@ -35,7 +32,7 @@ export class AlldonePage extends React.Component {
 
 AlldonePage.propTypes = {
 	navigation: PropTypes.object.isRequired,
-	dispatch: PropTypes.func.isRequired,
+	startConversationsUpdateService: PropTypes.func.isRequired,
 	targetHid: PropTypes.string.isRequired
 }
 
@@ -58,7 +55,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-	dispatch
+	startConversationsUpdateService: targetHid =>
+		dispatch(startConversationsUpdateService(targetHid))
 })
 
 export default connect(
