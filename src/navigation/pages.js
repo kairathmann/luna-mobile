@@ -127,7 +127,7 @@ const ProfilePageStackNavigation = createStackNavigator({
 
 const HomePageBottomTabNavigation = createBottomTabNavigator(
 	{
-		PROFILE: {
+		PROFILE_TAB: {
 			screen: ProfilePageStackNavigation,
 			navigationOptions: () => ({
 				title: '',
@@ -139,7 +139,9 @@ const HomePageBottomTabNavigation = createBottomTabNavigator(
 								: ProfilePageInactiveNavigationIcon
 						}
 					/>
-				)
+				),
+				tabBarOnPress: ({ navigation }) =>
+					navigation.navigate(PAGES_NAMES.PROFILE)
 			})
 		},
 		RECOMMENDATIONS_PAGE: {

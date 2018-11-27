@@ -22,7 +22,6 @@ import {
 } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import ImagePicker from 'react-native-image-picker'
-import { NavigationEvents } from 'react-navigation'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
 import {
@@ -371,13 +370,6 @@ export class EditPage extends React.Component {
 	render() {
 		return (
 			<React.Fragment>
-				<NavigationEvents
-					onDidBlur={props => {
-						console.log({ props })
-						this.props.navigation.goBack(null)
-						this.props.navigation.navigate(props.action)
-					}}
-				/>
 				<ScrollView style={{ padding: 8 }}>
 					<H3 style={styles.welcomePrompt}>
 						{`${I18n.t('edit_page.welcome')} ${this.state.name}`}{' '}
