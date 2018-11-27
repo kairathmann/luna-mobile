@@ -6,9 +6,10 @@ import { Image, Text, View } from 'react-native'
 import { checkImageURL } from '../../common/utils'
 import I18n from '../../../locales/i18n'
 
+const zoneOffset = new Date().getTimezoneOffset()
+
 class ConversationListItem extends React.PureComponent {
 	render() {
-		const zoneOffset = new Date().getTimezoneOffset()
 		return (
 			<View style={styles.container}>
 				<View style={styles.imageContainer}>
