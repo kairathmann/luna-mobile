@@ -1,10 +1,13 @@
+import Config from 'react-native-config'
 import { fetchConversations } from './conversationsService'
 import { doneFetchingConversationsSuccess } from '../store/conversations/actions'
 let timerInstance = ''
 let dispatchInstance = ''
 let userTargetHid = ''
-const UPDATE_INTERVAL_IN_MILISECONDS =
-	process.env.NODE_ENV === 'development' ? 15000 : 60000
+const UPDATE_INTERVAL_IN_MILISECONDS = Number(
+	Config.APP_CONVERSATIONS_UPDATE_INTERVAL
+)
+process.env.NODE_ENV === 'development' ? 15000 : 60000
 
 const initializeService = async (dispatch, userId) => {
 	stopTimer()
