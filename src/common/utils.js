@@ -48,7 +48,7 @@ const avatarRelativeUrlToFullPhotoUrl = avatarUrl => {
 	return `${baseHostForURLs}${avatarUrl}`
 }
 
-const isHydraImage = imageUrl => imageUrl.includes('hydra/img/src')
+const isHydraImage = (imageUrl = '') => imageUrl.includes('hydra/img/src')
 
 const rewriteUrlImageForDefault = (
 	photoUrl = 'hydra/img/src/',

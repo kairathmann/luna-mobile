@@ -26,7 +26,8 @@ import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
 import {
 	avatarRelativeUrlToFullPhotoUrl,
-	getLoaderImageForGender
+	getLoaderImageForGender,
+	isHydraImage
 } from '../../../common/utils'
 import { GENDER } from '../../../enums'
 import { styles as commonStyles } from '../../../styles'
@@ -71,12 +72,15 @@ export class EditPage extends React.Component {
 		}
 	}
 
-	UNSAFE_componentWillReceiveProps(nextProps) {
-		if (this.props.isLoading !== nextProps.isLoading) {
+	static getDerivedStateFromProps(nextProps, prevState) {
+		if (prevState.isLoading !== nextProps.isLoading) {
 			nextProps.navigation.setParams({
-				disabled: nextProps.isLoading || this.state.name === ''
+				disabled: nextProps.isLoading || prevState.name === ''
 			})
+			return { isLoading: nextProps.isLoading }
 		}
+
+		return { isLoading: prevState.isLoading }
 	}
 
 	componentDidMount() {
@@ -170,16 +174,17 @@ export class EditPage extends React.Component {
 	getAvatarUrl = () => {
 		const { avatarChanged, newAvatar, localAvatar } = this.state
 		const {
-			profile: { avatarUrl }
+			profile: { avatarUrl, gidIs }
 		} = this.props
+
 		if (avatarChanged) {
 			return { uri: newAvatar }
 		} else if (localAvatar) {
 			return { uri: avatarUrl }
 		} else {
-			return avatarUrl
+			return !isHydraImage(avatarUrl)
 				? { uri: avatarRelativeUrlToFullPhotoUrl(avatarUrl) }
-				: this.getDefaultImage()
+				: this.getDefaultImage(gidIs)
 		}
 	}
 
