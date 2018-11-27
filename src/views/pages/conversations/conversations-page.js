@@ -1,11 +1,5 @@
 import React from 'react'
-import {
-	ImageBackground,
-	Text,
-	RefreshControl,
-	ScrollView,
-	View
-} from 'react-native'
+import { Image, Text, RefreshControl, ScrollView, View } from 'react-native'
 import { Badge, H3, Text as NativeBaseText } from 'native-base'
 import PropTypes from 'prop-types'
 import EStyleSheet from 'react-native-extended-stylesheet'
@@ -17,6 +11,7 @@ import { GENDER } from '../../../enums'
 import { styles as commonStyles, notificationsStyles } from '../../../styles'
 import ConversationsList from '../../../components/ConversationsList'
 import { conversationsListTimerService } from '../../../services'
+import PalmTree from '../../../assets/images/palm-tree.png'
 
 class ConversationsPage extends React.Component {
 	refreshConversations = () => {
@@ -34,6 +29,19 @@ class ConversationsPage extends React.Component {
 					{newMessageCount > 99 ? '99' : newMessageCount}
 				</NativeBaseText>
 			</Badge>
+		</View>
+	)
+
+	renderNoMessagesView = () => (
+		<View style={commonStyles.content}>
+			<H3 style={styles.noMessageText}>
+				{I18n.t('conversations_page.no_messages')}
+			</H3>
+			<Image
+				style={styles.palmTreeImage}
+				resizeMode="contain"
+				source={PalmTree}
+			/>
 		</View>
 	)
 
@@ -72,18 +80,9 @@ class ConversationsPage extends React.Component {
 						</View>
 					)}
 				{!this.props.isLoadingConversations &&
-					!this.props.isLoadingConversations &&
-					this.props.conversations.length === 0 && (
-						<View
-							style={{
-								flex: 1,
-								justifyContent: 'center',
-								alignItems: 'center'
-							}}
-						>
-							<ImageBackground />
-						</View>
-					)}
+					!this.props.isFetchingConversationsError &&
+					this.props.conversations.length === 0 &&
+					this.renderNoMessagesView()}
 			</ScrollView>
 		)
 	}
@@ -128,6 +127,19 @@ const styles = EStyleSheet.create({
 	},
 	errorText: {
 		fontSize: '1.2rem'
+	},
+	noMessageText: {
+		fontSize: '1.2rem',
+		textAlign: 'center',
+		fontFamily: 'Lato-Regular',
+		paddingTop: '2rem'
+	},
+	palmTreeImage: {
+		flex: 1,
+		justifyContent: 'center',
+		alignSelf: 'center',
+		width: 256,
+		height: 256
 	},
 	newMessageContainer: {
 		alignItems: 'center',
