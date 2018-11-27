@@ -25,6 +25,8 @@ import AvatarPage from '../views/pages/flow/avatar/avatar-page'
 import GenderPreferencesPage from '../views/pages/flow/gender-preferences/gender-preferences-page'
 import NameBirthdayPage from '../views/pages/flow/name-birthday/name-birthday-page'
 import TaglinePage from '../views/pages/flow/tagline/tagline-page'
+import ForgotPasswordPage from '../views/pages/forgot-password/forgot-password-page'
+import FullLoader from '../views/pages/loader/full-loader'
 import LoginPage from '../views/pages/login/login-page'
 import ManageProfilePage from '../views/pages/manageprofile/manage-profile-page'
 import {
@@ -33,8 +35,8 @@ import {
 } from '../views/pages/manageprofile/manage-reason-page'
 import MessagesPage from '../views/pages/messages/messages-page'
 import ProfilePage from '../views/pages/profile/profile-page'
-
 import RecommendationsPage from '../views/pages/recommendations/recommendations-page'
+
 import SignupPage from '../views/pages/signup/signup-page'
 import WelcomePage from '../views/pages/welcome/welcome-page'
 
@@ -42,6 +44,7 @@ const PAGES_NAMES = {
 	WELCOME_PAGE: 'WELCOME_PAGE',
 	LOGIN_PAGE: 'LOGIN_PAGE',
 	SIGNUP_PAGE: 'SIGNUP_PAGE',
+	FORGOT_PASSWORD_PAGE: 'FORGOT_PASSWORD_PAGE',
 	HOME_PAGE: 'HOME_PAGE',
 	RECOMMENDATIONS_PAGE: 'RECOMMENDATIONS_PAGE',
 	MESSAGES_PAGE: 'MESSAGES_PAGE',
@@ -56,6 +59,7 @@ const PAGES_NAMES = {
 	MANAGE_PROFILE: 'MANAGE_PROFILE',
 	MANAGE_DISABLE: 'MANAGE_DISABLE',
 	MANAGE_DELETE: 'MANAGE_DELETE'
+	LOADER: 'LOADER'
 }
 
 const noNavbarStyle = {
@@ -155,7 +159,7 @@ const ProfilePageStackNavigation = createStackNavigator({
 
 const HomePageBottomTabNavigation = createBottomTabNavigator(
 	{
-		PROFILE: {
+		PROFILE_TAB: {
 			screen: ProfilePageStackNavigation,
 			navigationOptions: () => ({
 				title: '',
@@ -167,7 +171,9 @@ const HomePageBottomTabNavigation = createBottomTabNavigator(
 								: ProfilePageInactiveNavigationIcon
 						}
 					/>
-				)
+				),
+				tabBarOnPress: ({ navigation }) =>
+					navigation.navigate(PAGES_NAMES.PROFILE)
 			})
 		},
 		RECOMMENDATIONS_PAGE: {
@@ -231,6 +237,12 @@ const AppStackNavigator = createStackNavigator({
 			...noNavbarStyle
 		})
 	},
+	FORGOT_PASSWORD_PAGE: {
+		screen: ForgotPasswordPage,
+		navigationOptions: () => ({
+			...noNavbarStyle
+		})
+	},
 	FLOW_NAME_BIRTHDAY: {
 		screen: NameBirthdayPage,
 		navigationOptions: () => ({
@@ -287,4 +299,19 @@ const AppStackNavigator = createStackNavigator({
 	}
 })
 
-export { PAGES_NAMES, AppStackNavigator }
+const RootStack = createStackNavigator(
+	{
+		Main: {
+			screen: AppStackNavigator
+		},
+		LOADER: {
+			screen: FullLoader
+		}
+	},
+	{
+		mode: 'modal',
+		headerMode: 'none'
+	}
+)
+
+export { PAGES_NAMES, RootStack }

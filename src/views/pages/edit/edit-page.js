@@ -1,5 +1,5 @@
 import MultiSlider from '@ptomasroos/react-native-multi-slider'
-import moment from 'moment'
+// import moment from 'moment'
 import {
 	Form,
 	H3,
@@ -20,18 +20,19 @@ import {
 	TouchableOpacity,
 	View
 } from 'react-native'
-import Config from 'react-native-config'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import ImagePicker from 'react-native-image-picker'
-import DateTimePicker from 'react-native-modal-datetime-picker'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
-import { getLoaderImageForGender } from '../../../common/utils'
 import Button from '../../../components/Button/Button'
 import { GENDER } from '../../../enums'
 import { PAGES_NAMES } from '../../../navigation'
 import { styles as commonStyles } from '../../../styles'
-import * as COLORS from '../../../styles/colors'
+import {
+	avatarRelativeUrlToFullPhotoUrl,
+	getLoaderImageForGender,
+	isHydraImage
+} from '../../../common/utils'
 import { LUNA_PRIMARY_COLOR } from '../../../styles/colors'
 import { uploadChanges } from './scenario-actions'
 
@@ -43,9 +44,9 @@ const options = {
 	}
 }
 
-const maxDate = moment()
-	.subtract(18, 'years')
-	.toDate()
+// const maxDate = moment()
+// 	.subtract(18, 'years')
+// 	.toDate()
 const MAX_AGE = 100
 const MIN_AGE = 18
 const EXTRA_MARGIN = 16
@@ -64,11 +65,23 @@ export class EditPage extends React.Component {
 			sexuality: props.profile.gidSeeking || 2,
 			ageMax: props.profile.seekingAgeTo || MAX_AGE,
 			ageMin: props.profile.seekingAgeFrom || MIN_AGE,
+			localAvatar: props.profile.localAvatar || false,
 			minTouched: false,
 			maxTouched: false,
 			sliderWidth: this.calculateWidthOfMultiSlider(),
 			tagline: this.props.profile.tagline || ''
 		}
+	}
+
+	static getDerivedStateFromProps(nextProps, prevState) {
+		if (prevState.isLoading !== nextProps.isLoading) {
+			nextProps.navigation.setParams({
+				disabled: nextProps.isLoading || prevState.name === ''
+			})
+			return { isLoading: nextProps.isLoading }
+		}
+
+		return { isLoading: prevState.isLoading }
 	}
 
 	componentDidMount() {
@@ -80,9 +93,6 @@ export class EditPage extends React.Component {
 	}
 
 	_saveChanges = () => {
-		this.props.navigation.setParams({
-			disabled: true
-		})
 		this.props.saveChanges(
 			{
 				firstName: this.state.name,
@@ -131,9 +141,13 @@ export class EditPage extends React.Component {
 	handleChange = (event, field) => {
 		this.setState({ [field]: event.nativeEvent.text }, () => {
 			this.props.navigation.setParams({
-				disabled: this.state.name === ''
+				disabled: this.props.isLoading || this.state.name === ''
 			})
 		})
+	}
+
+	handleChangeTagline = (event, field) => {
+		this.setState({ [field]: event.nativeEvent.text })
 	}
 
 	handleChangeSelect = (value, field) => {
@@ -160,16 +174,18 @@ export class EditPage extends React.Component {
 	}
 
 	getAvatarUrl = () => {
-		const { avatarChanged, newAvatar } = this.state
+		const { avatarChanged, newAvatar, localAvatar, gender } = this.state
 		const {
 			profile: { avatarUrl }
 		} = this.props
 		if (avatarChanged) {
 			return { uri: newAvatar }
+		} else if (localAvatar) {
+			return { uri: avatarUrl }
 		} else {
-			return avatarUrl
-				? { uri: `${Config.APP_URL_BASE}/${avatarUrl}` }
-				: this.getDefaultImage()
+			return !isHydraImage(avatarUrl)
+				? { uri: avatarRelativeUrlToFullPhotoUrl(avatarUrl) }
+				: this.getDefaultImage(gender)
 		}
 	}
 
@@ -199,7 +215,7 @@ export class EditPage extends React.Component {
 	}
 
 	renderBirthdayAndNameForm = () => {
-		const { pickerOpened, birthday, name } = this.state
+		const { name } = this.state
 		return (
 			<Form>
 				<Item floatingLabel last>
@@ -208,33 +224,29 @@ export class EditPage extends React.Component {
 						blurOnSubmit={false}
 						onChange={val => this.handleChange(val, 'name')}
 						value={name}
-						returnKeyType={'next'}
-						onSubmitEditing={() => {
-							this.showDateTimePicker()
-						}}
 					/>
 				</Item>
-				<Item stackedLabel style={styles.birthdayContainer} last>
-					<Label>{I18n.t('flow_page.name_birthday.birthday')}</Label>
-					<TouchableOpacity
-						style={styles.birthdayButton}
-						onPress={this.showDateTimePicker}
-					>
-						<Text style={styles.birthdayText}>
-							{birthday !== ''
-								? moment(birthday).format('DD-MM-YYYY')
-								: 'DD-MM-YYYY'}
-						</Text>
-					</TouchableOpacity>
-					<DateTimePicker
-						maximumDate={maxDate}
-						isVisible={pickerOpened}
-						confirmTextStyle={styles.datePickerButton}
-						cancelTextStyle={styles.datePickerButton}
-						onConfirm={this.handleDatePicked}
-						onCancel={this.hideDateTimePicker}
-					/>
-				</Item>
+				{/*<Item stackedLabel style={styles.birthdayContainer} last>*/}
+				{/*<Label>{I18n.t('flow_page.name_birthday.birthday')}</Label>*/}
+				{/*<TouchableOpacity*/}
+				{/*style={styles.birthdayButton}*/}
+				{/*onPress={this.showDateTimePicker}*/}
+				{/*>*/}
+				{/*<Text style={styles.birthdayText}>*/}
+				{/*{birthday !== ''*/}
+				{/*? moment(birthday).format('DD-MM-YYYY')*/}
+				{/*: 'DD-MM-YYYY'}*/}
+				{/*</Text>*/}
+				{/*</TouchableOpacity>*/}
+				{/*<DateTimePicker*/}
+				{/*maximumDate={maxDate}*/}
+				{/*isVisible={pickerOpened}*/}
+				{/*confirmTextStyle={styles.datePickerButton}*/}
+				{/*cancelTextStyle={styles.datePickerButton}*/}
+				{/*onConfirm={this.handleDatePicked}*/}
+				{/*onCancel={this.hideDateTimePicker}*/}
+				{/*/>*/}
+				{/*</Item>*/}
 			</Form>
 		)
 	}
@@ -336,20 +348,16 @@ export class EditPage extends React.Component {
 		const { tagline } = this.state
 		return (
 			<React.Fragment>
-				<Text>{I18n.t('flow_page.tagline.tagline')}</Text>
 				<Form>
 					<Item floatingLabel last>
 						<Label>{I18n.t('flow_page.tagline.inputLabel')}</Label>
 						<Input
 							numberOfLines={3}
+							maxLength={MAX_LENGTH}
 							multiline={true}
 							blurOnSubmit={false}
-							onChange={val => this.handleChange(val, 'tagline')}
+							onChange={val => this.handleChangeTagline(val, 'tagline')}
 							value={tagline}
-							returnKeyType={'done'}
-							onSubmitEditing={() => {
-								this.handleNext()
-							}}
 						/>
 					</Item>
 				</Form>
@@ -372,12 +380,9 @@ export class EditPage extends React.Component {
 					<H3 style={styles.welcomePrompt}>
 						{`${I18n.t('edit_page.welcome')} ${this.state.name}`}{' '}
 					</H3>
-					{this.props.errorText && (
-						<Text style={commonStyles.errorText}>{this.props.errorText}</Text>
-					)}
 					{this.renderAvatar()}
 					{/*TODO: should be hidden as API does not return birthdate*/}
-					{/*{ this.renderBirthdayAndNameForm() }*/}
+					{this.renderBirthdayAndNameForm()}
 					{this.renderGender()}
 					{/*TODO: should be hidden as API does not return seeking_age_from and seeking_age_to*/}
 					{/*{ this.renderAgeLimits() }*/}
@@ -397,7 +402,6 @@ EditPage.propTypes = {
 	navigation: PropTypes.object.isRequired,
 	profile: PropTypes.object.isRequired,
 	saveChanges: PropTypes.func.isRequired,
-	errorText: PropTypes.string,
 	isLoading: PropTypes.bool
 }
 
@@ -492,15 +496,14 @@ const styles = EStyleSheet.create({
 		paddingBottom: 16
 	},
 	taglineCounterLimit: {
-		color: LUNA_PRIMARY_COLOR
+		color: '$primaryColor'
 	}
 })
 
 const mapStateToProps = state => {
 	return {
 		profile: state.profile.profileToEdit,
-		isLoading: state.profile.isLoading,
-		error: state.profile.error
+		isLoading: state.profile.isLoading
 	}
 }
 

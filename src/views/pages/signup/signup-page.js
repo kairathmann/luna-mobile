@@ -6,10 +6,11 @@ import { Keyboard, Text, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { connect } from 'react-redux'
 import validator from 'validator'
+import { NavigationEvents } from 'react-navigation'
 import I18n from '../../../../locales/i18n'
 import Button from '../../../components/Button/'
 import { auth, styles as commonStyles } from '../../../styles'
-import { signup } from './scenario-actions'
+import { clearError, signup } from './scenario-actions'
 
 const styles = auth
 
@@ -72,6 +73,12 @@ export class SignupPage extends React.Component {
 		this.inputs[id]._root.focus()
 	}
 
+	clearErrorState = () => {
+		if (this.props.error) {
+			this.props.clearError()
+		}
+	}
+
 	render() {
 		const {
 			emailValid,
@@ -82,6 +89,7 @@ export class SignupPage extends React.Component {
 		} = this.state
 		return (
 			<View style={styles.content}>
+				<NavigationEvents onWillFocus={this.clearErrorState} />
 				<KeyboardAwareScrollView
 					keyboardShouldPersistTaps={'handled'}
 					enableOnAndroid={true}
@@ -153,6 +161,7 @@ export class SignupPage extends React.Component {
 SignupPage.propTypes = {
 	navigation: PropTypes.object.isRequired,
 	signup: PropTypes.func.isRequired,
+	clearError: PropTypes.func.isRequired,
 	error: PropTypes.string
 }
 
@@ -164,6 +173,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
+		clearError: () => dispatch(clearError()),
 		signup: payload => dispatch(signup(payload))
 	}
 }

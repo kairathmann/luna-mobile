@@ -1,15 +1,19 @@
 import api from '../../../api'
 import { getErrorDataFromNetworkException } from '../../../common/utils'
+import {
+	clearSignInError,
+	signinError,
+	signinSuccess
+} from '../../../store/auth/actions'
 import { PAGES_NAMES } from '../../../navigation'
 import { navigationService } from '../../../services'
-import { signinError, signinSuccess } from '../../../store/auth/actions'
 import { fetchProfileSuccess } from '../../../store/profile/actions'
 import { PROFILE_STATE } from '../../../enums'
 
 export function login({ email, password }) {
 	return async dispatch => {
 		try {
-			// TODO: Show global loader
+			navigationService.navigate(PAGES_NAMES.LOADER)
 			const loginResult = await api.signin({ email, password })
 			dispatch(signinSuccess(loginResult))
 			const profileResponse = await api.fetchSelf()
@@ -29,8 +33,9 @@ export function login({ email, password }) {
 			}
 		} catch (error) {
 			dispatch(signinError(getErrorDataFromNetworkException(error)))
-		} finally {
-			// TODO: Hide global loader
+			navigationService.navigate(PAGES_NAMES.LOGIN_PAGE)
 		}
 	}
 }
+
+export const clearError = () => dispatch => dispatch(clearSignInError())
