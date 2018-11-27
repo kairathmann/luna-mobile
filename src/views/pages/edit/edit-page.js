@@ -172,11 +172,10 @@ export class EditPage extends React.Component {
 	}
 
 	getAvatarUrl = () => {
-		const { avatarChanged, newAvatar, localAvatar } = this.state
+		const { avatarChanged, newAvatar, localAvatar, gender } = this.state
 		const {
-			profile: { avatarUrl, gidIs }
+			profile: { avatarUrl }
 		} = this.props
-
 		if (avatarChanged) {
 			return { uri: newAvatar }
 		} else if (localAvatar) {
@@ -184,7 +183,7 @@ export class EditPage extends React.Component {
 		} else {
 			return !isHydraImage(avatarUrl)
 				? { uri: avatarRelativeUrlToFullPhotoUrl(avatarUrl) }
-				: this.getDefaultImage(gidIs)
+				: this.getDefaultImage(gender)
 		}
 	}
 
