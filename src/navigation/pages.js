@@ -18,21 +18,22 @@ import { ORIENTATION } from '../enums'
 
 import { COLORS } from '../styles'
 import { LUNA_PRIMARY_COLOR } from '../styles/colors'
+import EditPage from '../views/pages/edit/edit-page'
 import AgeLimitPage from '../views/pages/flow/age-limit/age-limit-page'
 import AlldonePage from '../views/pages/flow/alldone/alldone-page'
 import AvatarPage from '../views/pages/flow/avatar/avatar-page'
 import GenderPreferencesPage from '../views/pages/flow/gender-preferences/gender-preferences-page'
 import NameBirthdayPage from '../views/pages/flow/name-birthday/name-birthday-page'
 import TaglinePage from '../views/pages/flow/tagline/tagline-page'
+import ForgotPasswordPage from '../views/pages/forgot-password/forgot-password-page'
 import FullLoader from '../views/pages/loader/full-loader'
 import LoginPage from '../views/pages/login/login-page'
+import MessagesPage from '../views/pages/messages/messages-page'
+import ProfilePage from '../views/pages/profile/profile-page'
+import RecommendationsPage from '../views/pages/recommendations/recommendations-page'
 
 import SignupPage from '../views/pages/signup/signup-page'
-import ForgotPasswordPage from '../views/pages/forgot-password/forgot-password-page'
 import WelcomePage from '../views/pages/welcome/welcome-page'
-import RecommendationsPage from '../views/pages/recommendations/recommendations-page'
-import ProfilePage from '../views/pages/profile/profile-page'
-import MessagesPage from '../views/pages/messages/messages-page'
 
 const PAGES_NAMES = {
 	WELCOME_PAGE: 'WELCOME_PAGE',
@@ -49,6 +50,7 @@ const PAGES_NAMES = {
 	FLOW_AVATAR: 'FLOW_AVATAR',
 	FLOW_ALLDONE: 'FLOW_ALLDONE',
 	PROFILE: 'PROFILE',
+	EDIT_PROFILE: 'EDIT_PROFILE',
 	LOADER: 'LOADER'
 }
 
@@ -95,12 +97,37 @@ const ProfilePageStackNavigation = createStackNavigator({
 				shadowOpacity: 0 //remove shadow on iOS
 			}
 		})
+	},
+	EDIT_PROFILE: {
+		screen: EditPage,
+		navigationOptions: ({ navigation }) => ({
+			title: I18n.t('edit_page.title'),
+			headerTintColor: 'white',
+			headerStyle: { backgroundColor: LUNA_PRIMARY_COLOR },
+			headerRight: (
+				<Button
+					icon
+					transparent
+					disabled={navigation.getParam('disabled')}
+					style={{
+						marginRight: 4,
+						marginTop: 4,
+						opacity: navigation.getParam('disabled') ? 0.5 : 1.0
+					}}
+					onPress={navigation.getParam('saveProfile')}
+					title={'save'}
+					color="#fff"
+				>
+					<Icon name={'done-all'} color={'white'} style={{ color: 'white' }} />
+				</Button>
+			)
+		})
 	}
 })
 
 const HomePageBottomTabNavigation = createBottomTabNavigator(
 	{
-		PROFILE: {
+		PROFILE_TAB: {
 			screen: ProfilePageStackNavigation,
 			navigationOptions: () => ({
 				title: '',
@@ -112,7 +139,9 @@ const HomePageBottomTabNavigation = createBottomTabNavigator(
 								: ProfilePageInactiveNavigationIcon
 						}
 					/>
-				)
+				),
+				tabBarOnPress: ({ navigation }) =>
+					navigation.navigate(PAGES_NAMES.PROFILE)
 			})
 		},
 		RECOMMENDATIONS_PAGE: {

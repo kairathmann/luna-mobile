@@ -22,6 +22,7 @@ import {
 	switchToLoadingSkippedMatches,
 	unmatch
 } from './scenario-actions'
+import { NavigationEvents } from 'react-navigation'
 
 class RecommendationsPage extends React.Component {
 	constructor(props) {
@@ -29,10 +30,6 @@ class RecommendationsPage extends React.Component {
 		this.state = {
 			deviceOrientation: this.getDeviceOrientation()
 		}
-	}
-
-	componentDidMount() {
-		this.props.fetchRecommendations()
 	}
 
 	getDeviceOrientation = () => {
@@ -148,33 +145,36 @@ class RecommendationsPage extends React.Component {
 
 	render() {
 		return (
-			<ScrollView
-				contentContainerStyle={commonStyles.content}
-				onLayout={this.onLayout}
-				refreshControl={
-					<RefreshControl
-						refreshing={this.props.isLoading}
-						onRefresh={this.onPullToRefresh}
-					/>
-				}
-			>
-				{this.props.isFetchingRecommendationsError && (
-					<View style={styles.errorTextContainer}>
-						<Text style={[commonStyles.errorText, styles.errorText]}>
-							{I18n.t(
-								'recommendations_page.error_could_not_fetch_recommendations'
-							)}
-						</Text>
-					</View>
-				)}
-				{!this.props.isFetchingRecommendationsError &&
-					this.props.currentlyRenderRecommendation &&
-					this.renderContent()}
-				{!this.props.isLoading &&
-					!this.props.isFetchingRecommendationsError &&
-					this.props.matchesCount === 0 &&
-					this.renderNoMatchesMessage()}
-			</ScrollView>
+			<React.Fragment>
+				<NavigationEvents onWillFocus={this.props.fetchRecommendations} />
+				<ScrollView
+					contentContainerStyle={commonStyles.content}
+					onLayout={this.onLayout}
+					refreshControl={
+						<RefreshControl
+							refreshing={this.props.isLoading}
+							onRefresh={this.onPullToRefresh}
+						/>
+					}
+				>
+					{this.props.isFetchingRecommendationsError && (
+						<View style={styles.errorTextContainer}>
+							<Text style={[commonStyles.errorText, styles.errorText]}>
+								{I18n.t(
+									'recommendations_page.error_could_not_fetch_recommendations'
+								)}
+							</Text>
+						</View>
+					)}
+					{!this.props.isFetchingRecommendationsError &&
+						this.props.currentlyRenderRecommendation &&
+						this.renderContent()}
+					{!this.props.isLoading &&
+						!this.props.isFetchingRecommendationsError &&
+						this.props.matchesCount === 0 &&
+						this.renderNoMatchesMessage()}
+				</ScrollView>
+			</React.Fragment>
 		)
 	}
 }
