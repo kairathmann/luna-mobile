@@ -4,6 +4,7 @@ import { PROFILE_STATE } from '../../../enums'
 import { PAGES_NAMES } from '../../../navigation'
 import { navigationService } from '../../../services'
 import { fetchProfileSuccess } from '../../../store/profile/actions'
+import { conversationsListTimerService } from '../../../services'
 
 export function startup() {
 	return async dispatch => {
@@ -18,6 +19,10 @@ export function startup() {
 				navigationService.navigate(flowPageToNavigateTo)
 			} else {
 				navigationService.navigate(PAGES_NAMES.HOME_PAGE)
+				conversationsListTimerService.initializeService(
+					dispatch,
+					profileData.targetHid
+				)
 			}
 		} catch (error) {
 			navigationService.navigate(PAGES_NAMES.WELCOME_PAGE)

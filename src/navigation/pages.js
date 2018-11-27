@@ -1,8 +1,8 @@
-import { Button, Icon } from 'native-base'
 /* eslint react/display-name: 0 */
 /* eslint react/prop-types: 0 */
+import { Button, Icon } from 'native-base'
 import React from 'react'
-import { Image } from 'react-native'
+import { Image, ImageBackground } from 'react-native'
 import {
 	createBottomTabNavigator,
 	createStackNavigator
@@ -10,14 +10,17 @@ import {
 import I18n from '../../locales/i18n'
 import RecommendationsPageActiveNavigationIcon from '../assets/images/nav-icon-luna-active.png'
 import RecommendationsPageInactiveNavigationIcon from '../assets/images/nav-icon-luna.png'
-import MessagesPageActiveNavigationIcon from '../assets/images/nav-icon-messages-active.png'
-import MessagesPageInactiveNavigationIcon from '../assets/images/nav-icon-messages.png'
+import ConversationsPageActiveNavigationIcon from '../assets/images/nav-icon-messages-active.png'
+import ConversationsPageInactiveNavigationIcon from '../assets/images/nav-icon-messages.png'
 import ProfilePageActiveNavigationIcon from '../assets/images/nav-icon-profile-active.png'
 import ProfilePageInactiveNavigationIcon from '../assets/images/nav-icon-profile.png'
+
+import ConversationsBadgeIcon from '../components/ConversationsBadgeIcon'
 import { ORIENTATION } from '../enums'
 
 import { COLORS } from '../styles'
 import { LUNA_PRIMARY_COLOR } from '../styles/colors'
+import ConversationsPage from '../views/pages/conversations/conversations-page'
 import EditPage from '../views/pages/edit/edit-page'
 import AgeLimitPage from '../views/pages/flow/age-limit/age-limit-page'
 import AlldonePage from '../views/pages/flow/alldone/alldone-page'
@@ -33,7 +36,6 @@ import {
 	ManageDeleteReasonPage,
 	ManageDisableReasonPage
 } from '../views/pages/manageprofile/manage-reason-page'
-import MessagesPage from '../views/pages/messages/messages-page'
 import ProfilePage from '../views/pages/profile/profile-page'
 import RecommendationsPage from '../views/pages/recommendations/recommendations-page'
 
@@ -47,7 +49,7 @@ const PAGES_NAMES = {
 	FORGOT_PASSWORD_PAGE: 'FORGOT_PASSWORD_PAGE',
 	HOME_PAGE: 'HOME_PAGE',
 	RECOMMENDATIONS_PAGE: 'RECOMMENDATIONS_PAGE',
-	MESSAGES_PAGE: 'MESSAGES_PAGE',
+	CONVERSATIONS_PAGE: 'CONVERSATIONS_PAGE',
 	FLOW_NAME_BIRTHDAY: 'FLOW_NAME_BIRTHDAY',
 	FLOW_GENDER_SEXUALITY: 'FLOW_GENDER_SEXUALITY',
 	FLOW_AGE_LIMIT: 'FLOW_AGE_LIMIT',
@@ -191,18 +193,24 @@ const HomePageBottomTabNavigation = createBottomTabNavigator(
 				)
 			})
 		},
-		MESSAGES_PAGE: {
-			screen: MessagesPage,
+		CONVERSATIONS_PAGE: {
+			screen: ConversationsPage,
 			navigationOptions: () => ({
 				title: '',
 				tabBarIcon: ({ focused }) => (
-					<Image
+					<ImageBackground
+						style={{
+							width: 37,
+							height: 34
+						}}
 						source={
 							focused
-								? MessagesPageActiveNavigationIcon
-								: MessagesPageInactiveNavigationIcon
+								? ConversationsPageActiveNavigationIcon
+								: ConversationsPageInactiveNavigationIcon
 						}
-					/>
+					>
+						<ConversationsBadgeIcon />
+					</ImageBackground>
 				)
 			})
 		}

@@ -7,6 +7,8 @@ import {
 	startUpdatingProfile
 } from '../../../store/profile/actions'
 import { clearData as clearRecommendations } from '../../../store/recommendations/actions'
+import { clearData as clearConversations } from '../../../store/conversations/actions'
+import { conversationsListTimerService } from '../../../services'
 
 export function startEditing() {
 	return startUpdatingProfile()
@@ -16,10 +18,12 @@ export function logout() {
 	return async dispatch => {
 		try {
 			navigationService.navigate(PAGES_NAMES.LOADER)
+			conversationsListTimerService.stopTimer()
 			await api.logout()
 		} finally {
 			navigationService.navigate(PAGES_NAMES.WELCOME_PAGE)
 			dispatch(clearRecommendations())
+			dispatch(clearConversations())
 			dispatch(clearProfile())
 			dispatch(logoutUser())
 		}
