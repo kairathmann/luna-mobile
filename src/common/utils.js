@@ -48,11 +48,13 @@ const avatarRelativeUrlToFullPhotoUrl = avatarUrl => {
 	return `${baseHostForURLs}${avatarUrl}`
 }
 
+const isHydraImage = (imageUrl = '') => imageUrl.includes('hydra/img/src')
+
 const rewriteUrlImageForDefault = (
 	photoUrl = 'hydra/img/src/',
 	gender = GENDER.OTHER
 ) => {
-	if (photoUrl.includes('hydra/img/src/')) {
+	if (isHydraImage(photoUrl)) {
 		switch (gender) {
 			case GENDER.MALE:
 				return 'default_male'
@@ -110,6 +112,7 @@ export {
 	getErrorDataFromNetworkException,
 	getLoaderImageForGender,
 	getNameFromUri,
+	isHydraImage,
 	isPortrait,
 	isLandscape,
 	rewriteUrlImageForDefault

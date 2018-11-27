@@ -122,6 +122,7 @@ export class ManageReasonPage extends React.Component {
 								key={`reason-key-${reason.index}`}
 							>
 								<CheckBox
+									onPress={() => this.handleSelect(reason)}
 									color={LUNA_PRIMARY_COLOR}
 									checked={this.shouldBeChecked(reason)}
 								/>

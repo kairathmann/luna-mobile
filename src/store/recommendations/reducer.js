@@ -2,7 +2,9 @@ import {
 	LOAD_RECOMMENDATIONS_PROGRESS,
 	LOAD_RECOMMENDATIONS_SUCCESS,
 	LOAD_RECOMMENDATIONS_ERROR,
+	UNMATCH_RECOMMENDATION_PROGRESS,
 	UNMATCH_RECOMMENDATION_SUCCESS,
+	UNMATCH_RECOMMENDATION_FINISH,
 	SHOW_SKIPPED_RECOMMENDATIONS,
 	CLEAR_DATA
 } from './action-types'
@@ -20,6 +22,8 @@ export function recommendationsReducer(
 	{ payload, type }
 ) {
 	switch (type) {
+		case CLEAR_DATA:
+			return initialState
 		case LOAD_RECOMMENDATIONS_PROGRESS:
 			return {
 				...state,
@@ -42,6 +46,11 @@ export function recommendationsReducer(
 				errorMessage: payload.errorMessage,
 				recommendations: []
 			}
+		case UNMATCH_RECOMMENDATION_PROGRESS:
+			return {
+				...state,
+				isLoading: true
+			}
 		case UNMATCH_RECOMMENDATION_SUCCESS:
 			return {
 				...state,
@@ -49,14 +58,15 @@ export function recommendationsReducer(
 					person => person.hid !== payload
 				)
 			}
+		case UNMATCH_RECOMMENDATION_FINISH:
+			return {
+				...state,
+				isLoading: false
+			}
 		case SHOW_SKIPPED_RECOMMENDATIONS:
 			return {
 				...state,
 				isShowingSkipped: true
-			}
-		case CLEAR_DATA:
-			return {
-				initialState
 			}
 		default:
 			return state
