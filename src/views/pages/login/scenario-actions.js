@@ -9,6 +9,7 @@ import { PAGES_NAMES } from '../../../navigation'
 import { navigationService } from '../../../services'
 import { fetchProfileSuccess } from '../../../store/profile/actions'
 import { PROFILE_STATE } from '../../../enums'
+import { conversationsListTimerService } from '../../../services'
 
 export function login({ email, password }) {
 	return async dispatch => {
@@ -30,6 +31,10 @@ export function login({ email, password }) {
 				navigationService.navigate(flowPageToNavigateTo)
 			} else {
 				navigationService.navigate(PAGES_NAMES.HOME_PAGE)
+				conversationsListTimerService.initializeService(
+					dispatch,
+					profileData.targetHid
+				)
 			}
 		} catch (error) {
 			dispatch(signinError(getErrorDataFromNetworkException(error)))
