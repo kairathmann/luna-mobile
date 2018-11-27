@@ -28,7 +28,13 @@ class ConversationListItem extends React.PureComponent {
 						<Text style={styles.textUsername}>{this.props.partnerName}</Text>
 					</View>
 					<View style={{ flexWrap: 'wrap' }}>
-						<Text numberOfLines={3} style={styles.textLastMessage}>
+						<Text
+							numberOfLines={3}
+							style={[
+								styles.textLastMessage,
+								this.props.pending ? styles.textLastMessageUnread : ''
+							]}
+						>
 							{this.props.subject}
 						</Text>
 					</View>
@@ -104,6 +110,10 @@ const styles = EStyleSheet.create({
 		fontFamily: 'Lato-Regular',
 		fontSize: '0.7rem',
 		color: '#4a4a4a'
+	},
+	textLastMessageUnread: {
+		fontWeight: 'bold',
+		color: '$primaryColor'
 	},
 	textLastUpdatedContainer: {
 		flex: 1.5,
