@@ -48,7 +48,8 @@ const options = {
 const MAX_AGE = 100
 const MIN_AGE = 18
 const EXTRA_MARGIN = 16
-const MAX_LENGTH = 50
+const TAGLINE_MAX_LENGTH = 50
+const BIO_MAX_LENGTH = 2048
 
 export class EditPage extends React.Component {
 	constructor(props) {
@@ -352,7 +353,7 @@ export class EditPage extends React.Component {
 						<Label>{I18n.t('flow_page.tagline.inputLabel')}</Label>
 						<Input
 							numberOfLines={3}
-							maxLength={MAX_LENGTH}
+							maxLength={TAGLINE_MAX_LENGTH}
 							multiline={true}
 							blurOnSubmit={false}
 							onChange={val => this.handleTextChange(val, 'tagline')}
@@ -362,10 +363,12 @@ export class EditPage extends React.Component {
 				</Form>
 				<Text
 					style={[
-						styles.taglineCounter,
-						tagline.length === MAX_LENGTH ? styles.taglineCounterLimit : {}
+						styles.characterCounter,
+						tagline.length === TAGLINE_MAX_LENGTH
+							? styles.characterCounterLimit
+							: {}
 					]}
-				>{`${tagline.length}/${MAX_LENGTH}`}</Text>
+				>{`${tagline.length}/${TAGLINE_MAX_LENGTH}`}</Text>
 			</React.Fragment>
 		)
 	}
@@ -373,19 +376,28 @@ export class EditPage extends React.Component {
 	renderBio = () => {
 		const { bio } = this.state
 		return (
-			<Form style={{ paddingBottom: 20 }}>
-				<Item floatingLabel>
-					<Label>{I18n.t('flow_page.bio.inputLabel')}</Label>
-					<Input
-						numberOfLines={5}
-						multiline={true}
-						onChange={val => this.handleTextChange(val, 'bio')}
-						value={bio}
-						blurOnSubmit={false}
-						style={{ height: 200, textAlignVertical: 'top' }}
-					/>
-				</Item>
-			</Form>
+			<React.Fragment>
+				<Form>
+					<Item floatingLabel last>
+						<Label>{I18n.t('flow_page.bio.inputLabel')}</Label>
+						<Input
+							numberOfLines={5}
+							maxLength={BIO_MAX_LENGTH}
+							multiline={true}
+							onChange={val => this.handleTextChange(val, 'bio')}
+							value={bio}
+							blurOnSubmit={false}
+							style={{ height: 150, textAlignVertical: 'top' }}
+						/>
+					</Item>
+				</Form>
+				<Text
+					style={[
+						styles.characterCounter,
+						bio.length === BIO_MAX_LENGTH ? styles.characterCounterLimit : {}
+					]}
+				>{`${bio.length}/${BIO_MAX_LENGTH}`}</Text>
+			</React.Fragment>
 		)
 	}
 
@@ -503,11 +515,12 @@ const styles = EStyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center'
 	},
-	taglineCounter: {
+	characterCounter: {
 		textAlign: 'right',
-		marginTop: 8
+		marginTop: 8,
+		marginBottom: 8
 	},
-	taglineCounterLimit: {
+	characterCounterLimit: {
 		color: '$primaryColor'
 	}
 })
