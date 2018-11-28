@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import Moment from 'react-moment'
-import { Image, Text, View } from 'react-native'
+import { Image, Text, View, TouchableOpacity } from 'react-native'
 import { checkImageURL } from '../../common/utils'
 import I18n from '../../../locales/i18n'
 
@@ -11,46 +11,48 @@ const zoneOffset = new Date().getTimezoneOffset()
 class ConversationListItem extends React.PureComponent {
 	render() {
 		return (
-			<View style={styles.container}>
-				<View style={styles.imageContainer}>
-					<Image
-						style={styles.image}
-						source={checkImageURL(this.props.partnerAvatarSmall)}
-					/>
-					{this.props.pending && (
-						<View style={styles.notificationCircleContainer}>
-							<View style={styles.notificationCircle} />
+			<TouchableOpacity onPress={this.props.onClick}>
+				<View style={styles.container}>
+					<View style={styles.imageContainer}>
+						<Image
+							style={styles.image}
+							source={checkImageURL(this.props.partnerAvatarSmall)}
+						/>
+						{this.props.pending && (
+							<View style={styles.notificationCircleContainer}>
+								<View style={styles.notificationCircle} />
+							</View>
+						)}
+					</View>
+					<View style={styles.textContainer}>
+						<View style={{ flexWrap: 'wrap' }}>
+							<Text style={styles.textUsername}>{this.props.partnerName}</Text>
 						</View>
-					)}
-				</View>
-				<View style={styles.textContainer}>
-					<View style={{ flexWrap: 'wrap' }}>
-						<Text style={styles.textUsername}>{this.props.partnerName}</Text>
+						<View style={{ flexWrap: 'wrap' }}>
+							<Text
+								numberOfLines={3}
+								style={[
+									styles.textLastMessage,
+									this.props.pending ? styles.textLastMessageUnread : ''
+								]}
+							>
+								{this.props.subject}
+							</Text>
+						</View>
 					</View>
-					<View style={{ flexWrap: 'wrap' }}>
-						<Text
-							numberOfLines={3}
-							style={[
-								styles.textLastMessage,
-								this.props.pending ? styles.textLastMessageUnread : ''
-							]}
+					<View style={styles.textLastUpdatedContainer}>
+						<Moment
+							style={styles.textLastUpdated}
+							locale={I18n.locale}
+							element={Text}
+							fromNow
+							subtract={{ minutes: zoneOffset }}
 						>
-							{this.props.subject}
-						</Text>
+							{this.props.lastUpdate}
+						</Moment>
 					</View>
 				</View>
-				<View style={styles.textLastUpdatedContainer}>
-					<Moment
-						style={styles.textLastUpdated}
-						locale={I18n.locale}
-						element={Text}
-						fromNow
-						subtract={{ minutes: zoneOffset }}
-					>
-						{this.props.lastUpdate}
-					</Moment>
-				</View>
-			</View>
+			</TouchableOpacity>
 		)
 	}
 }
@@ -133,7 +135,8 @@ ConversationListItem.propTypes = {
 	partnerAvatarSmall: PropTypes.string.isRequired,
 	subject: PropTypes.string.isRequired,
 	partnerName: PropTypes.string.isRequired,
-	pending: PropTypes.bool.isRequired
+	pending: PropTypes.bool.isRequired,
+	onClick: PropTypes.func.isRequired
 }
 
 export default ConversationListItem

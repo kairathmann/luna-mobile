@@ -38,7 +38,7 @@ import {
 } from '../views/pages/manageprofile/manage-reason-page'
 import ProfilePage from '../views/pages/profile/profile-page'
 import RecommendationsPage from '../views/pages/recommendations/recommendations-page'
-
+import MessagePage from '../views/pages/message/message-page'
 import SignupPage from '../views/pages/signup/signup-page'
 import WelcomePage from '../views/pages/welcome/welcome-page'
 
@@ -57,11 +57,13 @@ const PAGES_NAMES = {
 	FLOW_AVATAR: 'FLOW_AVATAR',
 	FLOW_ALLDONE: 'FLOW_ALLDONE',
 	PROFILE: 'PROFILE',
+	LOADER: 'LOADER',
+	MESSAGE: 'MESSAGE_PAGE',
+	SINGLE_MESSAGE_PAGE: 'SINGLE_MESSAGE_PAGE',
 	EDIT_PROFILE: 'EDIT_PROFILE',
 	MANAGE_PROFILE: 'MANAGE_PROFILE',
 	MANAGE_DISABLE: 'MANAGE_DISABLE',
-	MANAGE_DELETE: 'MANAGE_DELETE',
-	LOADER: 'LOADER'
+	MANAGE_DELETE: 'MANAGE_DELETE'
 }
 
 const noNavbarStyle = {
@@ -72,6 +74,24 @@ const noNavbarStyle = {
 		shadowOpacity: 0 //remove shadow on iOS
 	}
 }
+
+const MessagePageStackNavigation = createStackNavigator({
+	CONVERSATIONS_PAGE: {
+		screen: ConversationsPage,
+		navigationOptions: () => ({
+			title: '',
+			header: null
+		})
+	},
+	SINGLE_MESSAGE_PAGE: {
+		screen: MessagePage,
+		navigationOptions: ({ navigation }) => ({
+			title: navigation.getParam('title'),
+			headerTintColor: 'white',
+			headerStyle: { backgroundColor: LUNA_PRIMARY_COLOR }
+		})
+	}
+})
 
 const ProfilePageStackNavigation = createStackNavigator({
 	PROFILE: {
@@ -193,10 +213,12 @@ const HomePageBottomTabNavigation = createBottomTabNavigator(
 				)
 			})
 		},
-		CONVERSATIONS_PAGE: {
-			screen: ConversationsPage,
+		CONVERSATIONS_TAB: {
+			screen: MessagePageStackNavigation,
 			navigationOptions: () => ({
 				title: '',
+				tabBarOnPress: ({ navigation }) =>
+					navigation.navigate(PAGES_NAMES.CONVERSATIONS_PAGE),
 				tabBarIcon: ({ focused }) => (
 					<ImageBackground
 						style={{

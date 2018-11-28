@@ -6,6 +6,7 @@ import EStyleSheet from 'react-native-extended-stylesheet'
 import I18n from '../../../../locales/i18n'
 import { connect } from 'react-redux'
 import { NavigationEvents } from 'react-navigation'
+import { PAGES_NAMES } from '../../../navigation'
 import { fetchConversations } from './scenario-actions'
 import { GENDER } from '../../../enums'
 import { styles as commonStyles, notifications } from '../../../styles'
@@ -45,6 +46,13 @@ class ConversationsPage extends React.Component {
 		</View>
 	)
 
+	handleClick = conversation => {
+		this.props.navigation.navigate(PAGES_NAMES.SINGLE_MESSAGE_PAGE, {
+			conversation,
+			targetHid: this.props.targetHid
+		})
+	}
+
 	render() {
 		return (
 			<ScrollView
@@ -66,7 +74,10 @@ class ConversationsPage extends React.Component {
 						<React.Fragment>
 							{this.props.newMessageCount > 0 &&
 								this.renderNewMessageCountView(this.props.newMessageCount)}
-							<ConversationsList conversations={this.props.conversations} />
+							<ConversationsList
+								handleClick={this.handleClick}
+								conversations={this.props.conversations}
+							/>
 						</React.Fragment>
 					)}
 				{!this.props.isLoadingConversations &&
@@ -112,7 +123,8 @@ ConversationsPage.propTypes = {
 			subject: PropTypes.string.isRequired
 		})
 	).isRequired,
-	targetHid: PropTypes.string.isRequired
+	targetHid: PropTypes.string.isRequired,
+	navigation: PropTypes.object.isRequired
 }
 
 const styles = EStyleSheet.create({
