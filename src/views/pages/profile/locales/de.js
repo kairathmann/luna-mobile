@@ -1,5 +1,7 @@
 export default {
 	no_tagline: '...',
 	tagline: 'Tagline',
-	token: 'Token'
+	token: 'Token',
+	bio: 'Bio',
+	no_bio: '...'
 }

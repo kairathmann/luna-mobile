@@ -1,7 +1,7 @@
 import { Button, H3 } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { Dimensions, Image, Text, View } from 'react-native'
+import { Dimensions, Image, ScrollView, Text, View } from 'react-native'
 import HeaderImageScrollView from 'react-native-image-header-scroll-view'
 import LinearGradient from 'react-native-linear-gradient'
 import { Header } from 'react-navigation'
@@ -121,12 +121,30 @@ export class ProfilePage extends React.Component {
 		)
 	}
 
+	renderBioLanscape = () => this.renderBio(false, this.props.profile.bio)
+
+	renderBioPortrait = () => this.renderBio(true, this.props.profile.bio)
+
+	renderBio = (isPortrait, profileBio) => (
+		<React.Fragment>
+			<H3>{I18n.t('profile_page.bio')}</H3>
+			<ScrollView
+				nestedScrollEnabled
+				contentContainerStyle={{ flexGrow: 1 }}
+				style={isPortrait ? { maxHeight: 100 } : {}}
+			>
+				<Text style={styles.bio}>
+					{profileBio || I18n.t('profile_page.no_bio')}
+				</Text>
+			</ScrollView>
+		</React.Fragment>
+	)
+
 	renderProfileData = () => {
 		return (
 			<View style={styles.portraitProfileDataContainer}>
-				<View style={styles.portraitTaglineContainer}>
-					{this.renderTagline()}
-				</View>
+				<View style={styles.card}>{this.renderTagline()}</View>
+				<View style={styles.card}>{this.renderBioPortrait()}</View>
 				<Button style={styles.tokenButton} full onPress={() => {}}>
 					<Text style={styles.tokenButtonText}>
 						{I18n.t('profile_page.token')}
@@ -188,23 +206,28 @@ export class ProfilePage extends React.Component {
 					{this.renderTitle()}
 				</View>
 				<View style={styles.landscapeProfileDataContainer}>
-					<View>{this.renderTagline()}</View>
-					<Button style={styles.tokenButton} full onPress={() => {}}>
-						<Text style={styles.tokenButtonText}>
-							{I18n.t('profile_page.token')}
-						</Text>
-						<Image style={styles.biggerIcon} source={StarIcon} />
-					</Button>
-					<Button
-						style={styles.landscapeLogoutButton}
-						full
-						bordered
-						onPress={this.props.logout}
-					>
-						<Text style={styles.landscapeLogoutButtonText}>
-							{I18n.t('common.logout')}
-						</Text>
-					</Button>
+					<View style={styles.shrinkItSelf}>{this.renderTagline()}</View>
+					<View style={styles.bioContainerLandscape}>
+						{this.renderBioLanscape()}
+					</View>
+					<View style={[styles.shrinkItSelf, styles.bringToBottom]}>
+						<Button style={styles.tokenButton} full onPress={() => {}}>
+							<Text style={styles.tokenButtonText}>
+								{I18n.t('profile_page.token')}
+							</Text>
+							<Image style={styles.biggerIcon} source={StarIcon} />
+						</Button>
+						<Button
+							style={styles.landscapeLogoutButton}
+							full
+							bordered
+							onPress={this.props.logout}
+						>
+							<Text style={styles.landscapeLogoutButtonText}>
+								{I18n.t('common.logout')}
+							</Text>
+						</Button>
+					</View>
 				</View>
 			</View>
 		)
@@ -256,9 +279,9 @@ const styles = EStyleSheet.create({
 		flex: 1,
 		width: '100%',
 		backgroundColor: '#efefef',
-		paddingBottom: 64
+		paddingBottom: 32
 	},
-	portraitTaglineContainer: {
+	card: {
 		backgroundColor: 'white',
 		marginTop: 8,
 		padding: 16,
@@ -271,6 +294,14 @@ const styles = EStyleSheet.create({
 	tagline: {
 		marginTop: 8,
 		fontStyle: 'italic'
+	},
+	bio: {
+		marginTop: 8,
+		fontStyle: 'italic'
+	},
+	bioContainerLandscape: {
+		flex: 1,
+		marginTop: 10
 	},
 	biggerIcon: {
 		width: 24,
@@ -305,6 +336,7 @@ const styles = EStyleSheet.create({
 	},
 	landscapeLogoutButton: {
 		marginTop: 8,
+		marginBottom: 8,
 		borderWidth: 2,
 		borderColor: '$primaryColor'
 	},
@@ -312,7 +344,15 @@ const styles = EStyleSheet.create({
 	landscapeProfileDataContainer: {
 		flex: 1,
 		justifyContent: 'center',
-		paddingRight: 16
+		paddingRight: 16,
+		marginTop: 40
+	},
+	shrinkItSelf: {
+		flexShrink: 1,
+		flexGrow: 0
+	},
+	bringToBottom: {
+		justifyContent: 'flex-end'
 	}
 })
 
