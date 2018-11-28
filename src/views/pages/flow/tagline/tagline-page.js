@@ -20,10 +20,7 @@ export class TaglinePage extends React.Component {
 	}
 
 	handleChange = (event, field) => {
-		const text = event.nativeEvent.text
-		if (text.length <= 50) {
-			this.setState({ [field]: event.nativeEvent.text })
-		}
+		this.setState({ [field]: event.nativeEvent.text })
 	}
 
 	handleNext = () => {
@@ -70,6 +67,7 @@ export class TaglinePage extends React.Component {
 								numberOfLines={3}
 								multiline={true}
 								blurOnSubmit={false}
+								maxLength={MAX_LENGTH}
 								onChange={val => this.handleChange(val, 'tagline')}
 								value={tagline}
 								returnKeyType={'done'}

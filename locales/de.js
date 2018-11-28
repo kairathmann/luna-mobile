@@ -5,8 +5,9 @@ import { de as forgot_password_page } from '../src/views/pages/forgot-password/l
 import { de as flow_page } from '../src/views/pages/flow/locales'
 
 import { de as profile_page } from '../src/views/pages/profile/locales'
-
+import { de as edit_page } from '../src/views/pages/edit/locales'
 import { de as recommendations_page } from '../src/views/pages/recommendations/locales'
+import { de as conversations_page } from '../src/views/pages/conversations/locales'
 
 export default {
 	welcome_page,
@@ -16,6 +17,8 @@ export default {
 	flow_page,
 	profile_page,
 	recommendations_page,
+	conversations_page,
+	edit_page,
 	common: {
 		email: 'Email',
 		errors: {

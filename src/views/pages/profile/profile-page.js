@@ -2,13 +2,13 @@ import { Button, H3 } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Dimensions, Image, Text, View } from 'react-native'
-import EStyleSheet from 'react-native-extended-stylesheet'
 import HeaderImageScrollView from 'react-native-image-header-scroll-view'
 import LinearGradient from 'react-native-linear-gradient'
 import { Header } from 'react-navigation'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
 import StarIcon from '../../../assets/images/star-icon.png'
+import EStyleSheet from 'react-native-extended-stylesheet'
 import {
 	avatarRelativeUrlToFullPhotoUrl,
 	getLoaderImageForGender,
@@ -17,7 +17,7 @@ import {
 } from '../../../common/utils'
 import { ORIENTATION } from '../../../enums'
 import { PAGES_NAMES } from '../../../navigation'
-import { logout } from './scenario-actions'
+import { logout, startEditing } from './scenario-actions'
 
 export class ProfilePage extends React.Component {
 	constructor(props) {
@@ -50,7 +50,8 @@ export class ProfilePage extends React.Component {
 	}
 
 	_goToEditPage = () => {
-		this.props.navigation.navigate(PAGES_NAMES.LOGIN_PAGE)
+		this.props.startEditing()
+		this.props.navigation.navigate(PAGES_NAMES.EDIT_PROFILE)
 	}
 
 	getDefaultImage = getLoaderImageForGender
@@ -58,8 +59,18 @@ export class ProfilePage extends React.Component {
 	getAvatarImage = () => {
 		return this.props.profile.avatarUrl &&
 			!isHydraImage(this.props.profile.avatarUrl)
-			? { uri: avatarRelativeUrlToFullPhotoUrl(this.props.profile.avatarUrl) }
+			? this.processIfLocal()
 			: this.getDefaultImage(this.props.profile.gidIs)
+	}
+
+	processIfLocal = () => {
+		if (this.props.profile.localAvatar) {
+			return { uri: this.props.profile.avatarUrl }
+		} else {
+			return {
+				uri: avatarRelativeUrlToFullPhotoUrl(this.props.profile.avatarUrl)
+			}
+		}
 	}
 
 	renderTitle = () => {
@@ -214,6 +225,7 @@ export class ProfilePage extends React.Component {
 ProfilePage.propTypes = {
 	navigation: PropTypes.object.isRequired,
 	profile: PropTypes.object.isRequired,
+	startEditing: PropTypes.func.isRequired,
 	logout: PropTypes.func.isRequired
 }
 
@@ -312,6 +324,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
+		startEditing: () => dispatch(startEditing()),
 		logout: () => dispatch(logout())
 	}
 }

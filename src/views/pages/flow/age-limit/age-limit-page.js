@@ -24,7 +24,7 @@ export class AgeLimitPage extends React.Component {
 			ageMax: props.profile.seekingAgeTo || MAX_AGE,
 			ageMin: props.profile.seekingAgeFrom || MIN_AGE,
 			minTouched: false,
-			maxtouched: false,
+			maxTouched: false,
 			sliderWidth: this.calculateWidthOfMultiSlider()
 		}
 	}

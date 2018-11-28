@@ -2,6 +2,7 @@ import EStyleSheet from 'react-native-extended-stylesheet'
 import authStyles from './authStyles'
 import * as COLORS from './colors'
 import flowStyles from './flowStyles'
+import notificationsStyles from './notifications'
 
 const styles = EStyleSheet.create({
 	content: {
@@ -19,5 +20,6 @@ const styles = EStyleSheet.create({
 
 const auth = EStyleSheet.create(authStyles)
 const flow = EStyleSheet.create(flowStyles)
+const notifications = EStyleSheet.create(notificationsStyles)
 
-export { COLORS, styles, auth, flow }
+export { COLORS, styles, auth, flow, notifications }
