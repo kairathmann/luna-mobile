@@ -61,6 +61,7 @@ export class EditPage extends React.Component {
 			birthday: props.profile.birthDate || '',
 			gender: props.profile.gidIs || 1,
 			sexuality: props.profile.gidSeeking || 2,
+			bio: props.profile.bio || '',
 			ageMax: props.profile.seekingAgeTo || MAX_AGE,
 			ageMin: props.profile.seekingAgeFrom || MIN_AGE,
 			localAvatar: props.profile.localAvatar || false,
@@ -95,7 +96,8 @@ export class EditPage extends React.Component {
 				firstName: this.state.name,
 				gidIs: this.state.gender,
 				gidSeeking: this.state.sexuality,
-				tagline: this.state.tagline
+				tagline: this.state.tagline,
+				bio: this.state.bio
 			},
 			this.state.avatarChanged ? { uri: this.state.newAvatar } : null
 		)
@@ -143,7 +145,7 @@ export class EditPage extends React.Component {
 		})
 	}
 
-	handleChangeTagline = (event, field) => {
+	handleTextChange = (event, field) => {
 		this.setState({ [field]: event.nativeEvent.text })
 	}
 
@@ -353,7 +355,7 @@ export class EditPage extends React.Component {
 							maxLength={MAX_LENGTH}
 							multiline={true}
 							blurOnSubmit={false}
-							onChange={val => this.handleChangeTagline(val, 'tagline')}
+							onChange={val => this.handleTextChange(val, 'tagline')}
 							value={tagline}
 						/>
 					</Item>
@@ -365,6 +367,25 @@ export class EditPage extends React.Component {
 					]}
 				>{`${tagline.length}/${MAX_LENGTH}`}</Text>
 			</React.Fragment>
+		)
+	}
+
+	renderBio = () => {
+		const { bio } = this.state
+		return (
+			<Form style={{ paddingBottom: 20 }}>
+				<Item floatingLabel>
+					<Label>{I18n.t('flow_page.bio.inputLabel')}</Label>
+					<Input
+						numberOfLines={5}
+						multiline={true}
+						onChange={val => this.handleTextChange(val, 'bio')}
+						value={bio}
+						blurOnSubmit={false}
+						style={{ height: 200, textAlignVertical: 'top' }}
+					/>
+				</Item>
+			</Form>
 		)
 	}
 
@@ -384,6 +405,7 @@ export class EditPage extends React.Component {
 					{/*TODO: should be hidden as API does not return seeking_age_from and seeking_age_to*/}
 					{/*{ this.renderAgeLimits() }*/}
 					{this.renderTagline()}
+					{this.renderBio()}
 				</ScrollView>
 			</React.Fragment>
 		)
@@ -483,9 +505,7 @@ const styles = EStyleSheet.create({
 	},
 	taglineCounter: {
 		textAlign: 'right',
-		marginTop: 8,
-		marginBottom: 8,
-		paddingBottom: 16
+		marginTop: 8
 	},
 	taglineCounterLimit: {
 		color: '$primaryColor'

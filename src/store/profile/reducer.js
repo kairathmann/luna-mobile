@@ -40,6 +40,7 @@ export function profileReducer(state = initialState, { payload, type }) {
 					seekingAgeFrom: state.profile.seekingAgeFrom,
 					seekingAgeTo: state.profile.seekingAgeTo,
 					tagline: state.profile.tagline,
+					bio: state.profile.bio,
 					localAvatar: state.profile.localAvatar || false
 					//TODO: Add more field mapping
 				}
@@ -86,9 +87,8 @@ export function profileReducer(state = initialState, { payload, type }) {
 					gidSeeking: state.profileToEdit.gidSeeking,
 					localAvatar: state.profileToEdit.localAvatar,
 					avatarUrl: state.profileToEdit.avatarUrl,
-					tagline: state.profileToEdit.tagline
-					// localAvatar: state.profileToEdit.localAvatar ? state.profileToEdit.localAvatar : state.profile.localAvatar,
-					// avatarUrl: state.profileToEdit.avatarUrl ? state.profileToEdit.avatarUrl : state.profile.avatarUrl
+					tagline: state.profileToEdit.tagline,
+					bio: state.profileToEdit.bio
 				},
 				profileToEdit: {}
 			}
