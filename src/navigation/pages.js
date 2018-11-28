@@ -33,7 +33,7 @@ import FullLoader from '../views/pages/loader/full-loader'
 import LoginPage from '../views/pages/login/login-page'
 import ProfilePage from '../views/pages/profile/profile-page'
 import RecommendationsPage from '../views/pages/recommendations/recommendations-page'
-
+import MessagePage from '../views/pages/message/message-page'
 import SignupPage from '../views/pages/signup/signup-page'
 import WelcomePage from '../views/pages/welcome/welcome-page'
 
@@ -68,16 +68,19 @@ const noNavbarStyle = {
 }
 
 const MessagePageStackNavigation = createStackNavigator({
-	MESSAGES_PAGE: {
-		screen: MessagesPage,
+	CONVERSATIONS_PAGE: {
+		screen: ConversationsPage,
 		navigationOptions: () => ({
-			title: ''
+			title: '',
+			header: null
 		})
 	},
 	SINGLE_MESSAGE_PAGE: {
-		screen: MessagesPage,
-		navigationOptions: () => ({
-			title: ''
+		screen: MessagePage,
+		navigationOptions: ({ navigation }) => ({
+			title: navigation.getParam('title'),
+			headerTintColor: 'white',
+			headerStyle: { backgroundColor: LUNA_PRIMARY_COLOR }
 		})
 	}
 })
@@ -178,16 +181,12 @@ const HomePageBottomTabNavigation = createBottomTabNavigator(
 				)
 			})
 		},
-		MESSAGES_PAGE: {
+		CONVERSATIONS_TAB: {
 			screen: MessagePageStackNavigation,
 			navigationOptions: () => ({
-				title: ''
-			})
-		},
-		CONVERSATIONS_PAGE: {
-			screen: ConversationsPage,
-			navigationOptions: () => ({
 				title: '',
+				tabBarOnPress: ({ navigation }) =>
+					navigation.navigate(PAGES_NAMES.CONVERSATIONS_PAGE),
 				tabBarIcon: ({ focused }) => (
 					<ImageBackground
 						style={{
