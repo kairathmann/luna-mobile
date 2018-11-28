@@ -8,7 +8,7 @@ import {
 	prepareToChangeProfileStatus,
 	startChangeProfileStatus
 } from '../../../store/profile/actions'
-import { logout } from '../profile/scenario-actions'
+import { clearStoreScenario, logoutScenario } from '../common-scenarios'
 
 export function deleteAccount({ reasons, comment, password }) {
 	return async dispatch =>
@@ -25,14 +25,23 @@ export function startManaging() {
 }
 
 async function performChangeStatus(dispatch, state, data) {
+	let statusChanged = false
 	try {
 		dispatch(startChangeProfileStatus())
 		await api.manageProfileState(state, data)
+		statusChanged = true
 		dispatch(changeProfileStatusSuccess())
-		dispatch(logout())
+		await logoutScenario()
 	} catch (error) {
-		dispatch(changeProfileStatusFailed(getErrorDataFromNetworkException(error)))
+		if (!statusChanged) {
+			dispatch(
+				changeProfileStatusFailed(getErrorDataFromNetworkException(error))
+			)
+		}
 	} finally {
-		navigationService.navigate(PAGES_NAMES.WELCOME_PAGE)
+		if (statusChanged) {
+			navigationService.navigate(PAGES_NAMES.WELCOME_PAGE)
+			clearStoreScenario(dispatch)
+		}
 	}
 }

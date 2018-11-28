@@ -31,7 +31,8 @@ export default {
 			server_error:
 				'_PL_Something is wrong at our side. Please try again later.',
 			not_authenticated: 'You are logged out',
-			deleted_user: '_PL_There is no user like that'
+			deleted_user: '_PL_There is no user like that',
+			illegal_state: 'Your account is already disabled or deleted'
 		},
 		male: 'Male',
 		female: 'Female',
