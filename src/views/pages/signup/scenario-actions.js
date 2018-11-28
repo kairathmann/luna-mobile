@@ -7,17 +7,19 @@ import {
 	signupError,
 	signupSuccess
 } from '../../../store/auth/actions'
+import { globalActions } from '../../../store/global'
 
 export function signup({ email, password }) {
 	return async dispatch => {
 		try {
-			navigationService.navigate(PAGES_NAMES.LOADER)
+			dispatch(globalActions.setGlobalLoading())
 			const result = await api.signup({ email, password })
 			dispatch(signupSuccess(result))
 			navigationService.navigate(PAGES_NAMES.FLOW_NAME_BIRTHDAY)
 		} catch (error) {
 			dispatch(signupError(getErrorDataFromNetworkException(error)))
-			navigationService.navigate(PAGES_NAMES.SIGNUP_PAGE)
+		} finally {
+			dispatch(globalActions.unsetGlobalLoading())
 		}
 	}
 }

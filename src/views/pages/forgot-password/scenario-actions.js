@@ -1,18 +1,17 @@
 import api from '../../../api'
 import { getErrorDataFromNetworkException } from '../../../common/utils'
-import { PAGES_NAMES } from '../../../navigation'
-import { navigationService } from '../../../services'
 import {
 	resetPasswordError,
 	resetPasswordSuccess,
 	clearResetPasswordError
 } from '../../../store/auth/actions'
+import { globalActions } from '../../../store/global'
 import I18n from '../../../../locales/i18n'
 import { toastService } from '../../../services'
 
 export const resetPassword = email => async dispatch => {
 	try {
-		navigationService.navigate(PAGES_NAMES.LOADER)
+		dispatch(globalActions.setGlobalLoading())
 		await api.forgotPassword({ email })
 		dispatch(resetPasswordSuccess())
 		toastService.showSuccessToast(
@@ -22,7 +21,7 @@ export const resetPassword = email => async dispatch => {
 	} catch (error) {
 		dispatch(resetPasswordError(getErrorDataFromNetworkException(error)))
 	} finally {
-		navigationService.navigate(PAGES_NAMES.FORGOT_PASSWORD_PAGE)
+		dispatch(globalActions.unsetGlobalLoading())
 	}
 }
 

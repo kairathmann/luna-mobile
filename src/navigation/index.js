@@ -1,1 +1,1 @@
-export { PAGES_NAMES, RootStack } from './pages.js'
+export { AppStackNavigatorWithGlobalSupport, PAGES_NAMES } from './pages.js'

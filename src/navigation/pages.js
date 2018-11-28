@@ -2,7 +2,7 @@
 /* eslint react/prop-types: 0 */
 import { Button, Icon } from 'native-base'
 import React from 'react'
-import { Image, ImageBackground } from 'react-native'
+import { Image, ImageBackground, View } from 'react-native'
 import {
 	createBottomTabNavigator,
 	createStackNavigator
@@ -29,7 +29,7 @@ import GenderPreferencesPage from '../views/pages/flow/gender-preferences/gender
 import NameBirthdayPage from '../views/pages/flow/name-birthday/name-birthday-page'
 import TaglinePage from '../views/pages/flow/tagline/tagline-page'
 import ForgotPasswordPage from '../views/pages/forgot-password/forgot-password-page'
-import FullLoader from '../views/pages/loader/full-loader'
+import { ConnectedLoader } from '../components/Loader'
 import LoginPage from '../views/pages/login/login-page'
 import ManageProfilePage from '../views/pages/manageprofile/manage-profile-page'
 import {
@@ -41,6 +41,8 @@ import RecommendationsPage from '../views/pages/recommendations/recommendations-
 import MessagePage from '../views/pages/message/message-page'
 import SignupPage from '../views/pages/signup/signup-page'
 import WelcomePage from '../views/pages/welcome/welcome-page'
+
+import { navigationService } from '../services'
 
 const PAGES_NAMES = {
 	WELCOME_PAGE: 'WELCOME_PAGE',
@@ -57,7 +59,6 @@ const PAGES_NAMES = {
 	FLOW_AVATAR: 'FLOW_AVATAR',
 	FLOW_ALLDONE: 'FLOW_ALLDONE',
 	PROFILE: 'PROFILE',
-	LOADER: 'LOADER',
 	MESSAGE: 'MESSAGE_PAGE',
 	SINGLE_MESSAGE_PAGE: 'SINGLE_MESSAGE_PAGE',
 	EDIT_PROFILE: 'EDIT_PROFILE',
@@ -329,19 +330,16 @@ const AppStackNavigator = createStackNavigator({
 	}
 })
 
-const RootStack = createStackNavigator(
-	{
-		Main: {
-			screen: AppStackNavigator
-		},
-		LOADER: {
-			screen: FullLoader
-		}
-	},
-	{
-		mode: 'modal',
-		headerMode: 'none'
-	}
+const AppStackNavigatorWithGlobalSupport = () => (
+	<View style={{ flex: 1 }} forceInset={{ top: 'always' }}>
+		<AppStackNavigator
+			ref={navigatorRef => {
+				navigationService.setTopLevelNavigator(navigatorRef)
+			}}
+			styles={{ position: 'absolute' }}
+		/>
+		<ConnectedLoader />
+	</View>
 )
 
-export { PAGES_NAMES, RootStack }
+export { AppStackNavigatorWithGlobalSupport, PAGES_NAMES }
