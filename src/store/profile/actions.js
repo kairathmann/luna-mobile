@@ -7,8 +7,37 @@ import {
 	PROFILE_START_LOCAL_LOADING,
 	FETCH_PROFILE_SUCCESS,
 	FETCH_PROFILE_ERROR,
-	CLEAR_DATA
+	CLEAR_DATA,
+	START_CHANGE_PROFILE_STATUS,
+	CHANGE_PROFILE_STATUS_ERROR,
+	CHANGE_PROFILE_STATUS_SUCCESS,
+	PREPARE_TO_CHANGE_STATUS
 } from './action-types'
+
+export function startChangeProfileStatus() {
+	return {
+		type: START_CHANGE_PROFILE_STATUS
+	}
+}
+
+export function prepareToChangeProfileStatus() {
+	return {
+		type: PREPARE_TO_CHANGE_STATUS
+	}
+}
+
+export function changeProfileStatusFailed(error) {
+	return {
+		type: CHANGE_PROFILE_STATUS_ERROR,
+		payload: error
+	}
+}
+
+export function changeProfileStatusSuccess() {
+	return {
+		type: CHANGE_PROFILE_STATUS_SUCCESS
+	}
+}
 
 export function fetchProfileSuccess(profile) {
 	return {

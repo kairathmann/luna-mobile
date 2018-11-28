@@ -44,7 +44,7 @@ const styles = EStyleSheet.create({
 		borderRadius: '3.1rem'
 	},
 	userInfoContainer: {
-		flex: 2,
+		flex: 3,
 		justifyContent: 'center',
 		alignItems: 'center',
 		borderBottomLeftRadius: '3.1rem',
@@ -53,15 +53,17 @@ const styles = EStyleSheet.create({
 		borderTopRightRadius: 0
 	},
 	userInfoTextContainer: {
+		marginLeft: '1rem',
+		marginRight: '1rem',
 		flexDirection: 'row',
-		justifyContent: 'center',
-		alignItems: 'center'
+		justifyContent: 'center'
 	},
 	userInfo: {
 		color: '#FFF',
 		fontSize: '1.1rem',
 		fontFamily: 'Lato-Regular',
-		marginRight: '1rem'
+		marginRight: '1rem',
+		textAlign: 'center'
 	}
 })
 

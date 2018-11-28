@@ -31,6 +31,11 @@ import TaglinePage from '../views/pages/flow/tagline/tagline-page'
 import ForgotPasswordPage from '../views/pages/forgot-password/forgot-password-page'
 import FullLoader from '../views/pages/loader/full-loader'
 import LoginPage from '../views/pages/login/login-page'
+import ManageProfilePage from '../views/pages/manageprofile/manage-profile-page'
+import {
+	ManageDeleteReasonPage,
+	ManageDisableReasonPage
+} from '../views/pages/manageprofile/manage-reason-page'
 import ProfilePage from '../views/pages/profile/profile-page'
 import RecommendationsPage from '../views/pages/recommendations/recommendations-page'
 import MessagePage from '../views/pages/message/message-page'
@@ -55,7 +60,10 @@ const PAGES_NAMES = {
 	LOADER: 'LOADER',
 	MESSAGE: 'MESSAGE_PAGE',
 	SINGLE_MESSAGE_PAGE: 'SINGLE_MESSAGE_PAGE',
-	EDIT_PROFILE: 'EDIT_PROFILE'
+	EDIT_PROFILE: 'EDIT_PROFILE',
+	MANAGE_PROFILE: 'MANAGE_PROFILE',
+	MANAGE_DISABLE: 'MANAGE_DISABLE',
+	MANAGE_DELETE: 'MANAGE_DELETE'
 }
 
 const noNavbarStyle = {
@@ -118,6 +126,30 @@ const ProfilePageStackNavigation = createStackNavigator({
 				elevation: 0, //remove shadow on Android
 				shadowOpacity: 0 //remove shadow on iOS
 			}
+		})
+	},
+	MANAGE_PROFILE: {
+		screen: ManageProfilePage,
+		navigationOptions: () => ({
+			title: I18n.t('manage_page.title'),
+			headerTintColor: 'white',
+			headerStyle: { backgroundColor: LUNA_PRIMARY_COLOR }
+		})
+	},
+	MANAGE_DISABLE: {
+		screen: ManageDisableReasonPage,
+		navigationOptions: () => ({
+			title: I18n.t('manage_page.title'),
+			headerTintColor: 'white',
+			headerStyle: { backgroundColor: LUNA_PRIMARY_COLOR }
+		})
+	},
+	MANAGE_DELETE: {
+		screen: ManageDeleteReasonPage,
+		navigationOptions: () => ({
+			title: I18n.t('manage_page.title'),
+			headerTintColor: 'white',
+			headerStyle: { backgroundColor: LUNA_PRIMARY_COLOR }
 		})
 	},
 	EDIT_PROFILE: {
