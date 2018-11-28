@@ -1,14 +1,7 @@
-import api from '../../../api/api'
 import { PAGES_NAMES } from '../../../navigation'
 import { navigationService } from '../../../services'
-import { logoutUser } from '../../../store/auth/actions'
-import {
-	clearData as clearProfile,
-	startUpdatingProfile
-} from '../../../store/profile/actions'
-import { clearData as clearRecommendations } from '../../../store/recommendations/actions'
-import { clearData as clearConversations } from '../../../store/conversations/actions'
-import { conversationsListTimerService } from '../../../services'
+import { startUpdatingProfile } from '../../../store/profile/actions'
+import { clearStoreScenario, logoutScenario } from '../common-scenarios'
 
 export function startEditing() {
 	return startUpdatingProfile()
@@ -17,15 +10,10 @@ export function startEditing() {
 export function logout() {
 	return async dispatch => {
 		try {
-			navigationService.navigate(PAGES_NAMES.LOADER)
-			conversationsListTimerService.stopTimer()
-			await api.logout()
+			await logoutScenario()
 		} finally {
 			navigationService.navigate(PAGES_NAMES.WELCOME_PAGE)
-			dispatch(clearRecommendations())
-			dispatch(clearConversations())
-			dispatch(clearProfile())
-			dispatch(logoutUser())
+			clearStoreScenario(dispatch)
 		}
 	}
 }

@@ -16,3 +16,26 @@ export const PROFILE_STATE = {
 	DISABLED: 3,
 	DELETED: 4
 }
+
+export const REASONS = [
+	{
+		slug: 'met_someone_here',
+		index: 1
+	},
+	{
+		slug: 'met_someone_elsewhere',
+		index: 2
+	},
+	{
+		slug: 'prefer_another_app',
+		index: 3
+	},
+	{
+		slug: 'no_people_around',
+		index: 4
+	},
+	{
+		slug: 'no_interesting_people',
+		index: 5
+	}
+]
