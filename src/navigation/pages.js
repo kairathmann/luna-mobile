@@ -10,14 +10,17 @@ import {
 import I18n from '../../locales/i18n'
 import RecommendationsPageActiveNavigationIcon from '../assets/images/nav-icon-luna-active.png'
 import RecommendationsPageInactiveNavigationIcon from '../assets/images/nav-icon-luna.png'
-import ConversationsPageInactiveNavigationIcon from '../assets/images/nav-icon-messages.png'
 import ConversationsPageActiveNavigationIcon from '../assets/images/nav-icon-messages-active.png'
+import ConversationsPageInactiveNavigationIcon from '../assets/images/nav-icon-messages.png'
 import ProfilePageActiveNavigationIcon from '../assets/images/nav-icon-profile-active.png'
 import ProfilePageInactiveNavigationIcon from '../assets/images/nav-icon-profile.png'
+
+import ConversationsBadgeIcon from '../components/ConversationsBadgeIcon'
 import { ORIENTATION } from '../enums'
 
 import { COLORS } from '../styles'
 import { LUNA_PRIMARY_COLOR } from '../styles/colors'
+import ConversationsPage from '../views/pages/conversations/conversations-page'
 import EditPage from '../views/pages/edit/edit-page'
 import AgeLimitPage from '../views/pages/flow/age-limit/age-limit-page'
 import AlldonePage from '../views/pages/flow/alldone/alldone-page'
@@ -28,14 +31,16 @@ import TaglinePage from '../views/pages/flow/tagline/tagline-page'
 import ForgotPasswordPage from '../views/pages/forgot-password/forgot-password-page'
 import FullLoader from '../views/pages/loader/full-loader'
 import LoginPage from '../views/pages/login/login-page'
+import ManageProfilePage from '../views/pages/manageprofile/manage-profile-page'
+import {
+	ManageDeleteReasonPage,
+	ManageDisableReasonPage
+} from '../views/pages/manageprofile/manage-reason-page'
 import ProfilePage from '../views/pages/profile/profile-page'
 import RecommendationsPage from '../views/pages/recommendations/recommendations-page'
 
 import SignupPage from '../views/pages/signup/signup-page'
 import WelcomePage from '../views/pages/welcome/welcome-page'
-import ConversationsPage from '../views/pages/conversations/conversations-page'
-
-import ConversationsBadgeIcon from '../components/ConversationsBadgeIcon'
 
 const PAGES_NAMES = {
 	WELCOME_PAGE: 'WELCOME_PAGE',
@@ -53,6 +58,9 @@ const PAGES_NAMES = {
 	FLOW_ALLDONE: 'FLOW_ALLDONE',
 	PROFILE: 'PROFILE',
 	EDIT_PROFILE: 'EDIT_PROFILE',
+	MANAGE_PROFILE: 'MANAGE_PROFILE',
+	MANAGE_DISABLE: 'MANAGE_DISABLE',
+	MANAGE_DELETE: 'MANAGE_DELETE',
 	LOADER: 'LOADER'
 }
 
@@ -98,6 +106,30 @@ const ProfilePageStackNavigation = createStackNavigator({
 				elevation: 0, //remove shadow on Android
 				shadowOpacity: 0 //remove shadow on iOS
 			}
+		})
+	},
+	MANAGE_PROFILE: {
+		screen: ManageProfilePage,
+		navigationOptions: () => ({
+			title: I18n.t('manage_page.title'),
+			headerTintColor: 'white',
+			headerStyle: { backgroundColor: LUNA_PRIMARY_COLOR }
+		})
+	},
+	MANAGE_DISABLE: {
+		screen: ManageDisableReasonPage,
+		navigationOptions: () => ({
+			title: I18n.t('manage_page.title'),
+			headerTintColor: 'white',
+			headerStyle: { backgroundColor: LUNA_PRIMARY_COLOR }
+		})
+	},
+	MANAGE_DELETE: {
+		screen: ManageDeleteReasonPage,
+		navigationOptions: () => ({
+			title: I18n.t('manage_page.title'),
+			headerTintColor: 'white',
+			headerStyle: { backgroundColor: LUNA_PRIMARY_COLOR }
 		})
 	},
 	EDIT_PROFILE: {

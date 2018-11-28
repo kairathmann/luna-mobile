@@ -29,8 +29,9 @@ import {
 	getLoaderImageForGender,
 	isHydraImage
 } from '../../../common/utils'
+import Button from '../../../components/Button/Button'
 import { GENDER } from '../../../enums'
-import * as COLORS from '../../../styles/colors'
+import { PAGES_NAMES } from '../../../navigation'
 import { LUNA_PRIMARY_COLOR } from '../../../styles/colors'
 import { uploadChanges } from './scenario-actions'
 
@@ -322,9 +323,9 @@ export class EditPage extends React.Component {
 				<MultiSlider
 					isMarkersSeparated={true}
 					markerStyle={{
-						backgroundColor: COLORS.LUNA_PRIMARY_COLOR
+						backgroundColor: LUNA_PRIMARY_COLOR
 					}}
-					selectedStyle={{ backgroundColor: COLORS.LUNA_PRIMARY_COLOR }}
+					selectedStyle={{ backgroundColor: LUNA_PRIMARY_COLOR }}
 					values={[ageMin, ageMax]}
 					min={MIN_AGE}
 					max={MAX_AGE}
@@ -384,6 +385,13 @@ export class EditPage extends React.Component {
 					{/*TODO: should be hidden as API does not return seeking_age_from and seeking_age_to*/}
 					{/*{ this.renderAgeLimits() }*/}
 					{this.renderTagline()}
+					{/*TODO: change it when screen available*/}
+					<Button
+						text={I18n.t('edit_page.manage_account')}
+						onPress={() =>
+							this.props.navigation.navigate(PAGES_NAMES.MANAGE_PROFILE)
+						}
+					/>
 				</ScrollView>
 			</React.Fragment>
 		)
