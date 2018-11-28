@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { Image, RefreshControl, ScrollView, Text, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
+import SearchHeader from 'react-native-search-header'
 import { Header, NavigationEvents } from 'react-navigation'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
@@ -12,17 +13,12 @@ import { GENDER } from '../../../enums'
 import { PAGES_NAMES } from '../../../navigation'
 import { conversationsListTimerService } from '../../../services'
 import { notifications, styles as commonStyles } from '../../../styles'
+import { LUNA_PRIMARY_COLOR } from '../../../styles/colors'
 import { fetchConversations } from './scenario-actions'
 
 class ConversationsPage extends React.Component {
 	state = {
 		searchText: ''
-	}
-
-	componentDidMount() {
-		this.props.navigation.setParams({
-			onSearch: this._onSearch
-		})
 	}
 
 	_onSearch = text => {
@@ -72,49 +68,78 @@ class ConversationsPage extends React.Component {
 	render() {
 		const { searchText } = this.state
 		return (
-			<ScrollView
-				style={{ marginTop: Header.HEIGHT }}
-				contentContainerStyle={styles.scrollViewContainer}
-				refreshControl={
-					<RefreshControl
-						refreshing={this.props.isLoadingConversations}
-						onRefresh={this.refreshConversations}
+			<View>
+				<View>
+					<View
+						style={{
+							width: '100%',
+							backgroundColor: LUNA_PRIMARY_COLOR,
+							height: 1
+						}}
 					/>
-				}
-			>
-				<NavigationEvents onWillFocus={this.refreshConversations} />
-				{this.props.isLoadingConversations && (
-					<View style={commonStyles.content} />
-				)}
-				{!this.props.isLoadingConversations &&
-					!this.props.isFetchingConversationsError &&
-					this.props.conversations.length > 0 && (
-						<React.Fragment>
-							{this.props.newMessageCount > 0 &&
-								this.renderNewMessageCountView(this.props.newMessageCount)}
-							<ConversationsList
-								handleClick={this.handleClick}
-								conversations={this.props.conversations.filter(con =>
-									con.partnerName.includes(searchText)
-								)}
-							/>
-						</React.Fragment>
+					<SearchHeader
+						placeholder="Search..."
+						placeholderColor="gray"
+						visibleInitially={false}
+						persistent={true}
+						enableSuggestion={false}
+						dropShadowed={true}
+						entryAnimation="from-right-side"
+						iconColor="gray"
+						autoFocus={false}
+						topOffset={0}
+						onClear={() => {
+							this._onSearch('')
+						}}
+						onEnteringSearch={event => {
+							this._onSearch(event.nativeEvent.text)
+						}}
+					/>
+				</View>
+				<ScrollView
+					style={{ marginTop: Header.HEIGHT }}
+					contentContainerStyle={styles.scrollViewContainer}
+					refreshControl={
+						<RefreshControl
+							refreshing={this.props.isLoadingConversations}
+							onRefresh={this.refreshConversations}
+						/>
+					}
+				>
+					<NavigationEvents onWillFocus={this.refreshConversations} />
+					{this.props.isLoadingConversations && (
+						<View style={commonStyles.content} />
 					)}
-				{!this.props.isLoadingConversations &&
-					this.props.isFetchingConversationsError && (
-						<View style={styles.errorTextContainer}>
-							<Text style={[commonStyles.errorText, styles.errorText]}>
-								{I18n.t(
-									'conversations_page.error_could_not_fetch_conversations'
-								)}
-							</Text>
-						</View>
-					)}
-				{!this.props.isLoadingConversations &&
-					!this.props.isFetchingConversationsError &&
-					this.props.conversations.length === 0 &&
-					this.renderNoMessagesView()}
-			</ScrollView>
+					{!this.props.isLoadingConversations &&
+						!this.props.isFetchingConversationsError &&
+						this.props.conversations.length > 0 && (
+							<React.Fragment>
+								{this.props.newMessageCount > 0 &&
+									this.renderNewMessageCountView(this.props.newMessageCount)}
+								<ConversationsList
+									handleClick={this.handleClick}
+									conversations={this.props.conversations.filter(con =>
+										con.partnerName.includes(searchText)
+									)}
+								/>
+							</React.Fragment>
+						)}
+					{!this.props.isLoadingConversations &&
+						this.props.isFetchingConversationsError && (
+							<View style={styles.errorTextContainer}>
+								<Text style={[commonStyles.errorText, styles.errorText]}>
+									{I18n.t(
+										'conversations_page.error_could_not_fetch_conversations'
+									)}
+								</Text>
+							</View>
+						)}
+					{!this.props.isLoadingConversations &&
+						!this.props.isFetchingConversationsError &&
+						this.props.conversations.length === 0 &&
+						this.renderNoMessagesView()}
+				</ScrollView>
+			</View>
 		)
 	}
 }

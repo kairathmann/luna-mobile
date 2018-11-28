@@ -1,9 +1,8 @@
 /* eslint react/display-name: 0 */
 /* eslint react/prop-types: 0 */
-import { Button, Icon, View } from 'native-base'
+import { Button, Icon } from 'native-base'
 import React from 'react'
 import { Image, ImageBackground } from 'react-native'
-import SearchHeader from 'react-native-search-header'
 import {
 	createBottomTabNavigator,
 	createStackNavigator
@@ -79,37 +78,9 @@ const noNavbarStyle = {
 const MessagePageStackNavigation = createStackNavigator({
 	CONVERSATIONS_PAGE: {
 		screen: ConversationsPage,
-		navigationOptions: ({ navigation }) => ({
+		navigationOptions: () => ({
 			title: '',
-			header: (
-				<View>
-					<View
-						style={{
-							width: '100%',
-							backgroundColor: LUNA_PRIMARY_COLOR,
-							height: 1
-						}}
-					/>
-					<SearchHeader
-						placeholder="Search..."
-						placeholderColor="gray"
-						visibleInitially={false}
-						persistent={true}
-						enableSuggestion={false}
-						dropShadowed={true}
-						entryAnimation="from-right-side"
-						iconColor="gray"
-						autoFocus={false}
-						topOffset={0}
-						onClear={() => {
-							navigation.getParam('onSearch')('')
-						}}
-						onEnteringSearch={event => {
-							navigation.getParam('onSearch')(event.nativeEvent.text)
-						}}
-					/>
-				</View>
-			)
+			header: null
 		})
 	},
 	SINGLE_MESSAGE_PAGE: {
