@@ -10,14 +10,17 @@ import {
 import I18n from '../../locales/i18n'
 import RecommendationsPageActiveNavigationIcon from '../assets/images/nav-icon-luna-active.png'
 import RecommendationsPageInactiveNavigationIcon from '../assets/images/nav-icon-luna.png'
-import ConversationsPageInactiveNavigationIcon from '../assets/images/nav-icon-messages.png'
 import ConversationsPageActiveNavigationIcon from '../assets/images/nav-icon-messages-active.png'
+import ConversationsPageInactiveNavigationIcon from '../assets/images/nav-icon-messages.png'
 import ProfilePageActiveNavigationIcon from '../assets/images/nav-icon-profile-active.png'
 import ProfilePageInactiveNavigationIcon from '../assets/images/nav-icon-profile.png'
+
+import ConversationsBadgeIcon from '../components/ConversationsBadgeIcon'
 import { ORIENTATION } from '../enums'
 
 import { COLORS } from '../styles'
 import { LUNA_PRIMARY_COLOR } from '../styles/colors'
+import ConversationsPage from '../views/pages/conversations/conversations-page'
 import EditPage from '../views/pages/edit/edit-page'
 import AgeLimitPage from '../views/pages/flow/age-limit/age-limit-page'
 import AlldonePage from '../views/pages/flow/alldone/alldone-page'
@@ -30,12 +33,9 @@ import FullLoader from '../views/pages/loader/full-loader'
 import LoginPage from '../views/pages/login/login-page'
 import ProfilePage from '../views/pages/profile/profile-page'
 import RecommendationsPage from '../views/pages/recommendations/recommendations-page'
-
+import MessagePage from '../views/pages/message/message-page'
 import SignupPage from '../views/pages/signup/signup-page'
 import WelcomePage from '../views/pages/welcome/welcome-page'
-import ConversationsPage from '../views/pages/conversations/conversations-page'
-
-import ConversationsBadgeIcon from '../components/ConversationsBadgeIcon'
 
 const PAGES_NAMES = {
 	WELCOME_PAGE: 'WELCOME_PAGE',
@@ -52,8 +52,10 @@ const PAGES_NAMES = {
 	FLOW_AVATAR: 'FLOW_AVATAR',
 	FLOW_ALLDONE: 'FLOW_ALLDONE',
 	PROFILE: 'PROFILE',
-	EDIT_PROFILE: 'EDIT_PROFILE',
-	LOADER: 'LOADER'
+	LOADER: 'LOADER',
+	MESSAGE: 'MESSAGE_PAGE',
+	SINGLE_MESSAGE_PAGE: 'SINGLE_MESSAGE_PAGE',
+	EDIT_PROFILE: 'EDIT_PROFILE'
 }
 
 const noNavbarStyle = {
@@ -64,6 +66,24 @@ const noNavbarStyle = {
 		shadowOpacity: 0 //remove shadow on iOS
 	}
 }
+
+const MessagePageStackNavigation = createStackNavigator({
+	CONVERSATIONS_PAGE: {
+		screen: ConversationsPage,
+		navigationOptions: () => ({
+			title: '',
+			header: null
+		})
+	},
+	SINGLE_MESSAGE_PAGE: {
+		screen: MessagePage,
+		navigationOptions: ({ navigation }) => ({
+			title: navigation.getParam('title'),
+			headerTintColor: 'white',
+			headerStyle: { backgroundColor: LUNA_PRIMARY_COLOR }
+		})
+	}
+})
 
 const ProfilePageStackNavigation = createStackNavigator({
 	PROFILE: {
@@ -161,10 +181,12 @@ const HomePageBottomTabNavigation = createBottomTabNavigator(
 				)
 			})
 		},
-		CONVERSATIONS_PAGE: {
-			screen: ConversationsPage,
+		CONVERSATIONS_TAB: {
+			screen: MessagePageStackNavigation,
 			navigationOptions: () => ({
 				title: '',
+				tabBarOnPress: ({ navigation }) =>
+					navigation.navigate(PAGES_NAMES.CONVERSATIONS_PAGE),
 				tabBarIcon: ({ focused }) => (
 					<ImageBackground
 						style={{

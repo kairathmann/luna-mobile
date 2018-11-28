@@ -14,6 +14,7 @@ class ConversationsList extends React.PureComponent {
 			partnerAvatarSmall={item.partnerAvatarSmall}
 			partnerName={item.partnerName}
 			pending={item.pending}
+			onClick={() => this.props.handleClick(item)}
 		/>
 	)
 	render() {
@@ -54,7 +55,8 @@ ConversationsList.propTypes = {
 			pending: PropTypes.bool.isRequired,
 			subject: PropTypes.string.isRequired
 		})
-	).isRequired
+	).isRequired,
+	handleClick: PropTypes.func.isRequired
 }
 
 export default ConversationsList
