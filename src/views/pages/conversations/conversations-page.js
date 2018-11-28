@@ -1,20 +1,36 @@
-import React from 'react'
-import { Image, Text, RefreshControl, ScrollView, View } from 'react-native'
 import { Badge, H3, Text as NativeBaseText } from 'native-base'
 import PropTypes from 'prop-types'
+import React from 'react'
+import { Image, RefreshControl, ScrollView, Text, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
-import I18n from '../../../../locales/i18n'
+import { Header, NavigationEvents } from 'react-navigation'
 import { connect } from 'react-redux'
-import { NavigationEvents } from 'react-navigation'
-import { PAGES_NAMES } from '../../../navigation'
-import { fetchConversations } from './scenario-actions'
-import { GENDER } from '../../../enums'
-import { styles as commonStyles, notifications } from '../../../styles'
-import ConversationsList from '../../../components/ConversationsList'
-import { conversationsListTimerService } from '../../../services'
+import I18n from '../../../../locales/i18n'
 import PalmTree from '../../../assets/images/palm-tree.png'
+import ConversationsList from '../../../components/ConversationsList'
+import { GENDER } from '../../../enums'
+import { PAGES_NAMES } from '../../../navigation'
+import { conversationsListTimerService } from '../../../services'
+import { notifications, styles as commonStyles } from '../../../styles'
+import { fetchConversations } from './scenario-actions'
 
 class ConversationsPage extends React.Component {
+	state = {
+		searchText: ''
+	}
+
+	componentDidMount() {
+		this.props.navigation.setParams({
+			onSearch: this._onSearch
+		})
+	}
+
+	_onSearch = text => {
+		this.setState({
+			searchText: text
+		})
+	}
+
 	refreshConversations = () => {
 		// when conversations view got refreshed due to entry on view or manual pull to refresh
 		// then reset the timer
@@ -54,8 +70,10 @@ class ConversationsPage extends React.Component {
 	}
 
 	render() {
+		const { searchText } = this.state
 		return (
 			<ScrollView
+				style={{ marginTop: Header.HEIGHT }}
 				contentContainerStyle={styles.scrollViewContainer}
 				refreshControl={
 					<RefreshControl
@@ -76,7 +94,9 @@ class ConversationsPage extends React.Component {
 								this.renderNewMessageCountView(this.props.newMessageCount)}
 							<ConversationsList
 								handleClick={this.handleClick}
-								conversations={this.props.conversations}
+								conversations={this.props.conversations.filter(con =>
+									con.partnerName.includes(searchText)
+								)}
 							/>
 						</React.Fragment>
 					)}
@@ -128,6 +148,14 @@ ConversationsPage.propTypes = {
 }
 
 const styles = EStyleSheet.create({
+	header: {
+		justifyContent: 'center',
+		alignItems: 'center',
+		width: '100%',
+		height: 56,
+		marginBottom: 6,
+		backgroundColor: '#00bcd4'
+	},
 	scrollViewContainer: {
 		backgroundColor: 'white',
 		flexGrow: 1

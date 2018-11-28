@@ -1,8 +1,9 @@
 /* eslint react/display-name: 0 */
 /* eslint react/prop-types: 0 */
-import { Button, Icon } from 'native-base'
+import { Button, Icon, View } from 'native-base'
 import React from 'react'
 import { Image, ImageBackground } from 'react-native'
+import SearchHeader from 'react-native-search-header'
 import {
 	createBottomTabNavigator,
 	createStackNavigator
@@ -31,9 +32,9 @@ import TaglinePage from '../views/pages/flow/tagline/tagline-page'
 import ForgotPasswordPage from '../views/pages/forgot-password/forgot-password-page'
 import FullLoader from '../views/pages/loader/full-loader'
 import LoginPage from '../views/pages/login/login-page'
+import MessagePage from '../views/pages/message/message-page'
 import ProfilePage from '../views/pages/profile/profile-page'
 import RecommendationsPage from '../views/pages/recommendations/recommendations-page'
-import MessagePage from '../views/pages/message/message-page'
 import SignupPage from '../views/pages/signup/signup-page'
 import WelcomePage from '../views/pages/welcome/welcome-page'
 
@@ -70,9 +71,37 @@ const noNavbarStyle = {
 const MessagePageStackNavigation = createStackNavigator({
 	CONVERSATIONS_PAGE: {
 		screen: ConversationsPage,
-		navigationOptions: () => ({
+		navigationOptions: ({ navigation }) => ({
 			title: '',
-			header: null
+			header: (
+				<View>
+					<View
+						style={{
+							width: '100%',
+							backgroundColor: LUNA_PRIMARY_COLOR,
+							height: 1
+						}}
+					/>
+					<SearchHeader
+						placeholder="Search..."
+						placeholderColor="gray"
+						visibleInitially={false}
+						persistent={true}
+						enableSuggestion={false}
+						dropShadowed={true}
+						entryAnimation="from-right-side"
+						iconColor="gray"
+						autoFocus={false}
+						topOffset={0}
+						onClear={() => {
+							navigation.getParam('onSearch')('')
+						}}
+						onEnteringSearch={event => {
+							navigation.getParam('onSearch')(event.nativeEvent.text)
+						}}
+					/>
+				</View>
+			)
 		})
 	},
 	SINGLE_MESSAGE_PAGE: {
