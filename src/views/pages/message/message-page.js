@@ -2,7 +2,6 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { RefreshControl, ScrollView } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
-import { NavigationEvents } from 'react-navigation'
 import { connect } from 'react-redux'
 import MessageItem from '../../../components/MessageItem/MessageItem'
 import { fetchMessages } from './scenario-actions'
@@ -32,7 +31,6 @@ class MessagePage extends React.Component {
 					/>
 				}
 			>
-				<NavigationEvents />
 				{this.props.messages.map(mes => (
 					<MessageItem message={mes} onClick={() => {}} key={mes.id} />
 				))}
@@ -54,32 +52,6 @@ const styles = EStyleSheet.create({
 		backgroundColor: 'white',
 		flexGrow: 1,
 		padding: 8
-	},
-	errorTextContainer: {
-		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center'
-	},
-	errorText: {
-		fontSize: '1.2rem'
-	},
-	noMessageText: {
-		fontSize: '1.2rem',
-		textAlign: 'center',
-		fontFamily: 'Lato-Regular',
-		paddingTop: '2rem'
-	},
-	palmTreeImage: {
-		flex: 1,
-		justifyContent: 'center',
-		alignSelf: 'center',
-		width: 256,
-		height: 256
-	},
-	newMessageContainer: {
-		alignItems: 'center',
-		flexDirection: 'row',
-		padding: '0.8rem'
 	}
 })
 
