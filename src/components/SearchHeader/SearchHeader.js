@@ -5,6 +5,7 @@ import { TextInput, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { Header } from 'react-navigation'
 import { LUNA_PRIMARY_COLOR } from '../../styles/colors'
+import I18n from '../../../locales/i18n'
 
 export default class SearchHeader extends React.Component {
 	constructor(props) {
@@ -39,7 +40,7 @@ export default class SearchHeader extends React.Component {
 				<Icon name={'search'} style={styles.searchIcon} />
 				<TextInput
 					style={styles.textInput}
-					placeholder={'Search...'}
+					placeholder={I18n.t('common.search_placeholder')}
 					onChange={this.handleChange}
 					value={this.state.value}
 					selectionColor={LUNA_PRIMARY_COLOR}

@@ -147,14 +147,6 @@ ConversationsPage.propTypes = {
 }
 
 const styles = EStyleSheet.create({
-	header: {
-		justifyContent: 'center',
-		alignItems: 'center',
-		width: '100%',
-		height: 56,
-		marginBottom: 6,
-		backgroundColor: '#00bcd4'
-	},
 	scrollViewContainer: {
 		backgroundColor: 'white',
 		flexGrow: 1
