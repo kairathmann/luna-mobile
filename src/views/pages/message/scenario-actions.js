@@ -1,20 +1,21 @@
+import api from '../../../api/api'
 import { getErrorDataFromNetworkException } from '../../../common/utils'
 import {
-	startFetchingConversations,
-	doneFetchingConversationsSuccess,
-	doneFetchingConversationsError
+	doneFetchingMessagesError,
+	doneFetchingMessagesSuccess,
+	startFetchingMessages
 } from '../../../store/conversations/actions'
-import { conversationsService } from '../../../services'
 
-export const fetchConversations = targetHid => async dispatch => {
+export const fetchMessages = (hid, conversation) => async dispatch => {
 	try {
-		dispatch(startFetchingConversations())
-		const conversations = await conversationsService.fetchConversations(
-			targetHid
-		)
-		dispatch(doneFetchingConversationsSuccess(conversations))
+		dispatch(startFetchingMessages())
+		const messages = await api.fetchMessages({
+			target_hid: hid,
+			conversation_id: conversation.id
+		})
+		dispatch(doneFetchingMessagesSuccess(messages.data.data.messages))
 	} catch (err) {
 		const errorMessage = getErrorDataFromNetworkException(err)
-		dispatch(doneFetchingConversationsError(errorMessage))
+		dispatch(doneFetchingMessagesError(errorMessage))
 	}
 }
