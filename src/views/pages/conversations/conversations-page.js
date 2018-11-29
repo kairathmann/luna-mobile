@@ -1,20 +1,31 @@
-import React from 'react'
-import { Image, Text, RefreshControl, ScrollView, View } from 'react-native'
 import { Badge, H3, Text as NativeBaseText } from 'native-base'
 import PropTypes from 'prop-types'
+import React from 'react'
+import { Image, RefreshControl, ScrollView, Text, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
-import I18n from '../../../../locales/i18n'
-import { connect } from 'react-redux'
 import { NavigationEvents } from 'react-navigation'
-import { PAGES_NAMES } from '../../../navigation'
-import { fetchConversations } from './scenario-actions'
-import { GENDER } from '../../../enums'
-import { styles as commonStyles, notifications } from '../../../styles'
-import ConversationsList from '../../../components/ConversationsList'
-import { conversationsListTimerService } from '../../../services'
+import { connect } from 'react-redux'
+import I18n from '../../../../locales/i18n'
 import PalmTree from '../../../assets/images/palm-tree.png'
+import ConversationsList from '../../../components/ConversationsList'
+import SearchHeader from '../../../components/SearchHeader/SearchHeader'
+import { GENDER } from '../../../enums'
+import { PAGES_NAMES } from '../../../navigation'
+import { conversationsListTimerService } from '../../../services'
+import { notifications, styles as commonStyles } from '../../../styles'
+import { fetchConversations } from './scenario-actions'
 
 class ConversationsPage extends React.Component {
+	state = {
+		searchText: ''
+	}
+
+	_onSearch = text => {
+		this.setState({
+			searchText: text
+		})
+	}
+
 	refreshConversations = () => {
 		// when conversations view got refreshed due to entry on view or manual pull to refresh
 		// then reset the timer
@@ -54,47 +65,55 @@ class ConversationsPage extends React.Component {
 	}
 
 	render() {
+		const { searchText } = this.state
 		return (
-			<ScrollView
-				contentContainerStyle={styles.scrollViewContainer}
-				refreshControl={
-					<RefreshControl
-						refreshing={this.props.isLoadingConversations}
-						onRefresh={this.refreshConversations}
-					/>
-				}
-			>
-				<NavigationEvents onWillFocus={this.refreshConversations} />
-				{this.props.isLoadingConversations && (
-					<View style={commonStyles.content} />
-				)}
-				{!this.props.isLoadingConversations &&
-					!this.props.isFetchingConversationsError &&
-					this.props.conversations.length > 0 && (
-						<React.Fragment>
-							{this.props.newMessageCount > 0 &&
-								this.renderNewMessageCountView(this.props.newMessageCount)}
-							<ConversationsList
-								handleClick={this.handleClick}
-								conversations={this.props.conversations}
-							/>
-						</React.Fragment>
+			<View>
+				<SearchHeader onSearch={this._onSearch} />
+				<ScrollView
+					contentContainerStyle={styles.scrollViewContainer}
+					refreshControl={
+						<RefreshControl
+							refreshing={this.props.isLoadingConversations}
+							onRefresh={this.refreshConversations}
+						/>
+					}
+				>
+					<NavigationEvents onWillFocus={this.refreshConversations} />
+					{this.props.isLoadingConversations && (
+						<View style={commonStyles.content} />
 					)}
-				{!this.props.isLoadingConversations &&
-					this.props.isFetchingConversationsError && (
-						<View style={styles.errorTextContainer}>
-							<Text style={[commonStyles.errorText, styles.errorText]}>
-								{I18n.t(
-									'conversations_page.error_could_not_fetch_conversations'
-								)}
-							</Text>
-						</View>
-					)}
-				{!this.props.isLoadingConversations &&
-					!this.props.isFetchingConversationsError &&
-					this.props.conversations.length === 0 &&
-					this.renderNoMessagesView()}
-			</ScrollView>
+					{!this.props.isLoadingConversations &&
+						!this.props.isFetchingConversationsError &&
+						this.props.conversations.length > 0 && (
+							<React.Fragment>
+								{this.props.newMessageCount > 0 &&
+									this.renderNewMessageCountView(this.props.newMessageCount)}
+								<ConversationsList
+									handleClick={this.handleClick}
+									conversations={this.props.conversations.filter(con =>
+										con.partnerName
+											.toLowerCase()
+											.includes(searchText.toLowerCase())
+									)}
+								/>
+							</React.Fragment>
+						)}
+					{!this.props.isLoadingConversations &&
+						this.props.isFetchingConversationsError && (
+							<View style={styles.errorTextContainer}>
+								<Text style={[commonStyles.errorText, styles.errorText]}>
+									{I18n.t(
+										'conversations_page.error_could_not_fetch_conversations'
+									)}
+								</Text>
+							</View>
+						)}
+					{!this.props.isLoadingConversations &&
+						!this.props.isFetchingConversationsError &&
+						this.props.conversations.length === 0 &&
+						this.renderNoMessagesView()}
+				</ScrollView>
+			</View>
 		)
 	}
 }
