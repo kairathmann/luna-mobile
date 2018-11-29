@@ -38,6 +38,7 @@ export default {
 		both: 'Both',
 		other: 'Other',
 		back: 'Back',
-		logout: 'Logout'
+		logout: 'Logout',
+		search_placeholder: 'Search...'
 	}
 }
