@@ -3,17 +3,16 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { Image, RefreshControl, ScrollView, Text, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
-import SearchHeader from 'react-native-search-header'
-import { Header, NavigationEvents } from 'react-navigation'
+import { NavigationEvents } from 'react-navigation'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
 import PalmTree from '../../../assets/images/palm-tree.png'
 import ConversationsList from '../../../components/ConversationsList'
+import SearchHeader from '../../../components/SearchHeader/SearchHeader'
 import { GENDER } from '../../../enums'
 import { PAGES_NAMES } from '../../../navigation'
 import { conversationsListTimerService } from '../../../services'
 import { notifications, styles as commonStyles } from '../../../styles'
-import { LUNA_PRIMARY_COLOR } from '../../../styles/colors'
 import { fetchConversations } from './scenario-actions'
 
 class ConversationsPage extends React.Component {
@@ -69,35 +68,8 @@ class ConversationsPage extends React.Component {
 		const { searchText } = this.state
 		return (
 			<View>
-				<View>
-					<View
-						style={{
-							width: '100%',
-							backgroundColor: LUNA_PRIMARY_COLOR,
-							height: 1
-						}}
-					/>
-					<SearchHeader
-						placeholder="Search..."
-						placeholderColor="gray"
-						visibleInitially={false}
-						persistent={true}
-						enableSuggestion={false}
-						dropShadowed={true}
-						entryAnimation="from-right-side"
-						iconColor="gray"
-						autoFocus={false}
-						topOffset={0}
-						onClear={() => {
-							this._onSearch('')
-						}}
-						onEnteringSearch={event => {
-							this._onSearch(event.nativeEvent.text)
-						}}
-					/>
-				</View>
+				<SearchHeader onSearch={this._onSearch} />
 				<ScrollView
-					style={{ marginTop: Header.HEIGHT }}
 					contentContainerStyle={styles.scrollViewContainer}
 					refreshControl={
 						<RefreshControl
@@ -119,7 +91,9 @@ class ConversationsPage extends React.Component {
 								<ConversationsList
 									handleClick={this.handleClick}
 									conversations={this.props.conversations.filter(con =>
-										con.partnerName.includes(searchText)
+										con.partnerName
+											.toLowerCase()
+											.includes(searchText.toLowerCase())
 									)}
 								/>
 							</React.Fragment>
