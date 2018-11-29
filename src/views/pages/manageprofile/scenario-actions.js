@@ -8,6 +8,7 @@ import {
 	prepareToChangeProfileStatus,
 	startChangeProfileStatus
 } from '../../../store/profile/actions'
+import { globalActions } from '../../../store/global'
 import { clearStoreScenario, logoutScenario } from '../common-scenarios'
 
 export function deleteAccount({ reasons, comment, password }) {
@@ -27,6 +28,7 @@ export function startManaging() {
 async function performChangeStatus(dispatch, state, data) {
 	let statusChanged = false
 	try {
+		dispatch(globalActions.setGlobalLoading())
 		dispatch(startChangeProfileStatus())
 		await api.manageProfileState(state, data)
 		statusChanged = true
@@ -39,6 +41,7 @@ async function performChangeStatus(dispatch, state, data) {
 			)
 		}
 	} finally {
+		dispatch(globalActions.unsetGlobalLoading())
 		if (statusChanged) {
 			navigationService.navigate(PAGES_NAMES.WELCOME_PAGE)
 			clearStoreScenario(dispatch)

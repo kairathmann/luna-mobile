@@ -5,6 +5,7 @@ import {
 	signinError,
 	signinSuccess
 } from '../../../store/auth/actions'
+import { globalActions } from '../../../store/global'
 import { PAGES_NAMES } from '../../../navigation'
 import { navigationService } from '../../../services'
 import { fetchProfileSuccess } from '../../../store/profile/actions'
@@ -14,7 +15,7 @@ import { conversationsListTimerService } from '../../../services'
 export function login({ email, password }) {
 	return async dispatch => {
 		try {
-			navigationService.navigate(PAGES_NAMES.LOADER)
+			dispatch(globalActions.setGlobalLoading())
 			const loginResult = await api.signin({ email, password })
 			dispatch(signinSuccess(loginResult))
 			const profileResponse = await api.fetchSelf()
@@ -38,7 +39,8 @@ export function login({ email, password }) {
 			}
 		} catch (error) {
 			dispatch(signinError(getErrorDataFromNetworkException(error)))
-			navigationService.navigate(PAGES_NAMES.LOGIN_PAGE)
+		} finally {
+			dispatch(globalActions.unsetGlobalLoading())
 		}
 	}
 }
