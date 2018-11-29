@@ -27,6 +27,9 @@ export default {
 		next: 'Finish profile',
 		inputLabel: 'Tagline '
 	},
+	bio: {
+		inputLabel: 'Bio'
+	},
 	avatar: {
 		title: 'Avatar Upload',
 		next: 'Setup age filters',

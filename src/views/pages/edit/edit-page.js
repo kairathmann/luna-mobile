@@ -49,7 +49,8 @@ const options = {
 const MAX_AGE = 100
 const MIN_AGE = 18
 const EXTRA_MARGIN = 16
-const MAX_LENGTH = 50
+const TAGLINE_MAX_LENGTH = 50
+const BIO_MAX_LENGTH = 2048
 
 export class EditPage extends React.Component {
 	constructor(props) {
@@ -62,6 +63,7 @@ export class EditPage extends React.Component {
 			birthday: props.profile.birthDate || '',
 			gender: props.profile.gidIs || 1,
 			sexuality: props.profile.gidSeeking || 2,
+			bio: props.profile.bio || '',
 			ageMax: props.profile.seekingAgeTo || MAX_AGE,
 			ageMin: props.profile.seekingAgeFrom || MIN_AGE,
 			localAvatar: props.profile.localAvatar || false,
@@ -96,7 +98,8 @@ export class EditPage extends React.Component {
 				firstName: this.state.name,
 				gidIs: this.state.gender,
 				gidSeeking: this.state.sexuality,
-				tagline: this.state.tagline
+				tagline: this.state.tagline,
+				bio: this.state.bio
 			},
 			this.state.avatarChanged ? { uri: this.state.newAvatar } : null
 		)
@@ -144,7 +147,7 @@ export class EditPage extends React.Component {
 		})
 	}
 
-	handleChangeTagline = (event, field) => {
+	handleTextChange = (event, field) => {
 		this.setState({ [field]: event.nativeEvent.text })
 	}
 
@@ -351,20 +354,50 @@ export class EditPage extends React.Component {
 						<Label>{I18n.t('flow_page.tagline.inputLabel')}</Label>
 						<Input
 							numberOfLines={3}
-							maxLength={MAX_LENGTH}
+							maxLength={TAGLINE_MAX_LENGTH}
 							multiline={true}
 							blurOnSubmit={false}
-							onChange={val => this.handleChangeTagline(val, 'tagline')}
+							onChange={val => this.handleTextChange(val, 'tagline')}
 							value={tagline}
 						/>
 					</Item>
 				</Form>
 				<Text
 					style={[
-						styles.taglineCounter,
-						tagline.length === MAX_LENGTH ? styles.taglineCounterLimit : {}
+						styles.characterCounter,
+						tagline.length === TAGLINE_MAX_LENGTH
+							? styles.characterCounterLimit
+							: {}
 					]}
-				>{`${tagline.length}/${MAX_LENGTH}`}</Text>
+				>{`${tagline.length}/${TAGLINE_MAX_LENGTH}`}</Text>
+			</React.Fragment>
+		)
+	}
+
+	renderBio = () => {
+		const { bio } = this.state
+		return (
+			<React.Fragment>
+				<Form>
+					<Item floatingLabel last>
+						<Label>{I18n.t('flow_page.bio.inputLabel')}</Label>
+						<Input
+							numberOfLines={5}
+							maxLength={BIO_MAX_LENGTH}
+							multiline={true}
+							onChange={val => this.handleTextChange(val, 'bio')}
+							value={bio}
+							blurOnSubmit={false}
+							style={{ height: 150, textAlignVertical: 'top' }}
+						/>
+					</Item>
+				</Form>
+				<Text
+					style={[
+						styles.characterCounter,
+						bio.length === BIO_MAX_LENGTH ? styles.characterCounterLimit : {}
+					]}
+				>{`${bio.length}/${BIO_MAX_LENGTH}`}</Text>
 			</React.Fragment>
 		)
 	}
@@ -385,7 +418,7 @@ export class EditPage extends React.Component {
 					{/*TODO: should be hidden as API does not return seeking_age_from and seeking_age_to*/}
 					{/*{ this.renderAgeLimits() }*/}
 					{this.renderTagline()}
-					{/*TODO: change it when screen available*/}
+					{this.renderBio()}
 					<Button
 						text={I18n.t('edit_page.manage_account')}
 						onPress={() =>
@@ -489,13 +522,12 @@ const styles = EStyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center'
 	},
-	taglineCounter: {
+	characterCounter: {
 		textAlign: 'right',
 		marginTop: 8,
-		marginBottom: 8,
-		paddingBottom: 16
+		marginBottom: 8
 	},
-	taglineCounterLimit: {
+	characterCounterLimit: {
 		color: '$primaryColor'
 	}
 })
