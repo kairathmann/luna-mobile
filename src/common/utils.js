@@ -1,9 +1,10 @@
+import moment from 'moment'
 import Config from 'react-native-config'
 import I18n from '../../locales/i18n'
-import { GENDER } from '../enums'
 import DefaultFemale from '../assets/images/default_female.png'
 import DefaultMale from '../assets/images/default_male.png'
 import DefaultOther from '../assets/images/default_other.png'
+import { GENDER } from '../enums'
 
 const baseHostForURLs = Config.APP_URL_BASE
 
@@ -106,6 +107,13 @@ const isLandscape = (screenWidth, screenHeight) => {
 	return screenWidth >= screenHeight
 }
 
+const isSameDay = (firstDate, secondDate) => {
+	const first = moment(firstDate)
+	const second = moment(secondDate)
+
+	return first.dayOfYear() === second.dayOfYear()
+}
+
 export {
 	avatarRelativeUrlToFullPhotoUrl,
 	checkImageURL,
@@ -115,5 +123,6 @@ export {
 	isHydraImage,
 	isPortrait,
 	isLandscape,
-	rewriteUrlImageForDefault
+	rewriteUrlImageForDefault,
+	isSameDay
 }

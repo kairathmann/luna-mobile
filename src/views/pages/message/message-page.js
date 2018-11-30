@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { RefreshControl, View, FlatList } from 'react-native'
+import { FlatList, RefreshControl, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { connect } from 'react-redux'
+import { isSameDay } from '../../../common/utils'
 import MessageItem from '../../../components/MessageItem/MessageItem'
 import NewMessage from '../../../components/NewMessage/NewMessage'
 import { fetchMessages, resendMessage, sendMessage } from './scenario-actions'
@@ -43,6 +44,7 @@ class MessagePage extends React.Component {
 					contentContainerStyle={styles.scrollViewContainer}
 					ref={ref => (this.scrollView = ref)}
 					data={this.props.messages}
+					initialNumToRender={100}
 					renderItem={({ item }) => (
 						<MessageItem
 							message={item}
@@ -107,7 +109,8 @@ const mapStateToProps = state => {
 					...mes,
 					showAvatar: !(next && next.senderHid === mes.senderHid),
 					ownPrevious: previous && previous.senderHid === mes.senderHid,
-					ownNext: next && next.senderHid === mes.senderHid
+					ownNext: next && next.senderHid === mes.senderHid,
+					hasDivider: previous && !isSameDay(previous.sentDate, mes.sentDate)
 				}
 			}
 		)
