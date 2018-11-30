@@ -36,6 +36,7 @@ class MessagePage extends React.Component {
 	}
 
 	render() {
+		console.log(this.props.messages)
 		return (
 			<View style={{ flex: 1 }}>
 				<FlatList
@@ -96,7 +97,15 @@ const mapStateToProps = state => {
 	return {
 		error: state.conversations.currentConversation.error,
 		isLoading: state.conversations.currentConversation.isLoading,
-		messages: state.conversations.currentConversation.messages
+		messages: state.conversations.currentConversation.messages.map(
+			(mes, index) => {
+				const next = state.conversations.currentConversation.messages[index + 1]
+				return {
+					...mes,
+					showAvatar: !(next && next.senderHid === mes.senderHid)
+				}
+			}
+		)
 	}
 }
 

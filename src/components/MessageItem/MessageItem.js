@@ -35,7 +35,13 @@ const MessageItem = ({ message, onResend }) => {
 					styles.container
 				]}
 			>
-				<Image style={styles.image} source={getAvatar(message)} />
+				{message.isRecipient && (
+					<View style={styles.imageContainer}>
+						{message.showAvatar && (
+							<Image style={styles.image} source={getAvatar(message)} />
+						)}
+					</View>
+				)}
 				<View
 					style={[
 						{
@@ -75,12 +81,16 @@ const styles = EStyleSheet.create({
 		alignItems: 'flex-end',
 		marginBottom: 4
 	},
+	imageContainer: {
+		width: 36,
+		height: 36,
+		marginRight: 4,
+		marginLeft: 4
+	},
 	image: {
 		width: 36,
 		height: 36,
-		borderRadius: 18,
-		marginRight: 4,
-		marginLeft: 4
+		borderRadius: 18
 	},
 	textContainer: {
 		borderRadius: 18,
