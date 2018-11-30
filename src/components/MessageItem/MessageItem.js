@@ -1,12 +1,14 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { Image, Text, View } from 'react-native'
+import { Image, Text, TouchableOpacity, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
+import I18n from '../../../locales/i18n'
 import {
 	avatarRelativeUrlToFullPhotoUrl,
 	getLoaderImageForGender,
 	isHydraImage
 } from '../../common/utils'
+import { styles as commonStyles } from '../../styles'
 import { LUNA_PRIMARY_COLOR } from '../../styles/colors'
 
 function getAvatar(message) {
@@ -15,13 +17,20 @@ function getAvatar(message) {
 		: { uri: avatarRelativeUrlToFullPhotoUrl(message.senderAvatar) }
 }
 
-const MessageItem = ({ message }) => {
+const MessageItem = ({ message, onResend }) => {
+	const handleMessageTap = () => {
+		if (message.error) {
+			onResend(message)
+		}
+	}
+
 	return (
 		<View>
 			<View
 				style={[
 					{
-						flexDirection: message.isRecipient ? 'row' : 'row-reverse'
+						flexDirection: message.isRecipient ? 'row' : 'row-reverse',
+						opacity: message.state === 'LOADING' || message.error ? 0.5 : 1
 					},
 					styles.container
 				]}
@@ -37,16 +46,26 @@ const MessageItem = ({ message }) => {
 						styles.textContainer
 					]}
 				>
-					<Text
-						style={{
-							margin: 0,
-							color: message.isRecipient ? '#2a2a2a' : 'white'
-						}}
+					<TouchableOpacity
+						disabled={!message.error}
+						onPress={handleMessageTap}
 					>
-						{message.body}
-					</Text>
+						<Text
+							style={{
+								margin: 0,
+								color: message.isRecipient ? '#2a2a2a' : 'white'
+							}}
+						>
+							{message.body}
+						</Text>
+					</TouchableOpacity>
 				</View>
 			</View>
+			{message.error && message.error !== '' ? (
+				<Text style={[commonStyles.errorText, { fontSize: 12 }]}>
+					{I18n.t('common.errors.send_message_failed')}
+				</Text>
+			) : null}
 		</View>
 	)
 }
@@ -75,7 +94,8 @@ const styles = EStyleSheet.create({
 })
 
 MessageItem.propTypes = {
-	message: PropTypes.object.isRequired
+	message: PropTypes.object.isRequired,
+	onResend: PropTypes.func.isRequired
 }
 
 export default MessageItem

@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { RefreshControl, ScrollView } from 'react-native'
+import { RefreshControl, View, FlatList } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { connect } from 'react-redux'
 import MessageItem from '../../../components/MessageItem/MessageItem'
-import { fetchMessages } from './scenario-actions'
+import NewMessage from '../../../components/NewMessage/NewMessage'
+import { fetchMessages, resendMessage, sendMessage } from './scenario-actions'
 
 class MessagePage extends React.Component {
 	componentDidMount() {
@@ -20,27 +21,62 @@ class MessagePage extends React.Component {
 		this.props.fetchMessages(targetHid, conversation)
 	}
 
+	handleSend = message => {
+		this.props.sendMessage(
+			this.props.navigation.getParam('conversation', {}),
+			message
+		)
+	}
+
+	handleResend = message => {
+		this.props.resendMessage(
+			this.props.navigation.getParam('conversation', {}),
+			message
+		)
+	}
+
 	render() {
 		return (
-			<ScrollView
-				contentContainerStyle={styles.scrollViewContainer}
-				refreshControl={
-					<RefreshControl
-						refreshing={this.props.isLoading}
-						onRefresh={() => this.askForMessages()}
-					/>
-				}
-			>
-				{this.props.messages.map(mes => (
-					<MessageItem message={mes} onClick={() => {}} key={mes.id} />
-				))}
-			</ScrollView>
+			<View style={{ flex: 1 }}>
+				<FlatList
+					keyExtractor={item => `message-item-index-${item.id}`}
+					contentContainerStyle={styles.scrollViewContainer}
+					ref={ref => (this.scrollView = ref)}
+					data={this.props.messages}
+					renderItem={({ item }) => (
+						<MessageItem
+							message={item}
+							onClick={() => {}}
+							onResend={this.handleResend}
+						/>
+					)}
+					onContentSizeChange={() => {
+						this.scrollView.scrollToEnd({ animated: true })
+					}}
+					refreshControl={
+						<RefreshControl
+							refreshing={this.props.isLoading}
+							onRefresh={() => this.askForMessages()}
+						/>
+					}
+				/>
+				<View
+					style={{
+						flexGrow: 0,
+						flexShrink: 1
+					}}
+				>
+					<NewMessage onSend={this.handleSend} />
+				</View>
+			</View>
 		)
 	}
 }
 
 MessagePage.propTypes = {
 	fetchMessages: PropTypes.func.isRequired,
+	sendMessage: PropTypes.func.isRequired,
+	resendMessage: PropTypes.func.isRequired,
 	navigation: PropTypes.object.isRequired,
 	isLoading: PropTypes.bool.isRequired,
 	messages: PropTypes.array.isRequired,
@@ -51,6 +87,7 @@ const styles = EStyleSheet.create({
 	scrollViewContainer: {
 		backgroundColor: 'white',
 		flexGrow: 1,
+		flexShrink: 0,
 		padding: 8
 	}
 })
@@ -66,7 +103,11 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
 	return {
 		fetchMessages: (hid, conversation) =>
-			dispatch(fetchMessages(hid, conversation))
+			dispatch(fetchMessages(hid, conversation)),
+		sendMessage: (conversation, text) =>
+			dispatch(sendMessage(conversation, text)),
+		resendMessage: (conversation, message) =>
+			dispatch(resendMessage(conversation, message))
 	}
 }
 
