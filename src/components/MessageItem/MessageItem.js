@@ -24,13 +24,31 @@ const MessageItem = ({ message, onResend }) => {
 		}
 	}
 
+	const getBorderRadius = () => {
+		const recipientBorder = {
+			borderTopLeftRadius: message.ownPrevious ? 4 : 18,
+			borderBottomLeftRadius: message.ownNext ? 4 : 18,
+			borderTopRightRadius: 18,
+			borderBottomRightRadius: 18
+		}
+		const userBorder = {
+			borderTopRightRadius: message.ownPrevious ? 4 : 18,
+			borderBottomRightRadius: message.ownNext ? 4 : 18,
+			borderTopLeftRadius: 18,
+			borderBottomLeftRadius: 18
+		}
+
+		return message.isRecipient ? recipientBorder : userBorder
+	}
+
 	return (
 		<View>
 			<View
 				style={[
 					{
 						flexDirection: message.isRecipient ? 'row' : 'row-reverse',
-						opacity: message.state === 'LOADING' || message.error ? 0.5 : 1
+						opacity: message.state === 'LOADING' || message.error ? 0.5 : 1,
+						marginBottom: message.ownNext ? 1 : 4
 					},
 					styles.container
 				]}
@@ -47,7 +65,8 @@ const MessageItem = ({ message, onResend }) => {
 						{
 							backgroundColor: message.isRecipient
 								? '#f1f0f0'
-								: LUNA_PRIMARY_COLOR
+								: LUNA_PRIMARY_COLOR,
+							...getBorderRadius()
 						},
 						styles.textContainer
 					]}
@@ -78,8 +97,7 @@ const MessageItem = ({ message, onResend }) => {
 
 const styles = EStyleSheet.create({
 	container: {
-		alignItems: 'flex-end',
-		marginBottom: 4
+		alignItems: 'flex-end'
 	},
 	imageContainer: {
 		width: 36,
@@ -93,7 +111,6 @@ const styles = EStyleSheet.create({
 		borderRadius: 18
 	},
 	textContainer: {
-		borderRadius: 18,
 		minHeight: 36,
 		maxWidth: '66%',
 		paddingLeft: 16,
