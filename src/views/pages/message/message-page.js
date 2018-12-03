@@ -4,6 +4,7 @@ import { FlatList, RefreshControl, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { connect } from 'react-redux'
 import { isSameDay } from '../../../common/utils'
+import MessageAvatar from '../../../components/MessageAvatar/MessageAvatar'
 import MessageItem from '../../../components/MessageItem/MessageItem'
 import NewMessage from '../../../components/NewMessage/NewMessage'
 import { fetchMessages, resendMessage, sendMessage } from './scenario-actions'
@@ -43,15 +44,24 @@ class MessagePage extends React.Component {
 					keyExtractor={item => `message-item-index-${item.id}`}
 					contentContainerStyle={styles.scrollViewContainer}
 					ref={ref => (this.scrollView = ref)}
-					data={this.props.messages}
+					data={[{ avatar: true }, ...this.props.messages]}
 					initialNumToRender={100}
-					renderItem={({ item }) => (
-						<MessageItem
-							message={item}
-							onClick={() => {}}
-							onResend={this.handleResend}
-						/>
-					)}
+					renderItem={({ item, index }) =>
+						index === 0 ? (
+							<MessageAvatar
+								conversation={this.props.navigation.getParam(
+									'conversation',
+									{}
+								)}
+							/>
+						) : (
+							<MessageItem
+								message={item}
+								onClick={() => {}}
+								onResend={this.handleResend}
+							/>
+						)
+					}
 					onContentSizeChange={() => {
 						this.scrollView.scrollToEnd({ animated: true })
 					}}
