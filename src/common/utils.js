@@ -110,7 +110,6 @@ const isLandscape = (screenWidth, screenHeight) => {
 const isSameDay = (firstDate, secondDate) => {
 	const first = moment(firstDate)
 	const second = moment(secondDate)
-
 	return first.dayOfYear() === second.dayOfYear()
 }
 

@@ -110,7 +110,9 @@ const mapStateToProps = state => {
 					showAvatar: !(next && next.senderHid === mes.senderHid),
 					ownPrevious: previous && previous.senderHid === mes.senderHid,
 					ownNext: next && next.senderHid === mes.senderHid,
-					hasDivider: previous && !isSameDay(previous.sentDate, mes.sentDate)
+					hasDivider:
+						!previous ||
+						(previous && !isSameDay(previous.sentTime, mes.sentTime))
 				}
 			}
 		)

@@ -1,7 +1,7 @@
 import { Icon } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { TextInput, View, Keyboard } from 'react-native'
+import { Keyboard, TextInput, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import I18n from '../../../locales/i18n'
 import { LUNA_PRIMARY_COLOR } from '../../styles/colors'
@@ -42,7 +42,15 @@ export default class NewMessage extends React.Component {
 					onChange={this.handleChange}
 					value={this.state.value}
 				/>
-				<Icon onPress={this.handleSend} style={styles.icon} name={'send'} />
+				<Icon
+					disabled={this.state.value.length === 0}
+					onPress={this.handleSend}
+					style={[
+						styles.icon,
+						{ opacity: this.state.value.length === 0 ? 0.25 : 1.0 }
+					]}
+					name={'send'}
+				/>
 			</View>
 		)
 	}
