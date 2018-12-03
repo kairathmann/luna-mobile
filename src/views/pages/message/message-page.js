@@ -1,12 +1,15 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { FlatList, RefreshControl, View } from 'react-native'
+import { Text } from 'react-native-animatable'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { connect } from 'react-redux'
+import I18n from '../../../../locales/i18n'
 import { isSameDay } from '../../../common/utils'
 import MessageAvatar from '../../../components/MessageAvatar/MessageAvatar'
 import MessageItem from '../../../components/MessageItem/MessageItem'
 import NewMessage from '../../../components/NewMessage/NewMessage'
+import { BID_STATUS } from '../../../enums'
 import { fetchMessages, resendMessage, sendMessage } from './scenario-actions'
 
 class MessagePage extends React.Component {
@@ -78,7 +81,14 @@ class MessagePage extends React.Component {
 						flexShrink: 1
 					}}
 				>
-					<NewMessage onSend={this.handleSend} />
+					{this.props.details &&
+					this.props.details.bidStatus === BID_STATUS.BID_WON ? (
+						<Text style={styles.waitingText}>
+							{I18n.t('message_page.waiting_text')}
+						</Text>
+					) : (
+						<NewMessage onSend={this.handleSend} />
+					)}
 				</View>
 			</View>
 		)
@@ -92,7 +102,8 @@ MessagePage.propTypes = {
 	navigation: PropTypes.object.isRequired,
 	isLoading: PropTypes.bool.isRequired,
 	messages: PropTypes.array.isRequired,
-	error: PropTypes.string
+	error: PropTypes.string,
+	details: PropTypes.object
 }
 
 const styles = EStyleSheet.create({
@@ -101,6 +112,13 @@ const styles = EStyleSheet.create({
 		flexGrow: 1,
 		flexShrink: 0,
 		padding: 8
+	},
+	waitingText: {
+		padding: 16,
+		backgroundColor: 'white',
+		textAlign: 'center',
+		fontSize: 20,
+		color: '#4f4f4f'
 	}
 })
 
@@ -108,6 +126,7 @@ const mapStateToProps = state => {
 	return {
 		error: state.conversations.currentConversation.error,
 		isLoading: state.conversations.currentConversation.isLoading,
+		details: state.conversations.currentConversation.details,
 		messages: state.conversations.currentConversation.messages.map(
 			(mes, index) => {
 				const previous =

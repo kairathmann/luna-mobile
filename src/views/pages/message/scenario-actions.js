@@ -16,7 +16,7 @@ export const fetchMessages = (hid, conversation) => async dispatch => {
 			target_hid: hid,
 			conversation_id: conversation.id
 		})
-		dispatch(doneFetchingMessagesSuccess(messages.data.data.messages))
+		dispatch(doneFetchingMessagesSuccess(messages.data.data))
 	} catch (err) {
 		const errorMessage = getErrorDataFromNetworkException(err)
 		dispatch(doneFetchingMessagesError(errorMessage))

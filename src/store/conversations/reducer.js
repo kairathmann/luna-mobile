@@ -104,8 +104,9 @@ export function conversationsReducer(state = initialState, { payload, type }) {
 			return {
 				...state,
 				currentConversation: {
+					details: payload.conversation,
 					isLoading: false,
-					messages: payload,
+					messages: payload.messages,
 					error: ''
 				}
 			}

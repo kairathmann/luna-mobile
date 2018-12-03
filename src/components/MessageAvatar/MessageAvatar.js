@@ -9,7 +9,7 @@ export default function MessageAvatar({ conversation }) {
 		<View style={styles.avatarContainer}>
 			<Image
 				style={styles.avatar}
-				source={checkImageURL(conversation.partnerAvatarSmall)}
+				source={checkImageURL(conversation.partnerAvatarMedium)}
 			/>
 		</View>
 	)
