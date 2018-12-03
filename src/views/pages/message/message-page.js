@@ -75,21 +75,23 @@ class MessagePage extends React.Component {
 						/>
 					}
 				/>
-				<View
-					style={{
-						flexGrow: 0,
-						flexShrink: 1
-					}}
-				>
-					{this.props.details &&
-					this.props.details.bidStatus === BID_STATUS.BID_WON ? (
-						<Text style={styles.waitingText}>
-							{I18n.t('message_page.waiting_text')}
-						</Text>
-					) : (
-						<NewMessage onSend={this.handleSend} />
-					)}
-				</View>
+				{!this.props.isLoading && (
+					<View
+						style={{
+							flexGrow: 0,
+							flexShrink: 1
+						}}
+					>
+						{this.props.details &&
+						this.props.details.bidStatus === BID_STATUS.BID_WON ? (
+							<Text style={styles.waitingText}>
+								{I18n.t('message_page.waiting_text')}
+							</Text>
+						) : (
+							<NewMessage onSend={this.handleSend} />
+						)}
+					</View>
+				)}
 			</View>
 		)
 	}
