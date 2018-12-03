@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { Image, RefreshControl, ScrollView, Text, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
-import { NavigationEvents } from 'react-navigation'
+import { Header } from 'react-navigation'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
 import PalmTree from '../../../assets/images/palm-tree.png'
@@ -78,7 +78,6 @@ class ConversationsPage extends React.Component {
 						/>
 					}
 				>
-					<NavigationEvents onWillFocus={this.refreshConversations} />
 					{this.props.isLoadingConversations && (
 						<View style={commonStyles.content} />
 					)}
@@ -149,7 +148,8 @@ ConversationsPage.propTypes = {
 const styles = EStyleSheet.create({
 	scrollViewContainer: {
 		backgroundColor: 'white',
-		flexGrow: 1
+		flexGrow: 1,
+		paddingBottom: Header.HEIGHT
 	},
 	errorTextContainer: {
 		flex: 1,

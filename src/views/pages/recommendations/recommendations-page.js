@@ -20,7 +20,8 @@ import { styles as commonStyles } from '../../../styles'
 import {
 	fetchRecommendations,
 	switchToLoadingSkippedMatches,
-	unmatch
+	unmatch,
+	match
 } from './scenario-actions'
 import { NavigationEvents } from 'react-navigation'
 
@@ -41,6 +42,10 @@ class RecommendationsPage extends React.Component {
 
 	unmatchRecommendation = userId => {
 		this.props.unmatchRecommendation(userId)
+	}
+
+	matchRecommendation = user => {
+		this.props.matchRecommendation(user)
 	}
 
 	onLayout = () => {
@@ -83,6 +88,9 @@ class RecommendationsPage extends React.Component {
 			<Icon
 				type="MaterialCommunityIcons"
 				name="email-outline"
+				onPress={() => {
+					this.matchRecommendation(this.props.currentlyRenderRecommendation)
+				}}
 				style={{ color: 'white', marginLeft: 0, marginRight: 0 }}
 			/>
 		</NativeBaseButton>
@@ -268,7 +276,8 @@ RecommendationsPage.propTypes = {
 		age: PropTypes.number.isRequired,
 		minBid: PropTypes.string.isRequired
 	}),
-	isShowingSkipped: PropTypes.bool.isRequired
+	isShowingSkipped: PropTypes.bool.isRequired,
+	matchRecommendation: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => {
@@ -289,7 +298,8 @@ const mapDispatchToProps = dispatch => {
 	return {
 		unmatchRecommendation: userId => dispatch(unmatch(userId)),
 		showSkippedMatches: () => dispatch(switchToLoadingSkippedMatches()),
-		fetchRecommendations: () => dispatch(fetchRecommendations())
+		fetchRecommendations: () => dispatch(fetchRecommendations()),
+		matchRecommendation: user => dispatch(match(user))
 	}
 }
 

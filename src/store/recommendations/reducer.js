@@ -6,6 +6,9 @@ import {
 	UNMATCH_RECOMMENDATION_SUCCESS,
 	UNMATCH_RECOMMENDATION_FINISH,
 	SHOW_SKIPPED_RECOMMENDATIONS,
+	MATCH_RECOMMENDATION_PROGRESS,
+	MATCH_RECOMMENDATION_SUCCESS,
+	MATCH_RECOMMENDATION_FINISH,
 	CLEAR_DATA
 } from './action-types'
 
@@ -46,11 +49,13 @@ export function recommendationsReducer(
 				errorMessage: payload.errorMessage,
 				recommendations: []
 			}
+		case MATCH_RECOMMENDATION_PROGRESS:
 		case UNMATCH_RECOMMENDATION_PROGRESS:
 			return {
 				...state,
 				isLoading: true
 			}
+		case MATCH_RECOMMENDATION_SUCCESS:
 		case UNMATCH_RECOMMENDATION_SUCCESS:
 			return {
 				...state,
@@ -58,6 +63,7 @@ export function recommendationsReducer(
 					person => person.hid !== payload
 				)
 			}
+		case MATCH_RECOMMENDATION_FINISH:
 		case UNMATCH_RECOMMENDATION_FINISH:
 			return {
 				...state,

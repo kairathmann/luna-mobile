@@ -41,6 +41,7 @@ import ProfilePage from '../views/pages/profile/profile-page'
 import RecommendationsPage from '../views/pages/recommendations/recommendations-page'
 import SignupPage from '../views/pages/signup/signup-page'
 import WelcomePage from '../views/pages/welcome/welcome-page'
+import BidMessagePage from '../views/pages/bid-message/bid-message-page'
 
 import { navigationService } from '../services'
 
@@ -64,7 +65,8 @@ const PAGES_NAMES = {
 	EDIT_PROFILE: 'EDIT_PROFILE',
 	MANAGE_PROFILE: 'MANAGE_PROFILE',
 	MANAGE_DISABLE: 'MANAGE_DISABLE',
-	MANAGE_DELETE: 'MANAGE_DELETE'
+	MANAGE_DELETE: 'MANAGE_DELETE',
+	BID_MESSAGE: 'BID_MESSAGE'
 }
 
 const noNavbarStyle = {
@@ -86,6 +88,24 @@ const MessagePageStackNavigation = createStackNavigator({
 	},
 	SINGLE_MESSAGE_PAGE: {
 		screen: MessagePage,
+		navigationOptions: ({ navigation }) => ({
+			title: navigation.getParam('title'),
+			headerTintColor: 'white',
+			headerStyle: { backgroundColor: LUNA_PRIMARY_COLOR }
+		})
+	}
+})
+
+const RecommendationPageStackNavigation = createStackNavigator({
+	RECOMMENDATIONS_PAGE: {
+		screen: RecommendationsPage,
+		navigationOptions: () => ({
+			title: '',
+			header: null
+		})
+	},
+	BID_MESSAGE: {
+		screen: BidMessagePage,
 		navigationOptions: ({ navigation }) => ({
 			title: navigation.getParam('title'),
 			headerTintColor: 'white',
@@ -199,10 +219,9 @@ const HomePageBottomTabNavigation = createBottomTabNavigator(
 					navigation.navigate(PAGES_NAMES.PROFILE)
 			})
 		},
-		RECOMMENDATIONS_PAGE: {
-			screen: RecommendationsPage,
+		RECOMMENDATIONS_TAB: {
+			screen: RecommendationPageStackNavigation,
 			navigationOptions: () => ({
-				title: '',
 				tabBarIcon: ({ focused }) => (
 					<Image
 						source={
@@ -211,7 +230,9 @@ const HomePageBottomTabNavigation = createBottomTabNavigator(
 								: RecommendationsPageInactiveNavigationIcon
 						}
 					/>
-				)
+				),
+				tabBarOnPress: ({ navigation }) =>
+					navigation.navigate(PAGES_NAMES.RECOMMENDATIONS_PAGE)
 			})
 		},
 		CONVERSATIONS_TAB: {
@@ -239,7 +260,7 @@ const HomePageBottomTabNavigation = createBottomTabNavigator(
 		}
 	},
 	{
-		initialRouteName: PAGES_NAMES.RECOMMENDATIONS_PAGE,
+		initialRouteName: 'RECOMMENDATIONS_TAB',
 		tabBarOptions: {
 			style: {
 				backgroundColor: COLORS.LUNA_PRIMARY_COLOR
