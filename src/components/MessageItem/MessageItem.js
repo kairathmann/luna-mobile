@@ -1,3 +1,4 @@
+import moment from 'moment'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Image, Text, TouchableOpacity, View } from 'react-native'
@@ -46,6 +47,11 @@ const MessageItem = ({ message, onResend }) => {
 
 	return (
 		<View>
+			{message.hasDivider && (
+				<Text style={styles.divider}>
+					{moment(message.sentTime).format('ddd, HH:mm')}
+				</Text>
+			)}
 			<View
 				style={[
 					{
@@ -101,6 +107,13 @@ const MessageItem = ({ message, onResend }) => {
 const styles = EStyleSheet.create({
 	container: {
 		alignItems: 'flex-end'
+	},
+	divider: {
+		fontSize: 12,
+		textAlign: 'center',
+		color: '#adadad',
+		marginTop: 4,
+		marginBottom: 4
 	},
 	imageContainer: {
 		width: 36,
