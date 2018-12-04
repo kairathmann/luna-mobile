@@ -1,16 +1,16 @@
 import { Form, H1, Input, Item, Label } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { Keyboard, Text, View } from 'react-native'
+import { Keyboard, StatusBar, Text, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { NavigationEvents } from 'react-navigation'
 import { connect } from 'react-redux'
 import validator from 'validator'
-import { NavigationEvents } from 'react-navigation'
 import I18n from '../../../../locales/i18n'
 import Button from '../../../components/Button/'
+import { PAGES_NAMES } from '../../../navigation'
 import { auth, styles as commonStyles } from '../../../styles'
 import { clearError, login } from './scenario-actions'
-import { PAGES_NAMES } from '../../../navigation'
 
 const styles = auth
 
@@ -59,6 +59,11 @@ export class LoginPage extends React.Component {
 		const { email, password, validationEnabled } = this.state
 		return (
 			<View style={styles.content}>
+				<StatusBar
+					barStyle={'dark-content'}
+					backgroundColor={'white'}
+					translucent={false}
+				/>
 				<NavigationEvents onWillFocus={this.clearErrorState} />
 				<KeyboardAwareScrollView
 					keyboardShouldPersistTaps={'handled'}

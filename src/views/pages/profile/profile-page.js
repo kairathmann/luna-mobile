@@ -1,14 +1,21 @@
 import { Button, H3 } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { Dimensions, Image, ScrollView, Text, View } from 'react-native'
+import {
+	Dimensions,
+	Image,
+	ScrollView,
+	StatusBar,
+	Text,
+	View
+} from 'react-native'
+import EStyleSheet from 'react-native-extended-stylesheet'
 import HeaderImageScrollView from 'react-native-image-header-scroll-view'
 import LinearGradient from 'react-native-linear-gradient'
 import { Header } from 'react-navigation'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
 import StarIcon from '../../../assets/images/star-icon.png'
-import EStyleSheet from 'react-native-extended-stylesheet'
 import {
 	avatarRelativeUrlToFullPhotoUrl,
 	getLoaderImageForGender,
@@ -17,6 +24,7 @@ import {
 } from '../../../common/utils'
 import { ORIENTATION } from '../../../enums'
 import { PAGES_NAMES } from '../../../navigation'
+import { LUNA_PRIMARY_COLOR } from '../../../styles/colors'
 import { logout, startEditing } from './scenario-actions'
 
 export class ProfilePage extends React.Component {
@@ -237,6 +245,11 @@ export class ProfilePage extends React.Component {
 		const { deviceOrientation } = this.state
 		return (
 			<View style={{ flex: 1 }} onLayout={this.onLayout}>
+				<StatusBar
+					translucent={false}
+					barStyle={'light-content'}
+					backgroundColor={LUNA_PRIMARY_COLOR}
+				/>
 				{deviceOrientation === ORIENTATION.PORTRAIT
 					? this.renderPortraitContent()
 					: this.renderLandscapeContent()}
