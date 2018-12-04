@@ -9,13 +9,16 @@ import {
 	isHydraImage
 } from '../../common/utils'
 import { styles as commonStyles } from '../../styles'
-import { LUNA_PRIMARY_COLOR } from '../../styles/colors'
+import { LUNA_MESSAGE_TEXT, LUNA_PRIMARY_COLOR } from '../../styles/colors'
 
 function getAvatar(message) {
 	return isHydraImage(message.senderAvatar)
 		? getLoaderImageForGender(message.senderGender)
 		: { uri: avatarRelativeUrlToFullPhotoUrl(message.senderAvatar) }
 }
+
+const BIG_RADIUS = 18
+const SMALL_RADIUS = 4
 
 const MessageItem = ({ message, onResend }) => {
 	const handleMessageTap = () => {
@@ -24,24 +27,49 @@ const MessageItem = ({ message, onResend }) => {
 		}
 	}
 
+	const getBorderRadius = () => {
+		const recipientBorder = {
+			borderTopLeftRadius: message.ownPrevious ? SMALL_RADIUS : BIG_RADIUS,
+			borderBottomLeftRadius: message.ownNext ? SMALL_RADIUS : BIG_RADIUS,
+			borderTopRightRadius: BIG_RADIUS,
+			borderBottomRightRadius: BIG_RADIUS
+		}
+		const userBorder = {
+			borderTopRightRadius: message.ownPrevious ? SMALL_RADIUS : BIG_RADIUS,
+			borderBottomRightRadius: message.ownNext ? SMALL_RADIUS : BIG_RADIUS,
+			borderTopLeftRadius: BIG_RADIUS,
+			borderBottomLeftRadius: BIG_RADIUS
+		}
+
+		return message.isRecipient ? recipientBorder : userBorder
+	}
+
 	return (
 		<View>
 			<View
 				style={[
 					{
 						flexDirection: message.isRecipient ? 'row' : 'row-reverse',
-						opacity: message.state === 'LOADING' || message.error ? 0.5 : 1
+						opacity: message.state === 'LOADING' || message.error ? 0.5 : 1,
+						marginBottom: message.ownNext ? 1 : 4
 					},
 					styles.container
 				]}
 			>
-				<Image style={styles.image} source={getAvatar(message)} />
+				{message.isRecipient && (
+					<View style={styles.imageContainer}>
+						{message.showAvatar && (
+							<Image style={styles.image} source={getAvatar(message)} />
+						)}
+					</View>
+				)}
 				<View
 					style={[
 						{
 							backgroundColor: message.isRecipient
 								? '#f1f0f0'
-								: LUNA_PRIMARY_COLOR
+								: LUNA_PRIMARY_COLOR,
+							...getBorderRadius()
 						},
 						styles.textContainer
 					]}
@@ -53,7 +81,7 @@ const MessageItem = ({ message, onResend }) => {
 						<Text
 							style={{
 								margin: 0,
-								color: message.isRecipient ? '#2a2a2a' : 'white'
+								color: message.isRecipient ? LUNA_MESSAGE_TEXT : 'white'
 							}}
 						>
 							{message.body}
@@ -72,18 +100,20 @@ const MessageItem = ({ message, onResend }) => {
 
 const styles = EStyleSheet.create({
 	container: {
-		alignItems: 'flex-end',
-		marginBottom: 4
+		alignItems: 'flex-end'
+	},
+	imageContainer: {
+		width: 36,
+		height: 36,
+		marginRight: 4,
+		marginLeft: 4
 	},
 	image: {
 		width: 36,
 		height: 36,
-		borderRadius: 18,
-		marginRight: 4,
-		marginLeft: 4
+		borderRadius: BIG_RADIUS
 	},
 	textContainer: {
-		borderRadius: 18,
 		minHeight: 36,
 		maxWidth: '66%',
 		paddingLeft: 16,

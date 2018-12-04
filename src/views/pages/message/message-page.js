@@ -96,7 +96,25 @@ const mapStateToProps = state => {
 	return {
 		error: state.conversations.currentConversation.error,
 		isLoading: state.conversations.currentConversation.isLoading,
-		messages: state.conversations.currentConversation.messages
+		messages: state.conversations.currentConversation.messages.map(
+			(mes, index) =>
+				processMessages(
+					mes,
+					index,
+					state.conversation.currentConversation.messages
+				)
+		)
+	}
+}
+
+const processMessages = (mes, index, messages) => {
+	const previous = index - 1 >= 0 ? messages[index - 1] : null
+	const next = messages[index + 1]
+	return {
+		...mes,
+		showAvatar: !(next && next.senderHid === mes.senderHid),
+		ownPrevious: previous && previous.senderHid === mes.senderHid,
+		ownNext: next && next.senderHid === mes.senderHid
 	}
 }
 
