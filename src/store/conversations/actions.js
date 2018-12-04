@@ -29,9 +29,9 @@ export const startFetchingMessages = () => ({
 	type: LOAD_MESSAGES_PROGRESS
 })
 
-export const doneFetchingMessagesSuccess = messages => ({
+export const doneFetchingMessagesSuccess = data => ({
 	type: LOAD_MESSAGES_SUCCESS,
-	payload: messages
+	payload: data
 })
 
 export const doneFetchingMessagesError = errorMessage => ({

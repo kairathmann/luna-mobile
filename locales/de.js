@@ -8,6 +8,7 @@ import { de as profile_page } from '../src/views/pages/profile/locales'
 import { de as recommendations_page } from '../src/views/pages/recommendations/locales'
 import { de as signup_page } from '../src/views/pages/signup/locales'
 import { de as welcome_page } from '../src/views/pages/welcome/locales'
+import { de as message_page } from '../src/views/pages/message/locales'
 
 export default {
 	welcome_page,
@@ -20,6 +21,7 @@ export default {
 	conversations_page,
 	edit_page,
 	manage_page,
+	message_page,
 	common: {
 		email: 'Email',
 		errors: {

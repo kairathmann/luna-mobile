@@ -17,6 +17,15 @@ export const PROFILE_STATE = {
 	DELETED: 4
 }
 
+export const BID_STATUS = {
+	BID_WINNING: 1,
+	BID_LOSING: 2,
+	BID_WON: 3,
+	BID_LOST: 4,
+	BID_ACCEPTED: 5,
+	BID_TIMEOUT: 6
+}
+
 export const REASONS = [
 	{
 		slug: 'met_someone_here',
