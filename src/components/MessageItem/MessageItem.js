@@ -9,13 +9,16 @@ import {
 	isHydraImage
 } from '../../common/utils'
 import { styles as commonStyles } from '../../styles'
-import { LUNA_PRIMARY_COLOR } from '../../styles/colors'
+import { LUNA_MESSAGE_TEXT, LUNA_PRIMARY_COLOR } from '../../styles/colors'
 
 function getAvatar(message) {
 	return isHydraImage(message.senderAvatar)
 		? getLoaderImageForGender(message.senderGender)
 		: { uri: avatarRelativeUrlToFullPhotoUrl(message.senderAvatar) }
 }
+
+const BIG_RADIUS = 18
+const SMALL_RADIUS = 4
 
 const MessageItem = ({ message, onResend }) => {
 	const handleMessageTap = () => {
@@ -26,16 +29,16 @@ const MessageItem = ({ message, onResend }) => {
 
 	const getBorderRadius = () => {
 		const recipientBorder = {
-			borderTopLeftRadius: message.ownPrevious ? 4 : 18,
-			borderBottomLeftRadius: message.ownNext ? 4 : 18,
-			borderTopRightRadius: 18,
-			borderBottomRightRadius: 18
+			borderTopLeftRadius: message.ownPrevious ? SMALL_RADIUS : BIG_RADIUS,
+			borderBottomLeftRadius: message.ownNext ? SMALL_RADIUS : BIG_RADIUS,
+			borderTopRightRadius: BIG_RADIUS,
+			borderBottomRightRadius: BIG_RADIUS
 		}
 		const userBorder = {
-			borderTopRightRadius: message.ownPrevious ? 4 : 18,
-			borderBottomRightRadius: message.ownNext ? 4 : 18,
-			borderTopLeftRadius: 18,
-			borderBottomLeftRadius: 18
+			borderTopRightRadius: message.ownPrevious ? SMALL_RADIUS : BIG_RADIUS,
+			borderBottomRightRadius: message.ownNext ? SMALL_RADIUS : BIG_RADIUS,
+			borderTopLeftRadius: BIG_RADIUS,
+			borderBottomLeftRadius: BIG_RADIUS
 		}
 
 		return message.isRecipient ? recipientBorder : userBorder
@@ -78,7 +81,7 @@ const MessageItem = ({ message, onResend }) => {
 						<Text
 							style={{
 								margin: 0,
-								color: message.isRecipient ? '#2a2a2a' : 'white'
+								color: message.isRecipient ? LUNA_MESSAGE_TEXT : 'white'
 							}}
 						>
 							{message.body}
@@ -108,7 +111,7 @@ const styles = EStyleSheet.create({
 	image: {
 		width: 36,
 		height: 36,
-		borderRadius: 18
+		borderRadius: BIG_RADIUS
 	},
 	textContainer: {
 		minHeight: 36,
