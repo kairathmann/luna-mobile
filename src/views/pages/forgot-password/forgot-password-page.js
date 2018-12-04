@@ -1,7 +1,7 @@
 import { Form, H1, Input, Item, Label } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { Keyboard, Text, View } from 'react-native'
+import { Keyboard, StatusBar, Text, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { connect } from 'react-redux'
 import validator from 'validator'
@@ -43,6 +43,11 @@ export class ForgotPasswordPage extends React.Component {
 		const { email, validationEnabled } = this.state
 		return (
 			<View style={styles.content}>
+				<StatusBar
+					barStyle={'dark-content'}
+					backgroundColor={'white'}
+					translucent={false}
+				/>
 				<NavigationEvents onWillFocus={this.clearErrorState} />
 				<KeyboardAwareScrollView
 					keyboardShouldPersistTaps={'handled'}

@@ -5,10 +5,12 @@ import {
 	Dimensions,
 	RefreshControl,
 	ScrollView,
+	StatusBar,
 	Text,
 	View
 } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
+import { NavigationEvents } from 'react-navigation'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
 import { isLandscape } from '../../../common/utils'
@@ -17,12 +19,12 @@ import LunaBackgroundImageView from '../../../components/LunaBackgroundImageView
 import UserMatchView from '../../../components/UserMatchView'
 import { GENDER, ORIENTATION } from '../../../enums'
 import { styles as commonStyles } from '../../../styles'
+import { LUNA_PRIMARY_COLOR } from '../../../styles/colors'
 import {
 	fetchRecommendations,
 	switchToLoadingSkippedMatches,
 	unmatch
 } from './scenario-actions'
-import { NavigationEvents } from 'react-navigation'
 
 class RecommendationsPage extends React.Component {
 	constructor(props) {
@@ -146,6 +148,11 @@ class RecommendationsPage extends React.Component {
 	render() {
 		return (
 			<React.Fragment>
+				<StatusBar
+					barStyle={'light-content'}
+					translucent={false}
+					backgroundColor={LUNA_PRIMARY_COLOR}
+				/>
 				<NavigationEvents onWillFocus={this.props.fetchRecommendations} />
 				<ScrollView
 					contentContainerStyle={commonStyles.content}
