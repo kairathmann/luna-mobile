@@ -5,6 +5,9 @@ import {
 	LOAD_MESSAGES_ERROR,
 	LOAD_MESSAGES_PROGRESS,
 	LOAD_MESSAGES_SUCCESS,
+	APPEND_LOCAL_MESSAGE,
+	SEND_MESSAGE_ERROR,
+	SEND_MESSAGE_SUCCESS,
 	CLEAR_DATA
 } from './action-types'
 
@@ -22,6 +25,50 @@ const initialState = {
 
 export function conversationsReducer(state = initialState, { payload, type }) {
 	switch (type) {
+		case APPEND_LOCAL_MESSAGE:
+			return {
+				...state,
+				currentConversation: {
+					...state.currentConversation,
+					messages: [
+						...state.currentConversation.messages,
+						{ ...payload, state: 'LOADING' }
+					]
+				}
+			}
+		case SEND_MESSAGE_SUCCESS:
+			return {
+				...state,
+				currentConversation: {
+					...state.currentConversation,
+					messages: state.currentConversation.messages.map(mes => {
+						if (mes.state === 'LOADING') {
+							return {
+								...mes,
+								state: '',
+								error: ''
+							}
+						}
+						return mes
+					})
+				}
+			}
+		case SEND_MESSAGE_ERROR:
+			return {
+				...state,
+				currentConversation: {
+					...state.currentConversation,
+					messages: state.currentConversation.messages.map(mes => {
+						if (mes.id === payload.id) {
+							return {
+								...mes,
+								error: payload.error
+							}
+						}
+						return mes
+					})
+				}
+			}
 		case LOAD_CONVERSATIONS_PROGRESS:
 			return {
 				...state,

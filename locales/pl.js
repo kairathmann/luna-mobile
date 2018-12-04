@@ -32,7 +32,8 @@ export default {
 				'_PL_Something is wrong at our side. Please try again later.',
 			not_authenticated: 'You are logged out',
 			deleted_user: '_PL_There is no user like that',
-			illegal_state: 'Your account is already disabled or deleted'
+			illegal_state: 'Your account is already disabled or deleted',
+			send_message_failed: 'Send message failed. Tap message to send again.'
 		},
 		male: 'Male',
 		female: 'Female',
@@ -40,6 +41,7 @@ export default {
 		other: 'Other',
 		back: 'Back',
 		logout: 'Logout',
-		search_placeholder: 'Search...'
+		search_placeholder: 'Search...',
+		message_placeholder: 'Type your message...'
 	}
 }
