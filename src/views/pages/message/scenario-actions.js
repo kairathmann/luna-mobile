@@ -25,7 +25,6 @@ export const fetchMessages = (hid, conversation) => async dispatch => {
 
 export const resendMessage = (conversation, message) => async dispatch => {
 	try {
-		console.log({ message, conversation })
 		await api.sendMessage({
 			recipient_hid: conversation.partnerHid,
 			body: message.body
