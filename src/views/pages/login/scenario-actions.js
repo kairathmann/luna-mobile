@@ -11,12 +11,15 @@ import { navigationService } from '../../../services'
 import { fetchProfileSuccess } from '../../../store/profile/actions'
 import { PROFILE_STATE } from '../../../enums'
 import { conversationsListTimerService } from '../../../services'
+import { toastService } from '../../../services'
+import I18n from '../../../../locales/i18n'
 
 export function login({ email, password }) {
 	return async dispatch => {
 		try {
 			dispatch(globalActions.setGlobalLoading())
 			const loginResult = await api.signin({ email, password })
+
 			dispatch(signinSuccess(loginResult))
 			const profileResponse = await api.fetchSelf()
 			const profileData = profileResponse.data.data
@@ -35,6 +38,13 @@ export function login({ email, password }) {
 				conversationsListTimerService.initializeService(
 					dispatch,
 					profileData.targetHid
+				)
+			}
+			if (loginResult.data.data.reactivated) {
+				toastService.showSuccessToast(
+					I18n.t('login_page.reactivated'),
+					'top',
+					10000
 				)
 			}
 		} catch (error) {
