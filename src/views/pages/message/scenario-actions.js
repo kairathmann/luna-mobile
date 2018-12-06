@@ -6,6 +6,7 @@ import {
 	doneFetchingMessagesSuccess,
 	sendMessageError,
 	sendMessageSuccess,
+	setConversationAsRead,
 	startFetchingMessages
 } from '../../../store/conversations/actions'
 
@@ -16,6 +17,7 @@ export const fetchMessages = (hid, conversation) => async dispatch => {
 			target_hid: hid,
 			conversation_id: conversation.id
 		})
+		dispatch(setConversationAsRead(conversation.id))
 		dispatch(doneFetchingMessagesSuccess(messages.data.data))
 	} catch (err) {
 		const errorMessage = getErrorDataFromNetworkException(err)
