@@ -8,6 +8,7 @@ import {
 	APPEND_LOCAL_MESSAGE,
 	SEND_MESSAGE_ERROR,
 	SEND_MESSAGE_SUCCESS,
+	READ_CONVERSATION,
 	CLEAR_DATA
 } from './action-types'
 
@@ -36,6 +37,19 @@ export function conversationsReducer(state = initialState, { payload, type }) {
 						{ ...payload, state: 'LOADING' }
 					]
 				}
+			}
+		case READ_CONVERSATION:
+			return {
+				...state,
+				conversations: state.conversations.map(conv => {
+					if (conv.id === payload) {
+						return {
+							...conv,
+							pending: false
+						}
+					}
+					return conv
+				})
 			}
 		case SEND_MESSAGE_SUCCESS:
 			return {
