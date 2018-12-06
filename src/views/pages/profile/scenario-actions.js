@@ -1,3 +1,4 @@
+import { Answers } from 'react-native-fabric'
 import { PAGES_NAMES } from '../../../navigation'
 import { navigationService } from '../../../services'
 import { startUpdatingProfile } from '../../../store/profile/actions'
@@ -17,6 +18,7 @@ export function logout() {
 			dispatch(globalActions.unsetGlobalLoading())
 			navigationService.navigate(PAGES_NAMES.WELCOME_PAGE)
 			clearStoreScenario(dispatch)
+			Answers.logCustom('Logout Event')
 		}
 	}
 }

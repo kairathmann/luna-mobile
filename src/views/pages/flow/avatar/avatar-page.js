@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { Image, Keyboard, Text, TouchableOpacity, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
+import { Answers } from 'react-native-fabric'
 import ImagePicker from 'react-native-image-picker'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import * as Progress from 'react-native-progress'
@@ -32,11 +33,13 @@ export class AvatarPage extends React.Component {
 		const { avatar } = this.state
 		this.props.next(avatar, PAGES_NAMES.FLOW_AGE_LIMIT)
 		Keyboard.dismiss()
+		Answers.logCustom('Skipped on avatar')
 	}
 
 	handleSkip = () => {
 		this.props.navigation.navigate(PAGES_NAMES.FLOW_ALLDONE)
 		Keyboard.dismiss()
+		Answers.logCustom('Avatar Step done')
 	}
 
 	calculateProgress = () => {

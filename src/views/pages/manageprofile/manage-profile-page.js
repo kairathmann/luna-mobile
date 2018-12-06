@@ -3,11 +3,16 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { ScrollView } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
+import { Answers } from 'react-native-fabric'
 import I18n from '../../../../locales/i18n'
 import Button from '../../../components/Button/Button'
 import { PAGES_NAMES } from '../../../navigation'
 
 export class ManageProfilePage extends React.Component {
+	componentDidMount() {
+		Answers.logContentView('Manage Profile Page')
+	}
+
 	render() {
 		return (
 			<React.Fragment>

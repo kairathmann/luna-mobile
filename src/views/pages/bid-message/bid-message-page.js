@@ -3,12 +3,17 @@ import React from 'react'
 import { View } from 'react-native'
 import { Text } from 'react-native-animatable'
 import EStyleSheet from 'react-native-extended-stylesheet'
+import { Answers } from 'react-native-fabric'
 import { connect } from 'react-redux'
 import MessageAvatar from '../../../components/MessageAvatar/MessageAvatar'
 import NewMessage from '../../../components/NewMessage/NewMessage'
 import { createMessage } from './scenario-actions'
 
 export class BidMessagePage extends React.Component {
+	componentDidMount() {
+		Answers.logContentView('Bid Message Page')
+	}
+
 	handleSend = message => {
 		this.props.createMessage({
 			partner: this.props.navigation.getParam('partner', {}),
