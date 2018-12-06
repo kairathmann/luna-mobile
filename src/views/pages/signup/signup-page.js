@@ -2,7 +2,7 @@ import { Form, H1, Input, Item, Label } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import { Keyboard, StatusBar, Text, View } from 'react-native'
+import { Keyboard, StatusBar, Text, View, Linking } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { NavigationEvents } from 'react-navigation'
 import { connect } from 'react-redux'
@@ -36,7 +36,19 @@ export class SignupPage extends React.Component {
 		})
 	}
 
-	handleLink = () => {}
+	handleLink = type => {
+		const url =
+			type === 'terms'
+				? 'https://www.meetluna.com/terms-of-service'
+				: 'https://www.meetluna.com/privacy-policy'
+		Linking.canOpenURL(url).then(supported => {
+			if (supported) {
+				Linking.openURL(url)
+			} else {
+				console.log("Don't know how to open URI: " + url)
+			}
+		})
+	}
 
 	handleSignup = () => {
 		this.setState({ validationEnabled: true }, () => {
