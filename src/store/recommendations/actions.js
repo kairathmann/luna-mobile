@@ -6,7 +6,10 @@ import {
 	UNMATCH_RECOMMENDATION_SUCCESS,
 	UNMATCH_RECOMMENDATION_FINISH,
 	SHOW_SKIPPED_RECOMMENDATIONS,
-	CLEAR_DATA
+	CLEAR_DATA,
+	MATCH_RECOMMENDATION_PROGRESS,
+	MATCH_RECOMMENDATION_SUCCESS,
+	MATCH_RECOMMENDATION_FINISH
 } from './action-types'
 
 export const startFetchingRecommendations = () => ({
@@ -34,6 +37,19 @@ export const doneUnmatchingRecommendationSuccess = idOfUserBeingUnmatched => ({
 
 export const doneUnmatchingRecommendation = () => ({
 	type: UNMATCH_RECOMMENDATION_FINISH
+})
+
+export const startMatching = () => ({
+	type: MATCH_RECOMMENDATION_PROGRESS
+})
+
+export const doneMatchingRecommendationSuccess = idOfUserBeingMatched => ({
+	type: MATCH_RECOMMENDATION_SUCCESS,
+	payload: idOfUserBeingMatched
+})
+
+export const doneMatchingRecommendation = () => ({
+	type: MATCH_RECOMMENDATION_FINISH
 })
 
 export const showSkippedMatches = () => ({

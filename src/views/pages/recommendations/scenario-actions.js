@@ -4,15 +4,17 @@ import {
 	getErrorDataFromNetworkException,
 	rewriteUrlImageForDefault
 } from '../../../common/utils'
+import { PAGES_NAMES } from '../../../navigation'
 import { toastService } from '../../../services'
+import * as navigationService from '../../../services/navigationService'
 import {
 	doneFetchingRecommendationsError,
 	doneFetchingRecommendationsSuccess,
-	startUnmatching,
-	doneUnmatchingRecommendationSuccess,
 	doneUnmatchingRecommendation,
+	doneUnmatchingRecommendationSuccess,
 	showSkippedMatches,
-	startFetchingRecommendations
+	startFetchingRecommendations,
+	startUnmatching
 } from '../../../store/recommendations/actions'
 
 const remapMatches = matches => {
@@ -43,6 +45,10 @@ export const fetchRecommendations = () => async (dispatch, getState) => {
 		const errorMessage = getErrorDataFromNetworkException(err)
 		dispatch(doneFetchingRecommendationsError(errorMessage))
 	}
+}
+
+export const match = user => async () => {
+	navigationService.navigate(PAGES_NAMES.BID_MESSAGE, { partner: user })
 }
 
 export const unmatch = userId => async (dispatch, getState) => {
