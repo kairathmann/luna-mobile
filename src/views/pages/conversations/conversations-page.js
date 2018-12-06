@@ -66,8 +66,11 @@ class ConversationsPage extends React.Component {
 	render() {
 		const { searchText } = this.state
 		return (
+
 			<View style={{ flex: 1 }}>
-				<SearchHeader onSearch={this._onSearch} />
+				{this.props.conversations.length !== 0 && (
+					<SearchHeader onSearch={this._onSearch} />
+				)}
 				<ScrollView
 					contentContainerStyle={styles.scrollViewContainer}
 					refreshControl={
