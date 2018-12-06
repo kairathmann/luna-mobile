@@ -17,6 +17,7 @@ const initialState = {
 	isFetchingConversationsError: false,
 	loadingConversationsErrorMessage: '',
 	currentConversation: {
+		details: {},
 		messages: [],
 		error: '',
 		isLoading: false

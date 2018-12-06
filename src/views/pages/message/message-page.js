@@ -134,7 +134,7 @@ const mapStateToProps = state => {
 				processMessages(
 					mes,
 					index,
-					state.conversation.currentConversation.messages
+					state.conversations.currentConversation.messages
 				)
 		)
 	}
