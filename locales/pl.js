@@ -37,7 +37,15 @@ export default {
 			not_authenticated: 'You are logged out',
 			deleted_user: '_PL_There is no user like that',
 			illegal_state: 'Your account is already disabled or deleted',
-			send_message_failed: 'Send message failed. Tap message to send again.'
+			send_message_failed: 'Send message failed. Tap message to send again.',
+			invalid_negative_balance: 'Your balance is negative',
+			invalid_address: 'Invalid address',
+			invalid_source_address: 'Invalid source address',
+			invalid_dest_address: 'Invalid destination address',
+			existing_inverse_reaction: `You've already skipped this person`,
+			existing_positive_reaction: `You already matched this person`,
+			resource_not_found: 'Unfortunately, not found.',
+			no_internet_connection: 'Oops, you have no internet connection!'
 		},
 		male: 'Male',
 		female: 'Female',
