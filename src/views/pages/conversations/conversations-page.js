@@ -4,6 +4,7 @@ import React from 'react'
 import { Image, RefreshControl, ScrollView, Text, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { Answers } from 'react-native-fabric'
+import { SafeAreaView } from 'react-navigation'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
 import PalmTree from '../../../assets/images/palm-tree.png'
@@ -71,54 +72,59 @@ class ConversationsPage extends React.Component {
 	render() {
 		const { searchText } = this.state
 		return (
-			<View style={{ flex: 1 }}>
-				{this.props.conversations.length !== 0 && (
-					<SearchHeader onSearch={this._onSearch} />
-				)}
-				<ScrollView
-					contentContainerStyle={styles.scrollViewContainer}
-					refreshControl={
-						<RefreshControl
-							refreshing={this.props.isLoadingConversations}
-							onRefresh={this.refreshConversations}
-						/>
-					}
-				>
-					{this.props.isLoadingConversations && (
-						<View style={commonStyles.content} />
+			<SafeAreaView
+				style={{ flex: 1, backgroundColor: 'white' }}
+				forceInset={{ top: 'always' }}
+			>
+				<View style={{ flex: 1 }}>
+					{this.props.conversations.length !== 0 && (
+						<SearchHeader onSearch={this._onSearch} />
 					)}
-					{!this.props.isLoadingConversations &&
-						!this.props.isFetchingConversationsError &&
-						this.props.conversations.length > 0 && (
-							<React.Fragment>
-								{this.props.newMessageCount > 0 &&
-									this.renderNewMessageCountView(this.props.newMessageCount)}
-								<ConversationsList
-									handleClick={this.handleClick}
-									conversations={this.props.conversations.filter(con =>
-										con.partnerName
-											.toLowerCase()
-											.includes(searchText.toLowerCase())
-									)}
-								/>
-							</React.Fragment>
+					<ScrollView
+						contentContainerStyle={styles.scrollViewContainer}
+						refreshControl={
+							<RefreshControl
+								refreshing={this.props.isLoadingConversations}
+								onRefresh={this.refreshConversations}
+							/>
+						}
+					>
+						{this.props.isLoadingConversations && (
+							<View style={commonStyles.content} />
 						)}
-					{!this.props.isLoadingConversations &&
-						this.props.isFetchingConversationsError && (
-							<View style={styles.errorTextContainer}>
-								<Text style={[commonStyles.errorText, styles.errorText]}>
-									{I18n.t(
-										'conversations_page.error_could_not_fetch_conversations'
-									)}
-								</Text>
-							</View>
-						)}
-					{!this.props.isLoadingConversations &&
-						!this.props.isFetchingConversationsError &&
-						this.props.conversations.length === 0 &&
-						this.renderNoMessagesView()}
-				</ScrollView>
-			</View>
+						{!this.props.isLoadingConversations &&
+							!this.props.isFetchingConversationsError &&
+							this.props.conversations.length > 0 && (
+								<React.Fragment>
+									{this.props.newMessageCount > 0 &&
+										this.renderNewMessageCountView(this.props.newMessageCount)}
+									<ConversationsList
+										handleClick={this.handleClick}
+										conversations={this.props.conversations.filter(con =>
+											con.partnerName
+												.toLowerCase()
+												.includes(searchText.toLowerCase())
+										)}
+									/>
+								</React.Fragment>
+							)}
+						{!this.props.isLoadingConversations &&
+							this.props.isFetchingConversationsError && (
+								<View style={styles.errorTextContainer}>
+									<Text style={[commonStyles.errorText, styles.errorText]}>
+										{I18n.t(
+											'conversations_page.error_could_not_fetch_conversations'
+										)}
+									</Text>
+								</View>
+							)}
+						{!this.props.isLoadingConversations &&
+							!this.props.isFetchingConversationsError &&
+							this.props.conversations.length === 0 &&
+							this.renderNoMessagesView()}
+					</ScrollView>
+				</View>
+			</SafeAreaView>
 		)
 	}
 }
