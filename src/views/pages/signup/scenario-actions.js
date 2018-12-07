@@ -1,3 +1,4 @@
+import { Answers } from 'react-native-fabric'
 import api from '../../../api'
 import { getErrorDataFromNetworkException } from '../../../common/utils'
 import { PAGES_NAMES } from '../../../navigation'
@@ -16,8 +17,12 @@ export function signup({ email, password }) {
 			const result = await api.signup({ email, password })
 			dispatch(signupSuccess(result))
 			navigationService.navigate(PAGES_NAMES.FLOW_NAME_BIRTHDAY)
+			Answers.logSignUp('APP', true)
 		} catch (error) {
 			dispatch(signupError(getErrorDataFromNetworkException(error)))
+			Answers.logSignUp('APP', false, {
+				reason: getErrorDataFromNetworkException(error)
+			})
 		} finally {
 			dispatch(globalActions.unsetGlobalLoading())
 		}

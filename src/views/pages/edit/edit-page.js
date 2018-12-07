@@ -21,6 +21,7 @@ import {
 	View
 } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
+import { Answers } from 'react-native-fabric'
 import ImagePicker from 'react-native-image-picker'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
@@ -90,6 +91,7 @@ export class EditPage extends React.Component {
 			saveProfile: this._saveChanges,
 			disabled: false
 		})
+		Answers.logContentView('Edit Profile Page')
 	}
 
 	_saveChanges = () => {

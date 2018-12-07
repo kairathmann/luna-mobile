@@ -1,3 +1,4 @@
+import { Answers } from 'react-native-fabric'
 import api from '../../../api'
 import {
 	avatarRelativeUrlToFullPhotoUrl,
@@ -66,6 +67,7 @@ export const unmatch = userId => async (dispatch, getState) => {
 			const recommendations = remapMatches(response.data.data.people)
 			dispatch(doneFetchingRecommendationsSuccess(recommendations))
 		}
+		Answers.logCustom('Skip event')
 	} catch (err) {
 		const errorMessage = getErrorDataFromNetworkException(err)
 		toastService.showErrorToast(errorMessage, 'top')
