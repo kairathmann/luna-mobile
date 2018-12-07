@@ -7,6 +7,7 @@ import {
 	LOAD_MESSAGES_ERROR,
 	LOAD_MESSAGES_PROGRESS,
 	LOAD_MESSAGES_SUCCESS,
+	READ_CONVERSATION,
 	SEND_MESSAGE_ERROR,
 	SEND_MESSAGE_SUCCESS
 } from './action-types'
@@ -29,6 +30,10 @@ export const startFetchingMessages = () => ({
 	type: LOAD_MESSAGES_PROGRESS
 })
 
+export const setConversationAsRead = conversationId => ({
+	type: READ_CONVERSATION,
+	payload: conversationId
+})
 export const doneFetchingMessagesSuccess = data => ({
 	type: LOAD_MESSAGES_SUCCESS,
 	payload: data

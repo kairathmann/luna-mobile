@@ -3,6 +3,7 @@ import React from 'react'
 import { FlatList, RefreshControl, View } from 'react-native'
 import { Text } from 'react-native-animatable'
 import EStyleSheet from 'react-native-extended-stylesheet'
+import { Answers } from 'react-native-fabric'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
 import { isSameDay } from '../../../common/utils'
@@ -15,6 +16,7 @@ import { fetchMessages, resendMessage, sendMessage } from './scenario-actions'
 class MessagePage extends React.Component {
 	componentDidMount() {
 		this.askForMessages()
+		Answers.logContentView('Message Page')
 	}
 
 	askForMessages() {

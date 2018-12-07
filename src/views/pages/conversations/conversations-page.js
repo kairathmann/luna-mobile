@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { Image, RefreshControl, ScrollView, Text, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
-import { Header } from 'react-navigation'
+import { Answers } from 'react-native-fabric'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
 import PalmTree from '../../../assets/images/palm-tree.png'
@@ -18,6 +18,10 @@ import { fetchConversations } from './scenario-actions'
 class ConversationsPage extends React.Component {
 	state = {
 		searchText: ''
+	}
+
+	componentDidMount() {
+		Answers.logContentView('Conversations Page')
 	}
 
 	_onSearch = text => {
@@ -67,8 +71,10 @@ class ConversationsPage extends React.Component {
 	render() {
 		const { searchText } = this.state
 		return (
-			<View>
-				<SearchHeader onSearch={this._onSearch} />
+			<View style={{ flex: 1 }}>
+				{this.props.conversations.length !== 0 && (
+					<SearchHeader onSearch={this._onSearch} />
+				)}
 				<ScrollView
 					contentContainerStyle={styles.scrollViewContainer}
 					refreshControl={
@@ -149,7 +155,7 @@ const styles = EStyleSheet.create({
 	scrollViewContainer: {
 		backgroundColor: 'white',
 		flexGrow: 1,
-		paddingBottom: Header.HEIGHT
+		flex: 1
 	},
 	errorTextContainer: {
 		flex: 1,

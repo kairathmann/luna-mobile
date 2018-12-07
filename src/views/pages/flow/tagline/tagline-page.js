@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { Keyboard, Text, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
+import { Answers } from 'react-native-fabric'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import * as Progress from 'react-native-progress'
 import { connect } from 'react-redux'
@@ -27,6 +28,7 @@ export class TaglinePage extends React.Component {
 		const { tagline } = this.state
 		this.props.next({ tagline }, PAGES_NAMES.FLOW_ALLDONE)
 		Keyboard.dismiss()
+		Answers.logCustom('Tagline Step done')
 	}
 
 	calculateProgress = () => {
