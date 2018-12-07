@@ -1,6 +1,6 @@
 export default {
 	title: 'Fill profile',
-	skip: "I'm done",
+	skip: 'Skip remaining steps',
 	name_birthday: {
 		title: 'About you',
 		name: 'Name or nickname',
@@ -10,7 +10,7 @@ export default {
 	gender_preferences: {
 		title: 'Gender',
 		prompt: 'Luna welcomes everyone',
-		gender_placeholder: 'I identify as',
+		gender_placeholder: 'Gender',
 		sexuality_placeholder: 'Interested in',
 		next: 'Select your avatar'
 	},

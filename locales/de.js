@@ -78,7 +78,7 @@ export default {
 		},
 		male: 'Male',
 		female: 'Female',
-		both: 'Both',
+		both: 'Everyone',
 		other: 'Other',
 		back: 'Back',
 		logout: 'Logout',
