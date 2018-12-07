@@ -37,9 +37,11 @@ import {
 	ManageDisableReasonPage
 } from '../views/pages/manageprofile/manage-reason-page'
 import MessagePage from '../views/pages/message/message-page'
+import PolicyPage from '../views/pages/policy/policy-page'
 import ProfilePage from '../views/pages/profile/profile-page'
 import RecommendationsPage from '../views/pages/recommendations/recommendations-page'
 import SignupPage from '../views/pages/signup/signup-page'
+import TermsPage from '../views/pages/terms/terms-page'
 import WelcomePage from '../views/pages/welcome/welcome-page'
 import BidMessagePage from '../views/pages/bid-message/bid-message-page'
 
@@ -66,7 +68,9 @@ const PAGES_NAMES = {
 	MANAGE_PROFILE: 'MANAGE_PROFILE',
 	MANAGE_DISABLE: 'MANAGE_DISABLE',
 	MANAGE_DELETE: 'MANAGE_DELETE',
-	BID_MESSAGE: 'BID_MESSAGE'
+	BID_MESSAGE: 'BID_MESSAGE',
+	POLICY: 'POLICY',
+	TERMS: 'TERMS'
 }
 
 const noNavbarStyle = {
@@ -347,6 +351,22 @@ const AppStackNavigator = createStackNavigator({
 		screen: HomePageBottomTabNavigation,
 		navigationOptions: () => ({
 			header: null
+		})
+	},
+	POLICY: {
+		screen: PolicyPage,
+		navigationOptions: () => ({
+			title: I18n.t('policy_page.title'),
+			headerTintColor: 'white',
+			headerStyle: { backgroundColor: LUNA_PRIMARY_COLOR }
+		})
+	},
+	TERMS: {
+		screen: TermsPage,
+		navigationOptions: () => ({
+			title: I18n.t('terms_page.title'),
+			headerTintColor: 'white',
+			headerStyle: { backgroundColor: LUNA_PRIMARY_COLOR }
 		})
 	}
 })

@@ -10,6 +10,8 @@ import { de as profile_page } from '../src/views/pages/profile/locales'
 import { de as recommendations_page } from '../src/views/pages/recommendations/locales'
 import { de as signup_page } from '../src/views/pages/signup/locales'
 import { de as welcome_page } from '../src/views/pages/welcome/locales'
+import { de as terms_page } from '../src/views/pages/terms/locales'
+import { de as policy_page } from '../src/views/pages/policy/locales'
 
 export default {
 	welcome_page,
@@ -24,6 +26,8 @@ export default {
 	manage_page,
 	message_page,
 	bid_page,
+	terms_page,
+	policy_page,
 	common: {
 		email: 'Email',
 		errors: {
