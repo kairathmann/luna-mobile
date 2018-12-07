@@ -9,6 +9,7 @@ import { connect } from 'react-redux'
 import validator from 'validator'
 import I18n from '../../../../locales/i18n'
 import Button from '../../../components/Button/'
+import { PAGES_NAMES } from '../../../navigation'
 import { auth, styles as commonStyles } from '../../../styles'
 import { clearError, signup } from './scenario-actions'
 
@@ -36,7 +37,10 @@ export class SignupPage extends React.Component {
 		})
 	}
 
-	handleLink = () => {}
+	handleLink = type => {
+		const page = type === 'terms' ? PAGES_NAMES.TERMS : PAGES_NAMES.POLICY
+		this.props.navigation.navigate(page)
+	}
 
 	handleSignup = () => {
 		this.setState({ validationEnabled: true }, () => {
