@@ -20,7 +20,9 @@ export function signup({ email, password }) {
 			Answers.logSignUp('APP', true)
 		} catch (error) {
 			dispatch(signupError(getErrorDataFromNetworkException(error)))
-			Answers.logSignUp('APP', false)
+			Answers.logSignUp('APP', false, {
+				reason: getErrorDataFromNetworkException(error)
+			})
 		} finally {
 			dispatch(globalActions.unsetGlobalLoading())
 		}

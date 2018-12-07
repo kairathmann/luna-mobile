@@ -33,13 +33,13 @@ export class AvatarPage extends React.Component {
 		const { avatar } = this.state
 		this.props.next(avatar, PAGES_NAMES.FLOW_AGE_LIMIT)
 		Keyboard.dismiss()
-		Answers.logCustom('Skipped on avatar')
+		Answers.logCustom('Avatar Step done')
 	}
 
 	handleSkip = () => {
 		this.props.navigation.navigate(PAGES_NAMES.FLOW_ALLDONE)
 		Keyboard.dismiss()
-		Answers.logCustom('Avatar Step done')
+		Answers.logCustom('Skipped on avatar')
 	}
 
 	calculateProgress = () => {
