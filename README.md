@@ -2,14 +2,19 @@
 
 Steps to do after first pull of repository: (those steps are done in order to replace placeholder values with Fabric.IO Api Keys during checkout and ensure that during commiting they are changed right back to placeholders)
 
-1. Add `LUNA_FABRIC_API_KEY` env variable to your global settings, preferable `.bash_profile`
-2. Add `LUNA_FABRIC_BUILD_SECRET` env variable to your global settings, preferable `.bash_profile`  
+1. Add `LUNA_FABRIC_API_KEY` env variable to your global settings, preferable `.bash_profile` / `.zshrc` / wherever you need to store your env variables
+2. Add `LUNA_FABRIC_BUILD_SECRET` env variable to your global settings, preferable `.bash_profile` / `.zshrc` / wherever you need to store your env variables
    You can get key pair from `Luna` organisation in `Fabric.io`
-3. Run:
+3. Add `LUNA_KEYSTORE_PASSWORD` env variable to your global settings, preferfable `.bash_profile` / `.zshrc` / wherever you need to store your env variables
+4. Add `LUNA_KEYSTORE_KEY_PASSWORD` env variable to your global settings, preferable `.bash_profile` / `.zshrc` / wherever you need to store your env variables  
+   You can get keystore password and keystore key password from Kai or somebody who is in charge of disitributing such informations.
+5. Run:
 
 ```
 git config --global filter.update-fabric-keys.clean path/to/repo/clean.sh
 git config --global filter.update-fabric-keys.smudge path/to/repo/smudge.sh
+git config --global filter.update-luna-keystore.clean path/to/repo/clean-keystore.sh
+git config --global filter.update-luna-keystore.smudge path/to/repo/smudge-keystore.sh
 ```
 
 4. Recheckout all files in order to make custom filter kick in:
@@ -26,6 +31,9 @@ git checkout ios/lunamobile.xcodeproj/project.pbxproj
 
 rm ios/lunamobile/Info.plist
 git checkout ios/lunamobile/Info.plist
+
+rm android/gradle.properties
+git checkout android/gradle.properties
 ```
 
 Now keys should be inserted, during commiting, keys will be automatically switch back to placeholders (note: that won't change in files themselves, you just won't have any differences in those files therefore you won't commit it. On remote branch there will always be placeholders)
@@ -65,31 +73,7 @@ cd node_modules/react-native/third-party/glog-0.3.5/ && ../../scripts/ios-config
 
 ## Building debug APK file for Android:
 
-1. Execute one of the following commands:  
-   `npm run build-debug-android-dev` - this will create offline APK file inside `dist` directory named: `luna-android-debug.apk` that uses environment variables from `.env.development`  
-   `npm run build-debug-android-staging` - this will create offline APK file inside `dist` directory named: `luna-android-debug.apk` that uses environment variables from `.env.staging`  
-   `npm run build-debug-android-production` - this will create offline APK file inside `dist` directory named: `luna-android-debug.apk` that uses environment variables from `.env.production`
-2. Use your terminal to `cd` into `dist` and execute `adb install luna-android-debug.apk` in order to install that APK file on your connected device.
-
-## Building production signed APK file for Android:
-
-1. Export new env variable: `LUNA_KEYSTORE_PASSWORD`. **WRAP VALUE IN DOUBLE QUOTES AS PASSWORD MIGHT CONTAIN SPECIAL CHARACTERS**
-2. Export new env variable: `LUNA_KEYSTORE_KEY_PASSWORD`. **WRAP VALUE IN DOUBLE QUOTES AS PASSWORD MIGHT CONTAIN SPECIAL CHARACTERS**
-3. Run: `git config --global filter.update-luna-keystore.clean path/to/repo/clean-keystore.sh`
-4. Run: `git config --global filter.update-luna-keystore.smudge path/to/repo/smudge-keystore.sh`
-5. Execute: `chmod +x clean-keystore.sh`
-6. Execute: `chmod +x smudge-keystore.sh`
-7. Recheckout all files in order to make custom filter kick in:
-   ```
-    rm android/gradle.properties
-    git checkout android/gradle.properties
-   ```
-8. Make sure that `repo/android/gradle.properties` have proper values instead of placeholders
-9. Copy `android.jks` storefile to `repo/android/app`
-10. Execute: `npm run build-release-android`
-11. Signed, release build will be created under name: `luna-android-release.apk` in directory: `repo/dist`
-
----
+**WON'T WORK IN REACT NATIVE THAT IS CURRENTLY USED (0.57)**
 
 # IOS:
 
@@ -131,9 +115,30 @@ The following steps are temporary until Luna registers its own company developme
    `Production` - build project with environment variables set in `.env.production`
 3. Go to `Product` -> `Archive`
 
-## Building production signed APP file for IOS:
+# Building production release for Android and IOS
 
-Upon creating an Archive, you have the option to upload it to App Store Connect.
+Unfortunately due to currently used version of React-Native (0.57) build process is a little bit complicated than before.  
+**Before** it would require running one command for Android and one button for IOS but because React-Native 0.57 is trying to be compatible with newest build system in newer versions of XCode it is not so easy anymore.  
+Mainly due to the fact that there is no full support of the box yet for new build system and for time being, users must rely on workardounds
+
+## Requirements:
+
+1. You need an Android Keystore (`android.jks`)
+2. You must copy storefile to `repo/android/app`  
+   Ask Kai or somebody who is in charge of disitributing such informations.
+
+## Steps:
+
+1. Open main repo directory
+2. Run `rm -rf node_modules` - in order to remove dangling references from XCode and be able to build for Android
+3. Run `npm install` - reinstall all modules
+4. Run `npm run build-release-android` - in order to build release version for Android, the output APK file will be placed in `repo/dist/luna-android-release.apk`
+5. Run `cd node_modules/react-native/scripts && ./ios-install-third-party.sh && cd ../../../` - in order to fetch 3rd party tools for IOS which were removed when doing `rm -rf node_modules`
+6. Run `cd node_modules/react-native/third-party/glog-0.3.5/ && ../../scripts/ios-configure-glog.sh && cd ../../../../` - in order to unpack and install 3rd party tools for IOS which were removed when doing `rm -rf node_modules`
+7. Open XCode Solution
+8. Select `Production` Scheme and target device to be: `Generic IOS Device`
+9. Click `Product -> Archive`
+10. IOS build is completed, you can now upload Archive to App Store
 
 # Inspecting React Elements, JavaScript breakpoints:
 
