@@ -34,7 +34,7 @@
 		"build-debug-android-dev": "export ENVFILE=.env.development && npm run build-debug-android",
 		"build-debug-android-staging": "export ENVFILE=.env.staging && npm run build-debug-android",
 		"build-debug-android-production": "export ENVFILE=.env.production && npm run build-debug-android",
-		"build-release-android": "export ENVFILE=.env.production && cd android && ./gradlew assembleRelease && cd .. && mkdir -p ./dist && rm -f ./dist/luna-android-release.apk && cp ./android/app/build/outputs/apk/app-release.apk ./dist/luna-android-release.apk"
+		"build-release-android": "export ENVFILE=.env.production && cd android && ./gradlew assembleRelease && cd .. && mkdir -p ./dist && rm -f ./dist/luna-android-release.apk && cp ./android/app/build/outputs/apk/release/app-release.apk ./dist/luna-android-release.apk"
 	},
 	"jest": {
 		"preset": "react-native",
