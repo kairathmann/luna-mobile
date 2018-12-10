@@ -1,6 +1,11 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { FlatList, RefreshControl, View } from 'react-native'
+import {
+	FlatList,
+	RefreshControl,
+	View,
+	KeyboardAvoidingView
+} from 'react-native'
 import { Text } from 'react-native-animatable'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { Answers } from 'react-native-fabric'
@@ -44,7 +49,7 @@ class MessagePage extends React.Component {
 
 	render() {
 		return (
-			<View style={{ flex: 1 }}>
+			<KeyboardAvoidingView style={{ flex: 1 }} behavior="padding" enabled>
 				<FlatList
 					keyExtractor={item => `message-item-index-${item.id}`}
 					contentContainerStyle={styles.scrollViewContainer}
@@ -94,7 +99,7 @@ class MessagePage extends React.Component {
 						)}
 					</View>
 				)}
-			</View>
+			</KeyboardAvoidingView>
 		)
 	}
 }

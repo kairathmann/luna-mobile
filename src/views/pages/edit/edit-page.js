@@ -15,6 +15,7 @@ import React from 'react'
 import {
 	Dimensions,
 	Image,
+	KeyboardAvoidingView,
 	ScrollView,
 	Text,
 	TouchableOpacity,
@@ -408,7 +409,7 @@ export class EditPage extends React.Component {
 
 	render() {
 		return (
-			<React.Fragment>
+			<KeyboardAvoidingView style={{ flex: 1 }} behavior="padding" enabled>
 				<ScrollView style={{ padding: 8 }}>
 					<H3 style={styles.welcomePrompt}>
 						{`${I18n.t('edit_page.welcome')} ${this.state.name}`}{' '}
@@ -428,7 +429,7 @@ export class EditPage extends React.Component {
 						}
 					/>
 				</ScrollView>
-			</React.Fragment>
+			</KeyboardAvoidingView>
 		)
 	}
 }

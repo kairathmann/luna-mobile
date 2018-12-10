@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { View } from 'react-native'
+import { KeyboardAvoidingView, View } from 'react-native'
 import { Text } from 'react-native-animatable'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { Answers } from 'react-native-fabric'
@@ -25,7 +25,7 @@ export class BidMessagePage extends React.Component {
 	render() {
 		const partner = this.props.navigation.getParam('partner', {})
 		return (
-			<View style={{ flex: 1 }}>
+			<KeyboardAvoidingView style={{ flex: 1 }} behavior="padding" enabled>
 				<View style={styles.avatarContainer}>
 					<MessageAvatar
 						conversation={{
@@ -38,7 +38,7 @@ export class BidMessagePage extends React.Component {
 				<View style={{ flexGrow: 0, flexShrink: 1 }}>
 					<NewMessage onSend={this.handleSend} />
 				</View>
-			</View>
+			</KeyboardAvoidingView>
 		)
 	}
 }
