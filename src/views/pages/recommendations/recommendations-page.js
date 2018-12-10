@@ -91,13 +91,17 @@ class RecommendationsPage extends React.Component {
 	)
 
 	renderMessageButton = () => (
-		<NativeBaseButton rounded icon style={styles.messageButton}>
+		<NativeBaseButton
+			rounded
+			icon
+			style={styles.messageButton}
+			onPress={() => {
+				this.matchRecommendation(this.props.currentlyRenderRecommendation)
+			}}
+		>
 			<Icon
 				type="MaterialCommunityIcons"
 				name="email-outline"
-				onPress={() => {
-					this.matchRecommendation(this.props.currentlyRenderRecommendation)
-				}}
 				style={{ color: 'white', marginLeft: 0, marginRight: 0 }}
 			/>
 		</NativeBaseButton>
