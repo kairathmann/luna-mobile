@@ -161,7 +161,7 @@ class RecommendationsPage extends React.Component {
 	render() {
 		return (
 			<SafeAreaView
-				style={{ flex: 1, backgroundColor: '#f6f6f6' }}
+				style={{ flex: 1, backgroundColor: LUNA_PRIMARY_COLOR }}
 				forceInset={{ top: 'always' }}
 			>
 				<StatusBar

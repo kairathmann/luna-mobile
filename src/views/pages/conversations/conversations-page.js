@@ -14,6 +14,7 @@ import { GENDER } from '../../../enums'
 import { PAGES_NAMES } from '../../../navigation'
 import { conversationsListTimerService } from '../../../services'
 import { notifications, styles as commonStyles } from '../../../styles'
+import { LUNA_PRIMARY_COLOR } from '../../../styles/colors'
 import { fetchConversations } from './scenario-actions'
 
 class ConversationsPage extends React.Component {
@@ -73,7 +74,7 @@ class ConversationsPage extends React.Component {
 		const { searchText } = this.state
 		return (
 			<SafeAreaView
-				style={{ flex: 1, backgroundColor: 'white' }}
+				style={{ flex: 1, backgroundColor: LUNA_PRIMARY_COLOR }}
 				forceInset={{ top: 'always' }}
 			>
 				<View style={{ flex: 1 }}>
