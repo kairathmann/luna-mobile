@@ -72,7 +72,8 @@ const styles = EStyleSheet.create({
 		justifyContent: 'center',
 		position: 'absolute',
 		width: '100%',
-		height: '100%'
+		height: '100%',
+		backgroundColor: '$primaryBackgroundColor'
 	},
 	center: {
 		flex: 1,

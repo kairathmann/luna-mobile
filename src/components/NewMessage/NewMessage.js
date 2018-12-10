@@ -1,7 +1,7 @@
 import { Icon } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { Keyboard, TextInput, View } from 'react-native'
+import { Keyboard, TextInput, View, Platform } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import I18n from '../../../locales/i18n'
 import { LUNA_PRIMARY_COLOR } from '../../styles/colors'
@@ -58,13 +58,15 @@ export default class NewMessage extends React.Component {
 
 const styles = EStyleSheet.create({
 	container: {
+		minHeight: Platform.OS === 'ios' ? 50 : 2,
 		paddingLeft: 12,
 		paddingRight: 12,
 		flexDirection: 'row',
 		backgroundColor: 'white',
 		borderTopWidth: 1,
 		borderTopColor: '#80808080',
-		alignItems: 'center'
+		alignItems: 'center',
+		justifyContent: 'center'
 	},
 	textInput: { flex: 1, fontSize: 18 },
 	icon: { color: '$primaryColor' }
