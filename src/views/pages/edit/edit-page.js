@@ -12,14 +12,8 @@ import {
 } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
-import {
-	Dimensions,
-	Image,
-	ScrollView,
-	Text,
-	TouchableOpacity,
-	View
-} from 'react-native'
+import { Dimensions, Image, Text, TouchableOpacity, View } from 'react-native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { Answers } from 'react-native-fabric'
 import ImagePicker from 'react-native-image-picker'
@@ -408,27 +402,25 @@ export class EditPage extends React.Component {
 
 	render() {
 		return (
-			<React.Fragment>
-				<ScrollView style={{ padding: 8 }}>
-					<H3 style={styles.welcomePrompt}>
-						{`${I18n.t('edit_page.welcome')} ${this.state.name}`}{' '}
-					</H3>
-					{this.renderAvatar()}
-					{/*TODO: should be hidden as API does not return birthdate*/}
-					{this.renderBirthdayAndNameForm()}
-					{this.renderGender()}
-					{/*TODO: should be hidden as API does not return seeking_age_from and seeking_age_to*/}
-					{/*{ this.renderAgeLimits() }*/}
-					{this.renderTagline()}
-					{this.renderBio()}
-					<Button
-						text={I18n.t('edit_page.manage_account')}
-						onPress={() =>
-							this.props.navigation.navigate(PAGES_NAMES.MANAGE_PROFILE)
-						}
-					/>
-				</ScrollView>
-			</React.Fragment>
+			<KeyboardAwareScrollView style={{ padding: 8 }}>
+				<H3 style={styles.welcomePrompt}>
+					{`${I18n.t('edit_page.welcome')} ${this.state.name}`}{' '}
+				</H3>
+				{this.renderAvatar()}
+				{/*TODO: should be hidden as API does not return birthdate*/}
+				{this.renderBirthdayAndNameForm()}
+				{this.renderGender()}
+				{/*TODO: should be hidden as API does not return seeking_age_from and seeking_age_to*/}
+				{/*{ this.renderAgeLimits() }*/}
+				{this.renderTagline()}
+				{this.renderBio()}
+				<Button
+					text={I18n.t('edit_page.manage_account')}
+					onPress={() =>
+						this.props.navigation.navigate(PAGES_NAMES.MANAGE_PROFILE)
+					}
+				/>
+			</KeyboardAwareScrollView>
 		)
 	}
 }
