@@ -139,6 +139,7 @@ const styles = EStyleSheet.create({
 	scrollViewContainer: {
 		backgroundColor: 'white',
 		flexGrow: 1,
+		flexShrink: 0,
 		padding: 8
 	},
 	waitingText: {
