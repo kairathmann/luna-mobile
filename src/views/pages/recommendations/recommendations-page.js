@@ -11,7 +11,7 @@ import {
 } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { Answers } from 'react-native-fabric'
-import { NavigationEvents } from 'react-navigation'
+import { NavigationEvents, SafeAreaView } from 'react-navigation'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
 import { isLandscape } from '../../../common/utils'
@@ -160,7 +160,10 @@ class RecommendationsPage extends React.Component {
 
 	render() {
 		return (
-			<React.Fragment>
+			<SafeAreaView
+				style={{ flex: 1, backgroundColor: LUNA_PRIMARY_COLOR }}
+				forceInset={{ top: 'always' }}
+			>
 				<StatusBar
 					barStyle={'light-content'}
 					translucent={false}
@@ -194,7 +197,7 @@ class RecommendationsPage extends React.Component {
 						this.props.matchesCount === 0 &&
 						this.renderNoMatchesMessage()}
 				</ScrollView>
-			</React.Fragment>
+			</SafeAreaView>
 		)
 	}
 }
