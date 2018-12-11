@@ -1,6 +1,13 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { KeyboardAvoidingView, Text, View } from 'react-native'
+import {
+	Keyboard,
+	KeyboardAvoidingView,
+	Platform,
+	Text,
+	TouchableWithoutFeedback,
+	View
+} from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { Answers } from 'react-native-fabric'
 import { connect } from 'react-redux'
@@ -24,16 +31,22 @@ export class BidMessagePage extends React.Component {
 	render() {
 		const partner = this.props.navigation.getParam('partner', {})
 		return (
-			<KeyboardAvoidingView style={{ flex: 1 }} behavior="padding" enabled>
-				<View style={styles.avatarContainer}>
-					<MessageAvatar
-						conversation={{
-							partnerAvatarMedium: partner.avatarUrl,
-							partnerGender: partner.gidIs
-						}}
-					/>
-					<Text style={styles.userInfo}>{partner.firstName}</Text>
-				</View>
+			<KeyboardAvoidingView
+				style={{ flex: 1 }}
+				behavior="padding"
+				enabled={Platform.OS === 'ios'}
+			>
+				<TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+					<View style={styles.avatarContainer}>
+						<MessageAvatar
+							conversation={{
+								partnerAvatarMedium: partner.avatarUrl,
+								partnerGender: partner.gidIs
+							}}
+						/>
+						<Text style={styles.userInfo}>{partner.firstName}</Text>
+					</View>
+				</TouchableWithoutFeedback>
 				<View style={{ flexGrow: 0, flexShrink: 1 }}>
 					<NewMessage onSend={this.handleSend} />
 				</View>
