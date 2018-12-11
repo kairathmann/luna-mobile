@@ -66,7 +66,7 @@
 		"react-native-fabric": "https://github.com/corymsmith/react-native-fabric/tarball/master",
 		"react-native-i18n": "2.0.15",
 		"react-native-image-header-scroll-view": "https://github.com/darekg11/react-native-image-header-scroll-view/tarball/master",
-		"react-native-image-picker": "^0.27.1",
+		"react-native-image-picker": "0.27.2",
 		"react-native-keyboard-aware-scroll-view": "^0.7.4",
 		"react-native-languages": "3.0.1",
 		"react-native-linear-gradient": "^2.4.4",
