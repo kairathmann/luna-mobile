@@ -20,6 +20,7 @@ function getAvatar(message) {
 
 const BIG_RADIUS = 18
 const SMALL_RADIUS = 4
+const zoneOffset = new Date().getTimezoneOffset()
 
 const MessageItem = ({ message, onResend }) => {
 	const handleMessageTap = () => {
@@ -49,7 +50,9 @@ const MessageItem = ({ message, onResend }) => {
 		<View>
 			{message.hasDivider && (
 				<Text style={styles.divider}>
-					{moment(message.sentTime).format('ddd, HH:mm')}
+					{moment(message.sentTime)
+						.subtract(zoneOffset)
+						.format('ddd, HH:mm')}
 				</Text>
 			)}
 			<View
