@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { KeyboardAvoidingView, View } from 'react-native'
-import { Text } from 'react-native-animatable'
+import { KeyboardAvoidingView, Text, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { Answers } from 'react-native-fabric'
 import { connect } from 'react-redux'
