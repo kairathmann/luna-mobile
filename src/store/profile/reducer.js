@@ -64,7 +64,10 @@ export function profileReducer(state = initialState, { payload, type }) {
 		case FETCH_PROFILE_SUCCESS:
 			return {
 				...state,
-				profile: payload
+				profile: {
+					...payload,
+					birthDate: payload.birthday
+				}
 			}
 		case CANCEL_UPDATING_PROFILE:
 			return {
@@ -131,7 +134,10 @@ export function profileReducer(state = initialState, { payload, type }) {
 					localAvatar: state.profileToEdit.localAvatar,
 					avatarUrl: state.profileToEdit.avatarUrl,
 					tagline: state.profileToEdit.tagline,
-					bio: state.profileToEdit.bio
+					bio: state.profileToEdit.bio,
+					seekingAgeFrom: state.profileToEdit.seekingAgeFrom,
+					seekingAgeTo: state.profileToEdit.seekingAgeTo,
+					birthDate: state.profileToEdit.birthDate
 				},
 				profileToEdit: {}
 			}

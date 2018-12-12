@@ -40,6 +40,7 @@ export function changeProfileStatusSuccess() {
 }
 
 export function fetchProfileSuccess(profile) {
+	console.log(profile)
 	return {
 		type: FETCH_PROFILE_SUCCESS,
 		payload: profile
