@@ -7,6 +7,7 @@ import I18n from '../../../locales/i18n'
 import {
 	avatarRelativeUrlToFullPhotoUrl,
 	getLoaderImageForGender,
+	getMomentCurrentLocaleWithFallback,
 	isHydraImage
 } from '../../common/utils'
 import { styles as commonStyles } from '../../styles'
@@ -51,6 +52,7 @@ const MessageItem = ({ message, onResend }) => {
 			{message.hasDivider && (
 				<Text style={styles.divider}>
 					{moment(message.sentTime)
+						.locale(getMomentCurrentLocaleWithFallback())
 						.subtract(zoneOffset)
 						.format('ddd, HH:mm')}
 				</Text>
