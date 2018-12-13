@@ -240,6 +240,7 @@ export class EditPage extends React.Component {
 						</Text>
 					</TouchableOpacity>
 					<DateTimePicker
+						date={new Date(birthDate)}
 						maximumDate={maxDate}
 						isVisible={pickerOpened}
 						confirmTextStyle={styles.datePickerButton}
