@@ -1,3 +1,4 @@
+import moment from 'moment'
 import {
 	CANCEL_UPDATING_PROFILE,
 	CHANGE_PROFILE_STATUS_ERROR,
@@ -137,7 +138,8 @@ export function profileReducer(state = initialState, { payload, type }) {
 					bio: state.profileToEdit.bio,
 					seekingAgeFrom: state.profileToEdit.seekingAgeFrom,
 					seekingAgeTo: state.profileToEdit.seekingAgeTo,
-					birthDate: state.profileToEdit.birthDate
+					birthDate: state.profileToEdit.birthDate,
+					age: moment().diff(state.profileToEdit.birthDate, 'years')
 				},
 				profileToEdit: {}
 			}
