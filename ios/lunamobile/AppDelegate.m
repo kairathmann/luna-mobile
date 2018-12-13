@@ -11,6 +11,8 @@
 #import <React/RCTRootView.h>
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
+#import <Crashlytics/Answers.h>
+#import "RNSplashScreen.h"
 
 @implementation AppDelegate
 
@@ -18,7 +20,11 @@
 {
   NSURL *jsCodeLocation;
 
+#ifdef DEBUG
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
+#else
+  jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
+#endif
 
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                       moduleName:@"Luna"
@@ -31,7 +37,8 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
-  [Fabric with:@[[Crashlytics class]]];
+  [RNSplashScreen show];
+  [Fabric with:@[[Crashlytics class], [Answers class]]];
   return YES;
 }
 
