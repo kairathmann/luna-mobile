@@ -131,14 +131,15 @@ Mainly due to the fact that there is no full support of the box yet for new buil
 
 1. Open main repo directory
 2. Run `rm -rf node_modules` - in order to remove dangling references from XCode and be able to build for Android
-3. Run `npm install` - reinstall all modules
-4. Run `npm run build-release-android` - in order to build release version for Android, the output APK file will be placed in `repo/dist/luna-android-release.apk`
-5. Run `cd node_modules/react-native/scripts && ./ios-install-third-party.sh && cd ../../../` - in order to fetch 3rd party tools for IOS which were removed when doing `rm -rf node_modules`
-6. Run `cd node_modules/react-native/third-party/glog-0.3.5/ && ../../scripts/ios-configure-glog.sh && cd ../../../../` - in order to unpack and install 3rd party tools for IOS which were removed when doing `rm -rf node_modules`
-7. Open XCode Solution
-8. Select `Production` Scheme and target device to be: `Generic IOS Device`
-9. Click `Product -> Archive`
-10. IOS build is completed, you can now upload Archive to App Store
+3. Run `rm -rf ~/.rncache` - in order to remove react-native cache
+4. Run `npm install` - reinstall all modules
+5. Run `npm run build-release-android` - in order to build release version for Android, the output APK file will be placed in `repo/dist/luna-android-release.apk`
+6. Run `cd node_modules/react-native && ./scripts/ios-install-third-party.sh && cd ../../` - in order to fetch 3rd party tools for IOS which were removed when doing `rm -rf node_modules`
+7. Run `cd node_modules/react-native/third-party/glog-0.3.5/ && ../../scripts/ios-configure-glog.sh && cd ../../../../` - in order to unpack and install 3rd party tools for IOS which were removed when doing `rm -rf node_modules`
+8. Open XCode Solution
+9. Select `Production` Scheme and target device to be: `Generic IOS Device`
+10. Click `Product -> Archive`
+11. IOS build is completed, you can now upload Archive to App Store
 
 # Inspecting React Elements, JavaScript breakpoints:
 
