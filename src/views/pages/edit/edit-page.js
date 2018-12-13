@@ -505,11 +505,13 @@ const styles = EStyleSheet.create({
 	},
 	dataEntryRight: {
 		textAlign: 'right',
+		paddingRight: 8,
 		flex: 1,
 		color: '#888'
 	},
 	dataEntryLeft: {
 		textAlign: 'left',
+		paddingLeft: 16,
 		flex: 1
 	},
 	inboxContainer: {
