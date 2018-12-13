@@ -113,11 +113,29 @@ const isSameDay = (firstDate, secondDate) => {
 	return first.dayOfYear() === second.dayOfYear()
 }
 
+const getMomentCurrentLocaleWithFallback = () => {
+	const supportedLocales = ['en', 'de', 'pl']
+	const fallback = 'en'
+	const currentLocale = I18n.locale
+	const separatorIndex = currentLocale.indexOf('-')
+	const currentLocaleStrippedToMomentFormat =
+		separatorIndex === -1
+			? currentLocale
+			: currentLocale.substr(0, separatorIndex)
+	const indexOfSupportedLocale = supportedLocales.indexOf(
+		currentLocaleStrippedToMomentFormat
+	)
+	return indexOfSupportedLocale === -1
+		? fallback
+		: currentLocaleStrippedToMomentFormat
+}
+
 export {
 	avatarRelativeUrlToFullPhotoUrl,
 	checkImageURL,
 	getErrorDataFromNetworkException,
 	getLoaderImageForGender,
+	getMomentCurrentLocaleWithFallback,
 	getNameFromUri,
 	isHydraImage,
 	isPortrait,

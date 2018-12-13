@@ -3,8 +3,10 @@ import PropTypes from 'prop-types'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import Moment from 'react-moment'
 import { Image, Text, View, TouchableOpacity } from 'react-native'
-import { checkImageURL } from '../../common/utils'
-import I18n from '../../../locales/i18n'
+import {
+	checkImageURL,
+	getMomentCurrentLocaleWithFallback
+} from '../../common/utils'
 
 const zoneOffset = new Date().getTimezoneOffset()
 
@@ -43,7 +45,7 @@ class ConversationListItem extends React.PureComponent {
 					<View style={styles.textLastUpdatedContainer}>
 						<Moment
 							style={styles.textLastUpdated}
-							locale={I18n.locale}
+							locale={getMomentCurrentLocaleWithFallback()}
 							element={Text}
 							fromNow
 							subtract={{ minutes: zoneOffset }}
