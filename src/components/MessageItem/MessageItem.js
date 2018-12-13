@@ -46,12 +46,6 @@ const MessageItem = ({ message, onResend }) => {
 
 		return message.isRecipient ? recipientBorder : userBorder
 	}
-	if (message.hasDivider) {
-		console.log({
-			time: message.sentTime,
-			zoneOffset
-		})
-	}
 
 	return (
 		<View>
