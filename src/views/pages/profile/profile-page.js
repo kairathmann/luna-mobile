@@ -155,7 +155,7 @@ export class ProfilePage extends React.Component {
 			<H3>{I18n.t('profile_page.bio')}</H3>
 			<ScrollView
 				nestedScrollEnabled
-				contentContainerStyle={{ flexGrow: 1 }}
+				contentContainerStyle={{ flexGrow: 1, padding: 8 }}
 				style={isPortrait ? { maxHeight: 100 } : {}}
 			>
 				<Text style={styles.bio}>
