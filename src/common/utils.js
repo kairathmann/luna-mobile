@@ -114,7 +114,7 @@ const isSameDay = (firstDate, secondDate) => {
 }
 
 const getMomentCurrentLocaleWithFallback = () => {
-	const supportedLocales = ['en', 'de', 'pl']
+	const supportedLocales = ['en']
 	const fallback = 'en'
 	const currentLocale = I18n.locale
 	const separatorIndex = currentLocale.indexOf('-')
