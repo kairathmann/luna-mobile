@@ -60,7 +60,7 @@
 		"react": "^16.6.0-alpha.8af6728",
 		"react-moment": "0.8.4",
 		"react-native": "^0.57.4",
-		"react-native-config": "https://github.com/darekg11/react-native-config/tarball/master",
+		"react-native-config": "0.11.7",
 		"react-native-extended-stylesheet": "0.10.0",
 		"react-native-fabric": "https://github.com/corymsmith/react-native-fabric/tarball/master",
 		"react-native-i18n": "2.0.15",
