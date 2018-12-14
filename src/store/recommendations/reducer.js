@@ -64,7 +64,8 @@ export function recommendationsReducer(
 				...state,
 				recommendations: state.recommendations.filter(
 					person => person.hid !== payload
-				)
+				),
+				isLoading: false
 			}
 		case MATCH_RECOMMENDATION_FINISH:
 		case UNMATCH_RECOMMENDATION_FINISH:
