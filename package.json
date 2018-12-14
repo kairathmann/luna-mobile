@@ -62,7 +62,7 @@
 		"react-native": "^0.57.4",
 		"react-native-config": "0.11.7",
 		"react-native-extended-stylesheet": "0.10.0",
-		"react-native-fabric": "https://github.com/corymsmith/react-native-fabric/tarball/master",
+		"react-native-fabric": "https://github.com/lunalabs/react-native-fabric/tarball/master",
 		"react-native-i18n": "2.0.15",
 		"react-native-image-header-scroll-view": "https://github.com/lunalabs/react-native-image-header-scroll-view/tarball/master",
 		"react-native-image-picker": "0.27.2",
