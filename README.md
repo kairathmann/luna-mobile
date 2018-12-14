@@ -49,18 +49,19 @@ cd node_modules/react-native/third-party/glog-0.3.5/ && ../../scripts/ios-config
 
 ## Basic development setup:
 
-1. Install [Android Studio](https://developer.android.com/studio/)
-2. Install Android 6.0 (Marshmallow) SDK from Android SDK Manager
-3. Install Android SDK Build-Tools 23, exactly 23.0.1 from Android SDK Manager
-4. Add `ANDROID_HOME` env variable pointing to SDK location (this is used by react-native to locate SDK):  
+1. Java JDK 1.8 is recommended in order to run / build Android
+2. Install [Android Studio](https://developer.android.com/studio/)
+3. Install Android 6.0 (Marshmallow) SDK from Android SDK Manager
+4. Install Android SDK Build-Tools 23, exactly 23.0.1 from Android SDK Manager
+5. Add `ANDROID_HOME` env variable pointing to SDK location (this is used by react-native to locate SDK):  
    `echo 'export ANDROID_HOME=/Users/$USER/Library/Android/sdk' >> ~/.bash_profile`  
    `source ~/.bash_profile`
-5. Add Android Platform Tools to your path:  
+6. Add Android Platform Tools to your path:  
    `echo 'export PATH=${PATH}:/Users/$USER/Library/Android/sdk/tools:/Users/$USER/Library/Android/sdk/platform-tools' >> ~/.bash_profile`  
    `source ~/.bash_profile`
-6. Now you should be able to use `adb devices` command to list connected devices.
+7. Now you should be able to use `adb devices` command to list connected devices.
    After connecting your Android device and running `adb devices` you should see ID of your device and `device` label in the right column. That means the device is connected. You must have only one device connected at a time. Also if this is real device, please make sure to enable USB Debugging and accept fingerprint of your development machine
-7. Install `Fabric for Android Studio` plugin from Plugin Repository in order to be able to deploy new builds for internal team
+8. Install `Fabric for Android Studio` plugin from Plugin Repository in order to be able to deploy new builds for internal team
 
 ## Launching dev version:
 
@@ -126,6 +127,7 @@ Mainly due to the fact that there is no full support of the box yet for new buil
 1. You need an Android Keystore (`android.jks`)
 2. You must copy storefile to `repo/android/app`  
    Ask Kai or somebody who is in charge of disitributing such informations.
+3. Java JDK 1.8 is recommended for Android Build
 
 ## Steps:
 
