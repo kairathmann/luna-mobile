@@ -42,6 +42,7 @@ import ProfilePage from '../views/pages/profile/profile-page'
 import RecommendationsPage from '../views/pages/recommendations/recommendations-page'
 import SignupPage from '../views/pages/signup/signup-page'
 import TermsPage from '../views/pages/terms/terms-page'
+import { ProfilePageUserDetailView } from '../views/pages/profile/profile-page'
 import WelcomePage from '../views/pages/welcome/welcome-page'
 import BidMessagePage from '../views/pages/bid-message/bid-message-page'
 
@@ -70,7 +71,8 @@ const PAGES_NAMES = {
 	MANAGE_DELETE: 'MANAGE_DELETE',
 	BID_MESSAGE: 'BID_MESSAGE',
 	POLICY: 'POLICY',
-	TERMS: 'TERMS'
+	TERMS: 'TERMS',
+	USER_INFO: 'USER_INFO'
 }
 
 const noNavbarStyle = {
@@ -114,6 +116,40 @@ const RecommendationPageStackNavigation = createStackNavigator({
 			title: navigation.getParam('title'),
 			headerTintColor: 'white',
 			headerStyle: { backgroundColor: LUNA_PRIMARY_COLOR }
+		})
+	},
+	USER_INFO: {
+		screen: ProfilePageUserDetailView,
+		navigationOptions: ({ navigation }) => ({
+			title: '',
+			headerTintColor: 'white',
+			headerTransparent: true,
+			headerLeft: (
+				<Button
+					icon
+					transparent
+					style={{ marginRight: 4, marginTop: 4 }}
+					onPress={() => navigation.goBack()}
+					title={'arrow_back'}
+					color="#fff"
+				>
+					<Icon
+						type={'MaterialCommunityIcons'}
+						name={'arrow-left'}
+						style={{
+							color:
+								navigation.getParam('orientation') === ORIENTATION.LANDSCAPE
+									? LUNA_PRIMARY_COLOR
+									: 'white'
+						}}
+					/>
+				</Button>
+			),
+			headerStyle: {
+				zIndex: 100,
+				elevation: 0, //remove shadow on Android
+				shadowOpacity: 0 //remove shadow on iOS
+			}
 		})
 	}
 })

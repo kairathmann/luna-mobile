@@ -6,6 +6,7 @@ import {
 	UNMATCH_RECOMMENDATION_SUCCESS,
 	UNMATCH_RECOMMENDATION_FINISH,
 	SHOW_SKIPPED_RECOMMENDATIONS,
+	SHOW_ACTIVE_RECOMMENDATIONS,
 	CLEAR_DATA,
 	MATCH_RECOMMENDATION_PROGRESS,
 	MATCH_RECOMMENDATION_SUCCESS,
@@ -54,6 +55,10 @@ export const doneMatchingRecommendation = () => ({
 
 export const showSkippedMatches = () => ({
 	type: SHOW_SKIPPED_RECOMMENDATIONS
+})
+
+export const showActiveMatches = () => ({
+	type: SHOW_ACTIVE_RECOMMENDATIONS
 })
 
 export const clearData = () => ({

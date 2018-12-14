@@ -11,7 +11,7 @@ import {
 } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { Answers } from 'react-native-fabric'
-import { NavigationEvents, SafeAreaView } from 'react-navigation'
+import { SafeAreaView } from 'react-navigation'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
 import { isLandscape } from '../../../common/utils'
@@ -22,11 +22,13 @@ import { GENDER, ORIENTATION } from '../../../enums'
 import { styles as commonStyles } from '../../../styles'
 import { LUNA_PRIMARY_COLOR } from '../../../styles/colors'
 import {
-	fetchRecommendations,
+	fetchRecommendationsWithFallbackToSkipped,
+	fetchSkippedRecommendations,
 	switchToLoadingSkippedMatches,
 	unmatch,
 	match
 } from './scenario-actions'
+import { PAGES_NAMES } from '../../../navigation'
 
 class RecommendationsPage extends React.Component {
 	constructor(props) {
@@ -38,6 +40,7 @@ class RecommendationsPage extends React.Component {
 
 	componentDidMount() {
 		Answers.logContentView('Recommendation Page')
+		this.props.fetchRecommendationsWithFallbackToSkipped()
 	}
 
 	getDeviceOrientation = () => {
@@ -55,6 +58,9 @@ class RecommendationsPage extends React.Component {
 		this.props.matchRecommendation(user)
 	}
 
+	openUserInfo = user =>
+		this.props.navigation.navigate(PAGES_NAMES.USER_INFO, { userProfile: user })
+
 	onLayout = () => {
 		const newDeviceOrientation = this.getDeviceOrientation()
 		if (newDeviceOrientation !== this.state.deviceOrientation) {
@@ -66,11 +72,11 @@ class RecommendationsPage extends React.Component {
 
 	onShowSkippedMatchesButtonClick = () => {
 		this.props.showSkippedMatches()
-		this.props.fetchRecommendations()
+		this.props.fetchSkippedRecommendations()
 	}
 
 	onPullToRefresh = () => {
-		this.props.fetchRecommendations()
+		this.props.fetchRecommendationsWithFallbackToSkipped()
 	}
 
 	renderUnmatchButton = styleToAdd => (
@@ -110,7 +116,12 @@ class RecommendationsPage extends React.Component {
 	renderPortraitContent = () => (
 		<React.Fragment>
 			<View style={styles.userProfileContainerPortrait}>
-				<UserMatchView userProfile={this.props.currentlyRenderRecommendation} />
+				<UserMatchView
+					userProfile={this.props.currentlyRenderRecommendation}
+					onInfoButtonClick={() =>
+						this.openUserInfo(this.props.currentlyRenderRecommendation)
+					}
+				/>
 			</View>
 			<View style={styles.buttonsColumnContainer}>
 				<View style={styles.buttonsRowContainer}>
@@ -146,7 +157,12 @@ class RecommendationsPage extends React.Component {
 				</View>
 			</View>
 			<View style={styles.userProfileLandscape}>
-				<UserMatchView userProfile={this.props.currentlyRenderRecommendation} />
+				<UserMatchView
+					userProfile={this.props.currentlyRenderRecommendation}
+					onInfoButtonClick={() =>
+						this.openUserInfo(this.props.currentlyRenderRecommendation)
+					}
+				/>
 			</View>
 			<View style={styles.buttonsColumnContainer}>
 				<View style={styles.buttonWrapperLandscape}>
@@ -173,7 +189,6 @@ class RecommendationsPage extends React.Component {
 					translucent={false}
 					backgroundColor={LUNA_PRIMARY_COLOR}
 				/>
-				<NavigationEvents onWillFocus={this.props.fetchRecommendations} />
 				<ScrollView
 					contentContainerStyle={commonStyles.content}
 					onLayout={this.onLayout}
@@ -275,7 +290,8 @@ const styles = EStyleSheet.create({
 RecommendationsPage.propTypes = {
 	unmatchRecommendation: PropTypes.func.isRequired,
 	showSkippedMatches: PropTypes.func.isRequired,
-	fetchRecommendations: PropTypes.func.isRequired,
+	fetchRecommendationsWithFallbackToSkipped: PropTypes.func.isRequired,
+	fetchSkippedRecommendations: PropTypes.func.isRequired,
 	isLoading: PropTypes.bool.isRequired,
 	isFetchingRecommendationsError: PropTypes.bool.isRequired,
 	errorMessage: PropTypes.string,
@@ -296,7 +312,8 @@ RecommendationsPage.propTypes = {
 		minBid: PropTypes.string.isRequired
 	}),
 	isShowingSkipped: PropTypes.bool.isRequired,
-	matchRecommendation: PropTypes.func.isRequired
+	matchRecommendation: PropTypes.func.isRequired,
+	navigation: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => {
@@ -317,7 +334,9 @@ const mapDispatchToProps = dispatch => {
 	return {
 		unmatchRecommendation: userId => dispatch(unmatch(userId)),
 		showSkippedMatches: () => dispatch(switchToLoadingSkippedMatches()),
-		fetchRecommendations: () => dispatch(fetchRecommendations()),
+		fetchRecommendationsWithFallbackToSkipped: () =>
+			dispatch(fetchRecommendationsWithFallbackToSkipped()),
+		fetchSkippedRecommendations: () => dispatch(fetchSkippedRecommendations()),
 		matchRecommendation: user => dispatch(match(user))
 	}
 }

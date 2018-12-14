@@ -7,7 +7,7 @@ import LinearGradient from 'react-native-linear-gradient'
 import { checkImageURL, getLoaderImageForGender } from '../../common/utils'
 import { GENDER } from '../../enums'
 
-const UserMatchView = ({ userProfile }) => (
+const UserMatchView = ({ userProfile, onInfoButtonClick }) => (
 	<ImageBackground
 		imageStyle={styles.backgroundImage}
 		style={styles.container}
@@ -28,6 +28,7 @@ const UserMatchView = ({ userProfile }) => (
 					type="MaterialCommunityIcons"
 					name="information-outline"
 					style={{ color: 'white' }}
+					onPress={onInfoButtonClick}
 				/>
 			</View>
 		</LinearGradient>
@@ -82,7 +83,8 @@ UserMatchView.propTypes = {
 		]).isRequired,
 		age: PropTypes.number.isRequired,
 		minBid: PropTypes.string.isRequired
-	})
+	}),
+	onInfoButtonClick: PropTypes.func.isRequired
 }
 
 export default UserMatchView
