@@ -1,10 +1,6 @@
 import { Answers } from 'react-native-fabric'
 import api from '../../../api'
-import {
-	avatarRelativeUrlToFullPhotoUrl,
-	getErrorDataFromNetworkException,
-	rewriteUrlImageForDefault
-} from '../../../common/utils'
+import { getErrorDataFromNetworkException } from '../../../common/utils'
 import { PAGES_NAMES } from '../../../navigation'
 import { toastService } from '../../../services'
 import * as navigationService from '../../../services/navigationService'
@@ -13,34 +9,43 @@ import {
 	doneFetchingRecommendationsSuccess,
 	doneUnmatchingRecommendation,
 	doneUnmatchingRecommendationSuccess,
+	showActiveMatches,
 	showSkippedMatches,
 	startFetchingRecommendations,
 	startUnmatching
 } from '../../../store/recommendations/actions'
+import { recommendationsService } from '../../../services'
 
-const remapMatches = matches => {
-	return matches.map(person => {
-		const avatarUrlToPhotoUrl = avatarRelativeUrlToFullPhotoUrl(
-			person.avatarUrl
-		)
-		const photoUrlRewrittenToDefaultIfRequired = rewriteUrlImageForDefault(
-			avatarUrlToPhotoUrl,
-			person.gidIs
-		)
-		return {
-			...person,
-			avatarUrl: photoUrlRewrittenToDefaultIfRequired
-		}
-	})
-}
-
-export const fetchRecommendations = () => async (dispatch, getState) => {
+export const fetchSkippedRecommendations = () => async dispatch => {
 	try {
 		dispatch(startFetchingRecommendations())
-		const response = getState().recommendations.isShowingSkipped
-			? await api.fetchSkipped()
-			: await api.fetchRecommendations()
-		const recommendations = remapMatches(response.data.data.people)
+		const recommendations = await recommendationsService.fetchRecommendations(
+			true
+		)
+		dispatch(doneFetchingRecommendationsSuccess(recommendations))
+	} catch (err) {
+		const errorMessage = getErrorDataFromNetworkException(err)
+		dispatch(doneFetchingRecommendationsError(errorMessage))
+	}
+}
+
+export const fetchRecommendationsWithFallbackToSkipped = () => async dispatch => {
+	try {
+		dispatch(startFetchingRecommendations())
+		let recommendations = []
+		let shouldShowSkipped = false
+		// First try to get active recommendations
+		recommendations = await recommendationsService.fetchRecommendations(false)
+		// If there are no active recommendations then just fetch skipped
+		if (recommendations.length === 0) {
+			recommendations = await recommendationsService.fetchRecommendations(true)
+			shouldShowSkipped = true
+		}
+		if (shouldShowSkipped) {
+			dispatch(showSkippedMatches())
+		} else {
+			dispatch(showActiveMatches())
+		}
 		dispatch(doneFetchingRecommendationsSuccess(recommendations))
 	} catch (err) {
 		const errorMessage = getErrorDataFromNetworkException(err)
@@ -61,10 +66,9 @@ export const unmatch = userId => async (dispatch, getState) => {
 		}
 		await dispatch(doneUnmatchingRecommendationSuccess(userId))
 		if (getState().recommendations.recommendations.length === 0) {
-			const response = getState().recommendations.isShowingSkipped
-				? await api.fetchSkipped()
-				: await api.fetchRecommendations()
-			const recommendations = remapMatches(response.data.data.people)
+			const recommendations = await recommendationsService.fetchRecommendations(
+				isShowingSkippedMatches
+			)
 			dispatch(doneFetchingRecommendationsSuccess(recommendations))
 		}
 		Answers.logCustom('Skip event')

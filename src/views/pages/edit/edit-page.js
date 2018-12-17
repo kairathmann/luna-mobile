@@ -1,5 +1,5 @@
 import MultiSlider from '@ptomasroos/react-native-multi-slider'
-// import moment from 'moment'
+import moment from 'moment'
 import {
 	Form,
 	H3,
@@ -12,17 +12,12 @@ import {
 } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
-import {
-	Dimensions,
-	Image,
-	ScrollView,
-	Text,
-	TouchableOpacity,
-	View
-} from 'react-native'
+import { Dimensions, Image, Text, TouchableOpacity, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { Answers } from 'react-native-fabric'
 import ImagePicker from 'react-native-image-picker'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import DateTimePicker from 'react-native-modal-datetime-picker'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
 import {
@@ -44,9 +39,9 @@ const options = {
 	}
 }
 
-// const maxDate = moment()
-// 	.subtract(18, 'years')
-// 	.toDate()
+const maxDate = moment()
+	.subtract(18, 'years')
+	.toDate()
 const MAX_AGE = 100
 const MIN_AGE = 18
 const EXTRA_MARGIN = 16
@@ -61,7 +56,7 @@ export class EditPage extends React.Component {
 			newAvatar: '',
 			pickerOpened: false,
 			name: props.profile.firstName || '',
-			birthday: props.profile.birthDate || '',
+			birthDate: props.profile.birthDate || '',
 			gender: props.profile.gidIs || 1,
 			sexuality: props.profile.gidSeeking || 2,
 			bio: props.profile.bio || '',
@@ -101,7 +96,10 @@ export class EditPage extends React.Component {
 				gidIs: this.state.gender,
 				gidSeeking: this.state.sexuality,
 				tagline: this.state.tagline,
-				bio: this.state.bio
+				bio: this.state.bio,
+				birthDate: this.state.birthDate,
+				seekingAgeFrom: this.state.ageMin,
+				seekingAgeTo: this.state.ageMax
 			},
 			this.state.avatarChanged ? { uri: this.state.newAvatar } : null
 		)
@@ -159,7 +157,7 @@ export class EditPage extends React.Component {
 
 	handleDatePicked = date => {
 		this.setState({
-			birthday: date,
+			birthDate: date,
 			pickerOpened: false
 		})
 	}
@@ -218,7 +216,7 @@ export class EditPage extends React.Component {
 	}
 
 	renderBirthdayAndNameForm = () => {
-		const { name } = this.state
+		const { name, birthDate, pickerOpened } = this.state
 		return (
 			<Form>
 				<Item floatingLabel last>
@@ -229,27 +227,28 @@ export class EditPage extends React.Component {
 						value={name}
 					/>
 				</Item>
-				{/*<Item stackedLabel style={styles.birthdayContainer} last>*/}
-				{/*<Label>{I18n.t('flow_page.name_birthday.birthday')}</Label>*/}
-				{/*<TouchableOpacity*/}
-				{/*style={styles.birthdayButton}*/}
-				{/*onPress={this.showDateTimePicker}*/}
-				{/*>*/}
-				{/*<Text style={styles.birthdayText}>*/}
-				{/*{birthday !== ''*/}
-				{/*? moment(birthday).format('DD-MM-YYYY')*/}
-				{/*: 'DD-MM-YYYY'}*/}
-				{/*</Text>*/}
-				{/*</TouchableOpacity>*/}
-				{/*<DateTimePicker*/}
-				{/*maximumDate={maxDate}*/}
-				{/*isVisible={pickerOpened}*/}
-				{/*confirmTextStyle={styles.datePickerButton}*/}
-				{/*cancelTextStyle={styles.datePickerButton}*/}
-				{/*onConfirm={this.handleDatePicked}*/}
-				{/*onCancel={this.hideDateTimePicker}*/}
-				{/*/>*/}
-				{/*</Item>*/}
+				<Item stackedLabel style={styles.birthdayContainer} last>
+					<Label>{I18n.t('flow_page.name_birthday.birthday')}</Label>
+					<TouchableOpacity
+						style={styles.birthdayButton}
+						onPress={this.showDateTimePicker}
+					>
+						<Text style={styles.birthdayText}>
+							{birthDate !== ''
+								? moment(birthDate).format('DD-MM-YYYY')
+								: 'DD-MM-YYYY'}
+						</Text>
+					</TouchableOpacity>
+					<DateTimePicker
+						date={new Date(birthDate)}
+						maximumDate={maxDate}
+						isVisible={pickerOpened}
+						confirmTextStyle={styles.datePickerButton}
+						cancelTextStyle={styles.datePickerButton}
+						onConfirm={this.handleDatePicked}
+						onCancel={this.hideDateTimePicker}
+					/>
+				</Item>
 			</Form>
 		)
 	}
@@ -408,27 +407,23 @@ export class EditPage extends React.Component {
 
 	render() {
 		return (
-			<React.Fragment>
-				<ScrollView style={{ padding: 8 }}>
-					<H3 style={styles.welcomePrompt}>
-						{`${I18n.t('edit_page.welcome')} ${this.state.name}`}{' '}
-					</H3>
-					{this.renderAvatar()}
-					{/*TODO: should be hidden as API does not return birthdate*/}
-					{this.renderBirthdayAndNameForm()}
-					{this.renderGender()}
-					{/*TODO: should be hidden as API does not return seeking_age_from and seeking_age_to*/}
-					{/*{ this.renderAgeLimits() }*/}
-					{this.renderTagline()}
-					{this.renderBio()}
-					<Button
-						text={I18n.t('edit_page.manage_account')}
-						onPress={() =>
-							this.props.navigation.navigate(PAGES_NAMES.MANAGE_PROFILE)
-						}
-					/>
-				</ScrollView>
-			</React.Fragment>
+			<KeyboardAwareScrollView style={{ padding: 8 }}>
+				<H3 style={styles.welcomePrompt}>
+					{`${I18n.t('edit_page.welcome')} ${this.state.name}`}{' '}
+				</H3>
+				{this.renderAvatar()}
+				{this.renderBirthdayAndNameForm()}
+				{this.renderGender()}
+				{this.renderAgeLimits()}
+				{this.renderTagline()}
+				{this.renderBio()}
+				<Button
+					text={I18n.t('edit_page.manage_account')}
+					onPress={() =>
+						this.props.navigation.navigate(PAGES_NAMES.MANAGE_PROFILE)
+					}
+				/>
+			</KeyboardAwareScrollView>
 		)
 	}
 }
@@ -510,11 +505,13 @@ const styles = EStyleSheet.create({
 	},
 	dataEntryRight: {
 		textAlign: 'right',
+		paddingRight: 8,
 		flex: 1,
 		color: '#888'
 	},
 	dataEntryLeft: {
 		textAlign: 'left',
+		paddingLeft: 16,
 		flex: 1
 	},
 	inboxContainer: {

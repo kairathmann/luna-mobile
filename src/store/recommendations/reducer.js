@@ -6,6 +6,7 @@ import {
 	UNMATCH_RECOMMENDATION_SUCCESS,
 	UNMATCH_RECOMMENDATION_FINISH,
 	SHOW_SKIPPED_RECOMMENDATIONS,
+	SHOW_ACTIVE_RECOMMENDATIONS,
 	MATCH_RECOMMENDATION_PROGRESS,
 	MATCH_RECOMMENDATION_SUCCESS,
 	MATCH_RECOMMENDATION_FINISH,
@@ -38,6 +39,8 @@ export function recommendationsReducer(
 		case LOAD_RECOMMENDATIONS_SUCCESS:
 			return {
 				...state,
+				isFetchingRecommendationsError: false,
+				isUnmatchingRecommendationError: false,
 				isLoading: false,
 				recommendations: payload
 			}
@@ -61,7 +64,8 @@ export function recommendationsReducer(
 				...state,
 				recommendations: state.recommendations.filter(
 					person => person.hid !== payload
-				)
+				),
+				isLoading: false
 			}
 		case MATCH_RECOMMENDATION_FINISH:
 		case UNMATCH_RECOMMENDATION_FINISH:
@@ -73,6 +77,11 @@ export function recommendationsReducer(
 			return {
 				...state,
 				isShowingSkipped: true
+			}
+		case SHOW_ACTIVE_RECOMMENDATIONS:
+			return {
+				...state,
+				isShowingSkipped: false
 			}
 		default:
 			return state

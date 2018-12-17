@@ -13,11 +13,12 @@ import EStyleSheet from 'react-native-extended-stylesheet'
 import { Answers } from 'react-native-fabric'
 import HeaderImageScrollView from 'react-native-image-header-scroll-view'
 import LinearGradient from 'react-native-linear-gradient'
-import { Header } from 'react-navigation'
+import { withNavigation, Header } from 'react-navigation'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
 import StarIcon from '../../../assets/images/star-icon.png'
 import {
+	checkImageURL,
 	avatarRelativeUrlToFullPhotoUrl,
 	getLoaderImageForGender,
 	isHydraImage,
@@ -52,11 +53,18 @@ export class ProfilePage extends React.Component {
 	}
 
 	componentDidMount() {
-		this.props.navigation.setParams({
-			goToEditPage: this._goToEditPage,
-			orientation: this.state.deviceOrientation
-		})
-		Answers.logContentView('Profile Page')
+		if (!this.props.isUserViewDetails) {
+			this.props.navigation.setParams({
+				goToEditPage: this._goToEditPage,
+				orientation: this.state.deviceOrientation
+			})
+			Answers.logContentView('Profile Page')
+		} else {
+			this.props.navigation.setParams({
+				orientation: this.state.deviceOrientation
+			})
+			Answers.logContentView('UserInfo Page')
+		}
 	}
 
 	_goToEditPage = () => {
@@ -67,6 +75,9 @@ export class ProfilePage extends React.Component {
 	getDefaultImage = getLoaderImageForGender
 
 	getAvatarImage = () => {
+		if (this.props.isUserViewDetails) {
+			return checkImageURL(this.props.profile.avatarUrl)
+		}
 		return this.props.profile.avatarUrl &&
 			!isHydraImage(this.props.profile.avatarUrl)
 			? this.processIfLocal()
@@ -100,22 +111,26 @@ export class ProfilePage extends React.Component {
 				>
 					{`${this.props.profile.firstName}, ${this.props.profile.age}`}
 				</Text>
-				<View style={{ marginLeft: 32 }}>
-					<Text
-						style={[
-							styles.imageTitle,
-							{ color: isLandscape ? '#222' : 'white' }
-						]}
-					>
-						{this.props.profile.balance
-							? Number(this.props.profile.balance.confirmed)
-							: 0}
-					</Text>
-				</View>
-				<Image
-					style={[styles.smallIcon, { marginLeft: 4 }]}
-					source={StarIcon}
-				/>
+				{!this.props.isUserViewDetails && (
+					<React.Fragment>
+						<View style={{ marginLeft: 32 }}>
+							<Text
+								style={[
+									styles.imageTitle,
+									{ color: isLandscape ? '#222' : 'white' }
+								]}
+							>
+								{this.props.profile.balance
+									? Number(this.props.profile.balance.confirmed)
+									: 0}
+							</Text>
+						</View>
+						<Image
+							style={[styles.smallIcon, { marginLeft: 4 }]}
+							source={StarIcon}
+						/>
+					</React.Fragment>
+				)}
 			</View>
 		)
 	}
@@ -140,7 +155,7 @@ export class ProfilePage extends React.Component {
 			<H3>{I18n.t('profile_page.bio')}</H3>
 			<ScrollView
 				nestedScrollEnabled
-				contentContainerStyle={{ flexGrow: 1 }}
+				contentContainerStyle={{ flexGrow: 1, padding: 8 }}
 				style={isPortrait ? { maxHeight: 100 } : {}}
 			>
 				<Text style={styles.bio}>
@@ -154,23 +169,29 @@ export class ProfilePage extends React.Component {
 		return (
 			<View style={styles.portraitProfileDataContainer}>
 				<View style={styles.card}>{this.renderTagline()}</View>
-				<View style={styles.card}>{this.renderBioPortrait()}</View>
-				<Button style={styles.tokenButton} full onPress={() => {}}>
-					<Text style={styles.tokenButtonText}>
-						{I18n.t('profile_page.token')}
-					</Text>
-					<Image style={styles.biggerIcon} source={StarIcon} />
-				</Button>
-				<Button
-					style={{ marginTop: 8 }}
-					full
-					danger
-					onPress={this.props.logout}
-				>
-					<Text style={styles.portraitLogoutText}>
-						{I18n.t('common.logout')}
-					</Text>
-				</Button>
+				<View style={[styles.card, { paddingRight: 0, paddingBottom: 8 }]}>
+					{this.renderBioPortrait()}
+				</View>
+				{!this.props.isUserViewDetails && (
+					<React.Fragment>
+						<Button style={styles.tokenButton} full onPress={() => {}}>
+							<Text style={styles.tokenButtonText}>
+								{I18n.t('profile_page.token')}
+							</Text>
+							<Image style={styles.biggerIcon} source={StarIcon} />
+						</Button>
+						<Button
+							style={{ marginTop: 8 }}
+							full
+							danger
+							onPress={this.props.logout}
+						>
+							<Text style={styles.portraitLogoutText}>
+								{I18n.t('common.logout')}
+							</Text>
+						</Button>
+					</React.Fragment>
+				)}
 			</View>
 		)
 	}
@@ -220,24 +241,26 @@ export class ProfilePage extends React.Component {
 					<View style={styles.bioContainerLandscape}>
 						{this.renderBioLanscape()}
 					</View>
-					<View style={[styles.shrinkItSelf, styles.bringToBottom]}>
-						<Button style={styles.tokenButton} full onPress={() => {}}>
-							<Text style={styles.tokenButtonText}>
-								{I18n.t('profile_page.token')}
-							</Text>
-							<Image style={styles.biggerIcon} source={StarIcon} />
-						</Button>
-						<Button
-							style={styles.landscapeLogoutButton}
-							full
-							bordered
-							onPress={this.props.logout}
-						>
-							<Text style={styles.landscapeLogoutButtonText}>
-								{I18n.t('common.logout')}
-							</Text>
-						</Button>
-					</View>
+					{!this.props.isUserViewDetails && (
+						<View style={[styles.shrinkItSelf, styles.bringToBottom]}>
+							<Button style={styles.tokenButton} full onPress={() => {}}>
+								<Text style={styles.tokenButtonText}>
+									{I18n.t('profile_page.token')}
+								</Text>
+								<Image style={styles.biggerIcon} source={StarIcon} />
+							</Button>
+							<Button
+								style={styles.landscapeLogoutButton}
+								full
+								bordered
+								onPress={this.props.logout}
+							>
+								<Text style={styles.landscapeLogoutButtonText}>
+									{I18n.t('common.logout')}
+								</Text>
+							</Button>
+						</View>
+					)}
 				</View>
 			</View>
 		)
@@ -263,8 +286,9 @@ export class ProfilePage extends React.Component {
 ProfilePage.propTypes = {
 	navigation: PropTypes.object.isRequired,
 	profile: PropTypes.object.isRequired,
-	startEditing: PropTypes.func.isRequired,
-	logout: PropTypes.func.isRequired
+	startEditing: PropTypes.func,
+	logout: PropTypes.func,
+	isUserViewDetails: PropTypes.bool.isRequired
 }
 
 const styles = EStyleSheet.create({
@@ -373,7 +397,8 @@ const styles = EStyleSheet.create({
 
 const mapStateToProps = state => {
 	return {
-		profile: state.profile.profile
+		profile: state.profile.profile,
+		isUserViewDetails: false
 	}
 }
 
@@ -388,3 +413,11 @@ export default connect(
 	mapStateToProps,
 	mapDispatchToProps
 )(ProfilePage)
+
+export const ProfilePageUserDetailView = withNavigation(({ navigation }) => (
+	<ProfilePage
+		isUserViewDetails={true}
+		navigation={navigation}
+		profile={navigation.getParam('userProfile', {})}
+	/>
+))

@@ -50,6 +50,7 @@ export const sendMessage = (conversation, text) => async (
 			appendLocalMessage({
 				id: uniqueId,
 				body: text,
+				sentTime: new Date().toISOString(),
 				senderHid: getState().profile.profile.targetHid,
 				senderGender: getState().profile.profile.gidIs,
 				senderAvatar: getState().profile.profile.avatarUrl

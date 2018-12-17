@@ -7,6 +7,7 @@ import I18n from '../../../locales/i18n'
 import {
 	avatarRelativeUrlToFullPhotoUrl,
 	getLoaderImageForGender,
+	getMomentCurrentLocaleWithFallback,
 	isHydraImage
 } from '../../common/utils'
 import { styles as commonStyles } from '../../styles'
@@ -20,6 +21,7 @@ function getAvatar(message) {
 
 const BIG_RADIUS = 18
 const SMALL_RADIUS = 4
+const zoneOffset = new Date().getTimezoneOffset()
 
 const MessageItem = ({ message, onResend }) => {
 	const handleMessageTap = () => {
@@ -49,7 +51,10 @@ const MessageItem = ({ message, onResend }) => {
 		<View>
 			{message.hasDivider && (
 				<Text style={styles.divider}>
-					{moment(message.sentTime).format('ddd, HH:mm')}
+					{moment(message.sentTime)
+						.locale(getMomentCurrentLocaleWithFallback())
+						.subtract(zoneOffset, 'minutes')
+						.format('ddd, HH:mm')}
 				</Text>
 			)}
 			<View

@@ -23,7 +23,7 @@ const maxDate = moment()
 export class NameBirthdayPage extends React.Component {
 	state = {
 		name: this.props.profile.firstName || '',
-		birthday: this.props.profile.birthDate || '',
+		birthDate: this.props.profile.birthDate || '',
 		pickerOpened: false
 	}
 
@@ -32,10 +32,10 @@ export class NameBirthdayPage extends React.Component {
 	}
 
 	handleNext = () => {
-		const { name, birthday } = this.state
-		if (name.length !== 0 && birthday.length !== 0) {
+		const { name, birthDate } = this.state
+		if (name.length !== 0 && birthDate.length !== 0) {
 			this.props.next(
-				{ firstName: name, birthDate: birthday },
+				{ firstName: name, birthDate },
 				PAGES_NAMES.FLOW_GENDER_SEXUALITY
 			)
 			Keyboard.dismiss()
@@ -45,7 +45,7 @@ export class NameBirthdayPage extends React.Component {
 
 	handleDatePicked = date => {
 		this.setState({
-			birthday: date,
+			birthDate: date,
 			pickerOpened: false
 		})
 	}
@@ -63,21 +63,21 @@ export class NameBirthdayPage extends React.Component {
 	}
 
 	calculateProgress = () => {
-		const { name, birthday } = this.state
+		const { name, birthDate } = this.state
 
 		const BASE_PROGRESS_VALUE = 0.2
 		let newProgressValue = BASE_PROGRESS_VALUE
 		if (name.length !== 0) {
 			newProgressValue += 0.1
 		}
-		if (birthday.length !== 0) {
+		if (birthDate.length !== 0) {
 			newProgressValue += 0.1
 		}
 		return newProgressValue
 	}
 
 	render() {
-		const { name, birthday, pickerOpened } = this.state
+		const { name, birthDate, pickerOpened } = this.state
 		return (
 			<View style={flow.content}>
 				<KeyboardAwareScrollView
@@ -115,8 +115,8 @@ export class NameBirthdayPage extends React.Component {
 								onPress={this.showDateTimePicker}
 							>
 								<Text style={styles.birthdayText}>
-									{birthday !== ''
-										? moment(birthday).format('DD-MM-YYYY')
+									{birthDate !== ''
+										? moment(birthDate).format('DD-MM-YYYY')
 										: 'DD-MM-YYYY'}
 								</Text>
 							</TouchableOpacity>
@@ -132,7 +132,7 @@ export class NameBirthdayPage extends React.Component {
 					</Form>
 					<Button
 						disabled={
-							!(name.length !== 0 && birthday.length !== 0) ||
+							!(name.length !== 0 && birthDate.length !== 0) ||
 							this.props.isLoading
 						}
 						text={I18n.t('flow_page.name_birthday.next')}

@@ -1,7 +1,14 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { FlatList, RefreshControl, View } from 'react-native'
-import { Text } from 'react-native-animatable'
+import {
+	FlatList,
+	Keyboard,
+	RefreshControl,
+	Platform,
+	Text,
+	View,
+	KeyboardAvoidingView
+} from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { Answers } from 'react-native-fabric'
 import { connect } from 'react-redux'
@@ -17,6 +24,23 @@ class MessagePage extends React.Component {
 	componentDidMount() {
 		this.askForMessages()
 		Answers.logContentView('Message Page')
+		this.keyboardDidShowListener = Keyboard.addListener(
+			'keyboardDidShow',
+			this.scrollToBottom
+		)
+		this.keyboardDidHideListener = Keyboard.addListener(
+			'keyboardDidHide',
+			this.scrollToBottom
+		)
+	}
+
+	scrollToBottom = () => {
+		this.scrollView.scrollToEnd({ animated: true })
+	}
+
+	componentWillUnmount() {
+		this.keyboardDidShowListener.remove()
+		this.keyboardDidHideListener.remove()
 	}
 
 	askForMessages() {
@@ -44,7 +68,11 @@ class MessagePage extends React.Component {
 
 	render() {
 		return (
-			<View style={{ flex: 1 }}>
+			<KeyboardAvoidingView
+				style={{ flex: 1 }}
+				behavior="padding"
+				enabled={Platform.OS === 'ios'}
+			>
 				<FlatList
 					keyExtractor={item => `message-item-index-${item.id}`}
 					contentContainerStyle={styles.scrollViewContainer}
@@ -67,9 +95,6 @@ class MessagePage extends React.Component {
 							/>
 						)
 					}
-					onContentSizeChange={() => {
-						this.scrollView.scrollToEnd({ animated: true })
-					}}
 					refreshControl={
 						<RefreshControl
 							refreshing={this.props.isLoading}
@@ -94,7 +119,7 @@ class MessagePage extends React.Component {
 						)}
 					</View>
 				)}
-			</View>
+			</KeyboardAvoidingView>
 		)
 	}
 }
