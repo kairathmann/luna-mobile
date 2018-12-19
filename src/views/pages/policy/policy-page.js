@@ -13,6 +13,7 @@ export class PolicyPage extends React.Component {
 		return (
 			<ScrollView>
 				<Text style={styles.headerText}>Privacy Policy</Text>
+				<Text style={styles.normalText}>Last updated: 19.12.2018</Text>
 				<Text style={styles.normalText}>
 					This Privacy Policy describes how Gravity Analytics Limited,
 					collectively referred to as &quot;Meetluna.com&quot; (or
@@ -37,11 +38,12 @@ export class PolicyPage extends React.Component {
 					or when you otherwise correspond with us regarding our Services, such
 					as when you contact our customer support team. The information you
 					provide us includes your email address (such that we can send you
-					email) and optionally a QTUM wallet address (such that you can receive
-					LSTR tokens from Meetluna.com). Additionally Name, Date of Birth,
-					Gender, Location and Sexual Orientation are required to create a
-					profile and to be later discovered on the platform. The complete list
-					of collected information is as follows:
+					email) and optionally an Ethereum wallet address or a QTUM wallet
+					address (such that you can receive LSTR tokens from Meetluna.com).
+					Additionally Name, Date of Birth, Gender, Location and Sexual
+					Orientation are required to create a profile and to be later
+					discovered on the platform. The complete list of collected information
+					is as follows:
 				</Text>
 				<Text style={styles.indentedNormalText}>- Email</Text>
 				<Text style={styles.indentedNormalText}>- Name</Text>
@@ -55,11 +57,7 @@ export class PolicyPage extends React.Component {
 					- Inbox size - preferred new daily messages
 				</Text>
 				<Text style={styles.indentedNormalText}>
-					- Messages - We collect received &amp; sent messages. (We need to
-					write down that we use it to better learn about the user and analyse
-					great patterns so the user will feel that it is done in a massive way
-					and not in a specific way - need to look at how other dating platform
-					are writing this)
+					- Messages - We collect received &amp; sent messages
 				</Text>
 				<Text style={styles.indentedNormalText}>
 					- Amount of token in the user wallet
