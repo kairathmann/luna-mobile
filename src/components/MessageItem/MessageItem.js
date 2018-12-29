@@ -53,7 +53,7 @@ const MessageItem = ({ message, onResend }) => {
 				<Text style={styles.divider}>
 					{moment(message.sentTime)
 						.locale(getMomentCurrentLocaleWithFallback())
-						.subtract(zoneOffset, 'minutes')
+						.subtract(message.isNew ? 0 : zoneOffset, 'minutes')
 						.format('ddd, HH:mm')}
 				</Text>
 			)}

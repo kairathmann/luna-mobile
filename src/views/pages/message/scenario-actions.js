@@ -48,6 +48,7 @@ export const sendMessage = (conversation, text) => async (
 	try {
 		dispatch(
 			appendLocalMessage({
+				isNew: true, // used to distinguish messages that has been locally append to list from those recieved from server
 				id: uniqueId,
 				body: text,
 				sentTime: new Date().toISOString(),
