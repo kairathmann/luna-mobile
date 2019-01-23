@@ -1,12 +1,9 @@
 import moment from 'moment'
-import Config from 'react-native-config'
 import I18n from '../../locales/i18n'
 import DefaultFemale from '../assets/images/default_female.png'
 import DefaultMale from '../assets/images/default_male.png'
 import DefaultOther from '../assets/images/default_other.png'
 import { GENDER } from '../enums'
-
-const baseHostForURLs = Config.APP_URL_BASE
 
 const getNameFromUri = uri => {
 	const lastPart = uri.split('/').slice(-1)[0]
@@ -46,7 +43,7 @@ const getErrorDataFromNetworkException = error => {
 }
 
 const avatarRelativeUrlToFullPhotoUrl = avatarUrl => {
-	return `${baseHostForURLs}${avatarUrl}`
+	return `${avatarUrl}`
 }
 
 const isHydraImage = (imageUrl = '') => imageUrl.includes('hydra/img/src')

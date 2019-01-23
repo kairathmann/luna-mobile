@@ -30,17 +30,7 @@ export function uploadAvatar(source, nextPage) {
 			dispatch(startLocalLoading())
 			if (source) {
 				// TODO: Change to smartcrop or introduce better mechanism
-				const {
-					data: { guid, viewerHid }
-				} = await api.stashAvatar(source)
-				await api.cropAvatar({
-					target_hid: viewerHid,
-					stash_guid: guid,
-					x1: 0,
-					y1: 0,
-					x2: 1000,
-					y2: 1000
-				})
+				await api.uploadAvatar(source)
 			}
 			dispatch(saveProfileSuccess({ avatar: source }))
 			navigationService.navigate(nextPage)

@@ -25,17 +25,7 @@ export function uploadChanges(changes, avatar) {
 			dispatch(startLocalLoading())
 			await api.updateProfile(changes)
 			if (avatar) {
-				const {
-					data: { guid, viewerHid }
-				} = await api.stashAvatar(avatar.uri)
-				await api.cropAvatar({
-					target_hid: viewerHid,
-					stash_guid: guid,
-					x1: 0,
-					y1: 0,
-					x2: 1000,
-					y2: 1000
-				})
+				await api.uploadAvatar(avatar.uri)
 				profileToSave = {
 					...profileToSave,
 					avatarUrl: avatar.uri,
