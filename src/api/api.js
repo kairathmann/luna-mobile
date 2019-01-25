@@ -42,6 +42,20 @@ export default {
 			return data
 		})
 	},
+	uploadAvatar: uri => {
+		const bodyFormData = new FormData()
+		bodyFormData.append('image', {
+			uri,
+			type: 'image/jpeg',
+			name: getNameFromUri(uri)
+		})
+		bodyFormData.append('resize_width', 1000)
+		bodyFormData.append('resize_height', 1000)
+		return axios.post('/user/avatar/upload/', bodyFormData).then(({ data }) => {
+			if (!data.success) throw new Error('error.stashing')
+			return data
+		})
+	},
 	cropAvatar: payload => {
 		return axios.post('/user/avatar/crop/', qs.stringify(payload))
 	},
