@@ -1,4 +1,3 @@
-import { Answers } from 'react-native-fabric'
 import api from '../../../api/api'
 import { getErrorDataFromNetworkException } from '../../../common/utils'
 import {
@@ -28,7 +27,6 @@ export const fetchMessages = (hid, conversation) => async dispatch => {
 
 export const resendMessage = (conversation, message) => async dispatch => {
 	try {
-		Answers.logCustom('Message Resend Success')
 		await api.sendMessage({
 			recipient_hid: conversation.partnerHid,
 			body: message.body
@@ -62,10 +60,8 @@ export const sendMessage = (conversation, text) => async (
 			body: text
 		})
 		dispatch(sendMessageSuccess(uniqueId))
-		Answers.logCustom('Message Send Success', { size: text.length })
 	} catch (err) {
 		const errorMessage = getErrorDataFromNetworkException(err)
 		dispatch(sendMessageError(errorMessage, uniqueId))
-		Answers.logCustom('Message Send Failed', { reason: errorMessage })
 	}
 }

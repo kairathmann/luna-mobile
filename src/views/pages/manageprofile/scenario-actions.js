@@ -1,4 +1,3 @@
-import { Answers } from 'react-native-fabric'
 import I18n from '../../../../locales/i18n'
 import api from '../../../api/api'
 import { getErrorDataFromNetworkException } from '../../../common/utils'
@@ -17,14 +16,12 @@ import { clearStoreScenario, logoutScenario } from '../common-scenarios'
 export function deleteAccount({ reasons, comment, password }) {
 	return async dispatch => {
 		performChangeStatus(dispatch, 'delete', { reasons, comment, password })
-		Answers.logCustom('Delete Event')
 	}
 }
 
 export function disableAccount({ reasons, comment, password }) {
 	return async dispatch => {
 		performChangeStatus(dispatch, 'disable', { reasons, comment, password })
-		Answers.logCustom('Disable Event')
 	}
 }
 
@@ -52,7 +49,6 @@ async function performChangeStatus(dispatch, state, data) {
 		if (statusChanged) {
 			navigationService.navigate(PAGES_NAMES.WELCOME_PAGE)
 			clearStoreScenario(dispatch)
-			Answers.logCustom('Logout Event')
 
 			if (state === 'disable') {
 				toastService.showErrorToast(

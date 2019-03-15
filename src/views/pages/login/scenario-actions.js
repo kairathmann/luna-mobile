@@ -1,4 +1,3 @@
-import { Answers } from 'react-native-fabric'
 import api from '../../../api'
 import { getErrorDataFromNetworkException } from '../../../common/utils'
 import {
@@ -48,12 +47,8 @@ export function login({ email, password }) {
 					10000
 				)
 			}
-			Answers.logLogin('APP', true)
 		} catch (error) {
 			dispatch(signinError(getErrorDataFromNetworkException(error)))
-			Answers.logLogin('APP', false, {
-				reason: getErrorDataFromNetworkException(error)
-			})
 		} finally {
 			dispatch(globalActions.unsetGlobalLoading())
 		}

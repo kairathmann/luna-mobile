@@ -2,8 +2,6 @@ package com.meetluna.luna;
 
 import android.app.Application;
 import com.AlexanderZaytsev.RNI18n.RNI18nPackage;
-import com.crashlytics.android.Crashlytics;
-import com.crashlytics.android.answers.Answers;
 import com.facebook.react.ReactApplication;
 import com.BV.LinearGradient.LinearGradientPackage;
 import com.imagepicker.ImagePickerPackage;
@@ -13,8 +11,6 @@ import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.reactcommunity.rnlanguages.RNLanguagesPackage;
-import com.smixx.fabric.FabricPackage;
-import io.fabric.sdk.android.Fabric;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 
 import java.util.Arrays;
@@ -37,8 +33,7 @@ public class MainApplication extends Application implements ReactApplication {
                     new SplashScreenReactPackage(),
                     new RNLanguagesPackage(),
                     new RNI18nPackage(),
-                    new ReactNativeConfigPackage(),
-                    new FabricPackage()
+                    new ReactNativeConfigPackage()
             );
         }
 
@@ -56,7 +51,6 @@ public class MainApplication extends Application implements ReactApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        Fabric.with(this, new Crashlytics(), new Answers());
         SoLoader.init(this, /* native exopackage */ false);
     }
 }

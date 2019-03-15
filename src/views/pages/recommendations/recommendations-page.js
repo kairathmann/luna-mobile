@@ -10,7 +10,6 @@ import {
 	View
 } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
-import { Answers } from 'react-native-fabric'
 import { SafeAreaView } from 'react-navigation'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
@@ -39,7 +38,6 @@ class RecommendationsPage extends React.Component {
 	}
 
 	componentDidMount() {
-		Answers.logContentView('Recommendation Page')
 		this.props.fetchRecommendationsWithFallbackToSkipped()
 	}
 

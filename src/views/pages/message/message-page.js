@@ -10,7 +10,6 @@ import {
 	KeyboardAvoidingView
 } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
-import { Answers } from 'react-native-fabric'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
 import { isSameDay } from '../../../common/utils'
@@ -23,7 +22,6 @@ import { fetchMessages, resendMessage, sendMessage } from './scenario-actions'
 class MessagePage extends React.Component {
 	componentDidMount() {
 		this.askForMessages()
-		Answers.logContentView('Message Page')
 		this.keyboardDidShowListener = Keyboard.addListener(
 			'keyboardDidShow',
 			this.scrollToBottom

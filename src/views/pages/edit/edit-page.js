@@ -14,7 +14,6 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { Dimensions, Image, Text, TouchableOpacity, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
-import { Answers } from 'react-native-fabric'
 import ImagePicker from 'react-native-image-picker'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import DateTimePicker from 'react-native-modal-datetime-picker'
@@ -86,7 +85,6 @@ export class EditPage extends React.Component {
 			saveProfile: this._saveChanges,
 			disabled: false
 		})
-		Answers.logContentView('Edit Profile Page')
 	}
 
 	_saveChanges = () => {

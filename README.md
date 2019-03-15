@@ -1,18 +1,10 @@
 # Luna Mobile
 
-Steps to do after first pull of repository: (those steps are done in order to replace placeholder values with Fabric.IO Api Keys during checkout and ensure that during commiting they are changed right back to placeholders)
-
-1. Add `LUNA_FABRIC_API_KEY` env variable to your global settings, preferable `.bash_profile` / `.zshrc` / wherever you need to store your env variables
-2. Add `LUNA_FABRIC_BUILD_SECRET` env variable to your global settings, preferable `.bash_profile` / `.zshrc` / wherever you need to store your env variables
-   You can get key pair from `Luna` organisation in `Fabric.io`
-3. Add `LUNA_KEYSTORE_PASSWORD` env variable to your global settings, preferfable `.bash_profile` / `.zshrc` / wherever you need to store your env variables
-4. Add `LUNA_KEYSTORE_KEY_PASSWORD` env variable to your global settings, preferable `.bash_profile` / `.zshrc` / wherever you need to store your env variables  
-   You can get keystore password and keystore key password from Kai or somebody who is in charge of disitributing such informations.
-5. Run:
+1. Add `LUNA_KEYSTORE_PASSWORD` env variable to your global settings, preferable `.bash_profile` / `.zshrc` / wherever you need to store your env variables
+2. Add `LUNA_KEYSTORE_KEY_PASSWORD` env variable to your global settings, preferable `.bash_profile` / `.zshrc` / wherever you need to store your env variables  
+3. Run:
 
 ```
-git config --global filter.update-fabric-keys.clean path/to/repo/clean.sh
-git config --global filter.update-fabric-keys.smudge path/to/repo/smudge.sh
 git config --global filter.update-luna-keystore.clean path/to/repo/clean-keystore.sh
 git config --global filter.update-luna-keystore.smudge path/to/repo/smudge-keystore.sh
 ```
@@ -20,18 +12,6 @@ git config --global filter.update-luna-keystore.smudge path/to/repo/smudge-keyst
 4. Recheckout all files in order to make custom filter kick in:
 
 ```
-rm android/app/src/main/AndroidManifest.xml
-git checkout android/app/src/main/AndroidManifest.xml
-
-rm android/app/fabric.properties
-git checkout android/app/fabric.properties
-
-rm ios/lunamobile.xcodeproj/project.pbxproj
-git checkout ios/lunamobile.xcodeproj/project.pbxproj
-
-rm ios/lunamobile/Info.plist
-git checkout ios/lunamobile/Info.plist
-
 rm android/gradle.properties
 git checkout android/gradle.properties
 ```
@@ -61,7 +41,6 @@ cd node_modules/react-native/third-party/glog-0.3.5/ && ../../scripts/ios-config
    `source ~/.bash_profile`
 7. Now you should be able to use `adb devices` command to list connected devices.
    After connecting your Android device and running `adb devices` you should see ID of your device and `device` label in the right column. That means the device is connected. You must have only one device connected at a time. Also if this is real device, please make sure to enable USB Debugging and accept fingerprint of your development machine
-8. Install `Fabric for Android Studio` plugin from Plugin Repository in order to be able to deploy new builds for internal team
 
 ## Launching dev version:
 
@@ -77,12 +56,6 @@ cd node_modules/react-native/third-party/glog-0.3.5/ && ../../scripts/ios-config
 **WON'T WORK IN REACT NATIVE THAT IS CURRENTLY USED (0.57)**
 
 # IOS:
-
-## Basic development setup:
-
-1. Install [XCode](https://developer.apple.com/xcode/)
-2. Download the [Crashlytics SDK](https://fabric.io/kits/ios/crashlytics/manual-install), extract it and place the two frameworks in a directory called `Crashlytics` in the ios directory.
-3. Install [Fabric for Mac App](https://www.fabric.io/downloads/apple) in order to be able to deploy new builds for internal team
 
 ## Launching dev version:
 
@@ -125,8 +98,7 @@ Mainly due to the fact that there is no full support of the box yet for new buil
 ## Requirements:
 
 1. You need an Android Keystore (`android.jks`)
-2. You must copy storefile to `repo/android/app`  
-   Ask Kai or somebody who is in charge of disitributing such informations.
+2. You must copy storefile to `repo/android/app`
 3. Java JDK 1.8 is recommended for Android Build
 
 ## Steps:

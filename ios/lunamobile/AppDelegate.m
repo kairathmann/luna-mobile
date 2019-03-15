@@ -9,9 +9,6 @@
 
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
-#import <Fabric/Fabric.h>
-#import <Crashlytics/Crashlytics.h>
-#import <Crashlytics/Answers.h>
 #import "RNSplashScreen.h"
 
 @implementation AppDelegate
@@ -38,7 +35,6 @@
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
   [RNSplashScreen show];
-  [Fabric with:@[[Crashlytics class], [Answers class]]];
   return YES;
 }
 

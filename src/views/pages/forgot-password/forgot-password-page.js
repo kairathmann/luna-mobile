@@ -2,7 +2,6 @@ import { Form, H1, Input, Item, Label } from 'native-base'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Keyboard, StatusBar, Text, View } from 'react-native'
-import { Answers } from 'react-native-fabric'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { connect } from 'react-redux'
 import validator from 'validator'
@@ -18,10 +17,6 @@ export class ForgotPasswordPage extends React.Component {
 	state = {
 		email: '',
 		validationEnabled: false
-	}
-
-	componentDidMount() {
-		Answers.logContentView('Forgot Password Page')
 	}
 
 	handleChange = (event, field) => {

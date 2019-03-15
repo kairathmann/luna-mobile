@@ -1,4 +1,3 @@
-import { Answers } from 'react-native-fabric'
 import api from '../../../api'
 import { getErrorDataFromNetworkException } from '../../../common/utils'
 import { PAGES_NAMES } from '../../../navigation'
@@ -71,7 +70,6 @@ export const unmatch = userId => async (dispatch, getState) => {
 			)
 			dispatch(doneFetchingRecommendationsSuccess(recommendations))
 		}
-		Answers.logCustom('Skip event')
 	} catch (err) {
 		const errorMessage = getErrorDataFromNetworkException(err)
 		toastService.showErrorToast(errorMessage, 'top')

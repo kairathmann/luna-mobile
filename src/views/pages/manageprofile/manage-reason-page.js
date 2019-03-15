@@ -14,7 +14,6 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { ScrollView, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
-import { Answers } from 'react-native-fabric'
 import connect from 'react-redux/es/connect/connect'
 import I18n from '../../../../locales/i18n'
 import Button from '../../../components/Button/Button'
@@ -38,7 +37,6 @@ export class ManageReasonPage extends React.Component {
 
 	componentDidMount() {
 		this.props.startManaging()
-		Answers.logContentView('Reason Page')
 	}
 
 	handleChange = (event, field) => {

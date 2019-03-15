@@ -2,13 +2,8 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { Text, ScrollView } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
-import { Answers } from 'react-native-fabric'
 
 export class PolicyPage extends React.Component {
-	componentDidMount() {
-		Answers.logContentView('Policy Page')
-	}
-
 	render() {
 		return (
 			<ScrollView>

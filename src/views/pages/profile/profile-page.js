@@ -10,7 +10,6 @@ import {
 	View
 } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
-import { Answers } from 'react-native-fabric'
 import HeaderImageScrollView from 'react-native-image-header-scroll-view'
 import LinearGradient from 'react-native-linear-gradient'
 import { withNavigation, Header } from 'react-navigation'
@@ -58,12 +57,10 @@ export class ProfilePage extends React.Component {
 				goToEditPage: this._goToEditPage,
 				orientation: this.state.deviceOrientation
 			})
-			Answers.logContentView('Profile Page')
 		} else {
 			this.props.navigation.setParams({
 				orientation: this.state.deviceOrientation
 			})
-			Answers.logContentView('UserInfo Page')
 		}
 	}
 

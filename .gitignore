@@ -104,7 +104,6 @@ android/.gradle/
 ios/main.jsbundle
 ios/main.jsbundle.meta
 ios/assets/**/*.*
-ios/Crashlytics/**/*.*
 
 **/.DS_Store
 

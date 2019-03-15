@@ -2,13 +2,8 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { ScrollView, Text } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
-import { Answers } from 'react-native-fabric'
 
 export class TermsPage extends React.Component {
-	componentDidMount() {
-		Answers.logContentView('Manage Profile Page')
-	}
-
 	render() {
 		return (
 			<ScrollView>
