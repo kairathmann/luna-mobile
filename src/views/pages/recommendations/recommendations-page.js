@@ -320,9 +320,7 @@ const mapStateToProps = state => {
 		isFetchingRecommendationsError:
 			state.recommendations.isFetchingRecommendationsError,
 		errorMessage: state.recommendations.errorMessage,
-		//TODO: Refactor later on to selectors or something similar
 		matchesCount: state.recommendations.recommendations.length,
-		//TODO: Refactor later on to selectors or something similar
 		currentlyRenderRecommendation: state.recommendations.recommendations[0],
 		isShowingSkipped: state.recommendations.isShowingSkipped
 	}

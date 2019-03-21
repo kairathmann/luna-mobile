@@ -89,7 +89,6 @@ export function profileReducer(state = initialState, { payload, type }) {
 					tagline: state.profile.tagline,
 					bio: state.profile.bio,
 					localAvatar: state.profile.localAvatar || false
-					//TODO: Add more field mapping
 				}
 			}
 		}
