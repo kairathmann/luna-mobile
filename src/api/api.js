@@ -1,5 +1,6 @@
 import axios from 'axios'
 import * as humps from 'humps'
+import rfblob from 'rn-fetch-blob'
 import qs from 'qs'
 import { getNameFromUri } from '../common/utils'
 
@@ -118,5 +119,22 @@ export default {
 	},
 	fetchSkipped: () => {
 		return axios.post('/user/retrieve/skipped/')
+	},
+	getPresignedUrl: () => {
+		return axios.post('/message/message/bubble/', {})
+	},
+	uploadVideo: (source, url, onUpload) => {
+		const filePath = source.uri
+		const filePathClearedFromFilePrefix = filePath.replace('file://', '')
+		return rfblob
+			.fetch(
+				'PUT',
+				url,
+				{ 'x-amz-acl': 'public-read' },
+				rfblob.wrap(filePathClearedFromFilePrefix)
+			)
+			.uploadProgress((written, total) => {
+				onUpload((written / total) * 100)
+			})
 	}
 }

@@ -78,7 +78,21 @@ export default {
 			invalid_file_format: 'Invalid file format',
 			malformed_email: 'This is not correct email format',
 			malformed_password: 'This is not correct password',
-			nonexistent_recipient: 'Receipient does not exist'
+			nonexistent_recipient: 'Receipient does not exist',
+			error_general_recording:
+				'Recording could not start due to missing permissions or camera error',
+			error_general_recording_playback: 'Could not play video.',
+			send_message_failed_bubble: 'Send message failed.'
+		},
+		permissions: {
+			microphone: {
+				title: 'Luna Audio Recording Permissions',
+				message: 'Luna would like to use your microphone when recording videos'
+			},
+			camera: {
+				title: 'Luna Video Recording Permissions',
+				message: 'Luna would like to use your camera when recording videos'
+			}
 		},
 		male: 'Male',
 		female: 'Female',
@@ -87,6 +101,14 @@ export default {
 		back: 'Back',
 		logout: 'Logout',
 		search_placeholder: 'Search...',
-		message_placeholder: 'Type your message...'
+		message_placeholder: 'Type your message...',
+		recording_prompt: 'Tap on the video below to start recording your message',
+		preview_prompt: 'Tap on the video below to playback recorded video',
+		tap_to_record: 'TAP TO RECORD',
+		record_again: 'Record again',
+		ok: 'OK',
+		missing_permissions_title: 'Missing Permissions',
+		missing_video_recording_permissions:
+			"Video can't be recorded due to missing permissions. Please enable them in Settings of your device."
 	}
 }

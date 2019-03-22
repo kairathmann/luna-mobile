@@ -9,6 +9,7 @@ import {
 	SEND_MESSAGE_ERROR,
 	SEND_MESSAGE_SUCCESS,
 	READ_CONVERSATION,
+	UPDATE_MESSAGES,
 	CLEAR_DATA
 } from './action-types'
 
@@ -132,6 +133,14 @@ export function conversationsReducer(state = initialState, { payload, type }) {
 					...state.currentConversation,
 					isLoading: false,
 					error: ''
+				}
+			}
+		case UPDATE_MESSAGES:
+			return {
+				...state,
+				currentConversation: {
+					...state.currentConversation,
+					messages: payload
 				}
 			}
 		case CLEAR_DATA:

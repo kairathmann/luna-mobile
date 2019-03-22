@@ -144,9 +144,18 @@ android {
             }
         }
     }
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+
 }
 
 dependencies {
+    implementation project(':react-native-video')
+    implementation project(':rn-fetch-blob')
+    implementation project(':react-native-svg')
+    implementation project(':react-native-camera')
     implementation project(':react-native-linear-gradient')
     implementation project(':react-native-image-picker')
     implementation project(':react-native-languages')

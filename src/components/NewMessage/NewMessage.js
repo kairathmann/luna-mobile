@@ -28,9 +28,20 @@ export default class NewMessage extends React.Component {
 		})
 	}
 
+	handleCameraOpen = () => {
+		Keyboard.dismiss()
+		this.props.onCameraOpen()
+	}
+
 	render() {
 		return (
 			<View style={styles.container}>
+				<Icon
+					onPress={this.handleCameraOpen}
+					style={[styles.icon, styles.iconPadded]}
+					type="Feather"
+					name="camera"
+				/>
 				<TextInput
 					style={styles.textInput}
 					multiline={true}
@@ -69,9 +80,13 @@ const styles = EStyleSheet.create({
 		justifyContent: 'center'
 	},
 	textInput: { flex: 1, fontSize: 18 },
-	icon: { color: '$primaryColor' }
+	icon: { color: '$primaryColor' },
+	iconPadded: {
+		marginRight: 10
+	}
 })
 
 NewMessage.propTypes = {
-	onSend: PropTypes.func.isRequired
+	onSend: PropTypes.func.isRequired,
+	onCameraOpen: PropTypes.func.isRequired
 }

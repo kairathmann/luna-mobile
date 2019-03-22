@@ -11,6 +11,7 @@ class ConversationsList extends React.PureComponent {
 		<ConversationListItem
 			lastUpdate={item.lastUpdate}
 			subject={item.subject}
+			subjectType={item.subjectType}
 			partnerAvatarSmall={item.partnerAvatarSmall}
 			partnerName={item.partnerName}
 			pending={item.pending}
@@ -53,7 +54,8 @@ ConversationsList.propTypes = {
 			partnerHid: PropTypes.string.isRequired,
 			partnerName: PropTypes.string.isRequired,
 			pending: PropTypes.bool.isRequired,
-			subject: PropTypes.string.isRequired
+			subject: PropTypes.string.isRequired,
+			subjectType: PropTypes.string.isRequired
 		})
 	).isRequired,
 	handleClick: PropTypes.func.isRequired

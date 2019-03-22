@@ -12,15 +12,28 @@ import EStyleSheet from 'react-native-extended-stylesheet'
 import { connect } from 'react-redux'
 import MessageAvatar from '../../../components/MessageAvatar/MessageAvatar'
 import NewMessage from '../../../components/NewMessage/NewMessage'
+import VideoRecordModal from '../../../components/VideoRecordModal'
 import { createMessage } from './scenario-actions'
 
 export class BidMessagePage extends React.Component {
+	state = {
+		showingVideoRecordingModal: false
+	}
+
 	handleSend = message => {
 		this.props.createMessage({
 			partner: this.props.navigation.getParam('partner', {}),
 			text: message,
 			targetHid: this.props.targetHid
 		})
+	}
+
+	showRecordingModal = () => {
+		this.setState({ showingVideoRecordingModal: true })
+	}
+
+	hideRecordingModal = () => {
+		this.setState({ showingVideoRecordingModal: false })
 	}
 
 	render() {
@@ -31,6 +44,12 @@ export class BidMessagePage extends React.Component {
 				behavior="padding"
 				enabled={Platform.OS === 'ios'}
 			>
+				{this.state.showingVideoRecordingModal && (
+					<VideoRecordModal
+						onClose={this.hideRecordingModal}
+						onRecordingFinish={() => {}}
+					/>
+				)}
 				<TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
 					<View style={styles.avatarContainer}>
 						<MessageAvatar
@@ -43,7 +62,10 @@ export class BidMessagePage extends React.Component {
 					</View>
 				</TouchableWithoutFeedback>
 				<View style={{ flexGrow: 0, flexShrink: 1 }}>
-					<NewMessage onSend={this.handleSend} />
+					<NewMessage
+						onSend={this.handleSend}
+						onCameraOpen={this.showRecordingModal}
+					/>
 				</View>
 			</KeyboardAvoidingView>
 		)

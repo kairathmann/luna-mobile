@@ -26,6 +26,19 @@ export const BID_STATUS = {
 	BID_TIMEOUT: 6
 }
 
+export const VIDEO_STATE = {
+	INITIALIZING_MEDIA_PLAYER: 0,
+	PAUSED: 1,
+	PLAYING: 2,
+	LOADING: 3,
+	ERROR: 4
+}
+
+export const MESSAGE_TYPE = {
+	BUBBLE: 'BUBBLE',
+	STANDARD: 'STANDARD'
+}
+
 export const REASONS = [
 	{
 		slug: 'met_someone_here',
@@ -48,3 +61,21 @@ export const REASONS = [
 		index: 5
 	}
 ]
+
+export const RECORDING_STATUSES = {
+	WAITING: 0,
+	RECORDING: 1,
+	UPLOADING: 2,
+	PERMISSIONS_MISSING: 3,
+	ERROR: 4
+}
+
+export const CAMERA_STATUSES = {
+	PENDING_AUTHORIZATION: 'PENDING_AUTHORIZATION',
+	NOT_AUTHORIZED: 'NOT_AUTHORIZED',
+	READY: 'READY'
+}
+
+export const MAX_VIDEO_DIMENSIONS = 512
+export const MIN_VIDEO_DIMENSIONS = 128
+export const VIDEO_BORDER_WIDTH = 5

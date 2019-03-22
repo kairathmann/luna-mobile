@@ -1,7 +1,7 @@
 # Luna Mobile
 
 1. Add `LUNA_KEYSTORE_PASSWORD` env variable to your global settings, preferable `.bash_profile` / `.zshrc` / wherever you need to store your env variables
-2. Add `LUNA_KEYSTORE_KEY_PASSWORD` env variable to your global settings, preferable `.bash_profile` / `.zshrc` / wherever you need to store your env variables  
+2. Add `LUNA_KEYSTORE_KEY_PASSWORD` env variable to your global settings, preferable `.bash_profile` / `.zshrc` / wherever you need to store your env variables
 3. Run:
 
 ```
