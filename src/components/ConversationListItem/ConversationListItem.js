@@ -3,10 +3,12 @@ import PropTypes from 'prop-types'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import Moment from 'react-moment'
 import { Image, Text, View, TouchableOpacity } from 'react-native'
+import I18n from '../../../locales/i18n'
 import {
 	checkImageURL,
 	getMomentCurrentLocaleWithFallback
 } from '../../common/utils'
+import { MESSAGE_TYPE } from '../../enums'
 
 const zoneOffset = new Date().getTimezoneOffset()
 
@@ -35,10 +37,15 @@ class ConversationListItem extends React.PureComponent {
 								numberOfLines={3}
 								style={[
 									styles.textLastMessage,
+									this.props.subjectType === MESSAGE_TYPE.BUBBLE
+										? styles.bubbleSubject
+										: '',
 									this.props.pending ? styles.textLastMessageUnread : ''
 								]}
 							>
-								{this.props.subject}
+								{this.props.subjectType == MESSAGE_TYPE.BUBBLE
+									? I18n.t('conversations_page.bubble_message')
+									: this.props.subject}
 							</Text>
 						</View>
 					</View>
@@ -129,6 +136,9 @@ const styles = EStyleSheet.create({
 		fontWeight: '100',
 		fontSize: '0.5rem',
 		color: '#4a4a4a'
+	},
+	bubbleSubject: {
+		color: '$primaryColor'
 	}
 })
 
@@ -138,6 +148,7 @@ ConversationListItem.propTypes = {
 	subject: PropTypes.string.isRequired,
 	partnerName: PropTypes.string.isRequired,
 	pending: PropTypes.bool.isRequired,
+	subjectType: PropTypes.string.isRequired,
 	onClick: PropTypes.func.isRequired
 }
 

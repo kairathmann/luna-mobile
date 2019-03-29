@@ -9,7 +9,8 @@ import {
 	LOAD_MESSAGES_SUCCESS,
 	READ_CONVERSATION,
 	SEND_MESSAGE_ERROR,
-	SEND_MESSAGE_SUCCESS
+	SEND_MESSAGE_SUCCESS,
+	UPDATE_MESSAGES
 } from './action-types'
 
 export const startFetchingConversations = () => ({
@@ -60,6 +61,11 @@ export const sendMessageError = (error, id) => ({
 		error,
 		id
 	}
+})
+
+export const updateMessagesWithNewData = newMessages => ({
+	type: UPDATE_MESSAGES,
+	payload: newMessages
 })
 
 export const clearData = () => ({

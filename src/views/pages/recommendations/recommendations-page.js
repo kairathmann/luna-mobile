@@ -10,7 +10,6 @@ import {
 	View
 } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
-import { Answers } from 'react-native-fabric'
 import { SafeAreaView } from 'react-navigation'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
@@ -39,7 +38,6 @@ class RecommendationsPage extends React.Component {
 	}
 
 	componentDidMount() {
-		Answers.logContentView('Recommendation Page')
 		this.props.fetchRecommendationsWithFallbackToSkipped()
 	}
 
@@ -322,9 +320,7 @@ const mapStateToProps = state => {
 		isFetchingRecommendationsError:
 			state.recommendations.isFetchingRecommendationsError,
 		errorMessage: state.recommendations.errorMessage,
-		//TODO: Refactor later on to selectors or something similar
 		matchesCount: state.recommendations.recommendations.length,
-		//TODO: Refactor later on to selectors or something similar
 		currentlyRenderRecommendation: state.recommendations.recommendations[0],
 		isShowingSkipped: state.recommendations.isShowingSkipped
 	}

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { Image, RefreshControl, ScrollView, Text, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
-import { Answers } from 'react-native-fabric'
 import { SafeAreaView } from 'react-navigation'
 import { connect } from 'react-redux'
 import I18n from '../../../../locales/i18n'
@@ -20,10 +19,6 @@ import { fetchConversations } from './scenario-actions'
 class ConversationsPage extends React.Component {
 	state = {
 		searchText: ''
-	}
-
-	componentDidMount() {
-		Answers.logContentView('Conversations Page')
 	}
 
 	_onSearch = text => {

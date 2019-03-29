@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { Keyboard, Text, TouchableOpacity, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
-import { Answers } from 'react-native-fabric'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import DateTimePicker from 'react-native-modal-datetime-picker'
 import * as Progress from 'react-native-progress'
@@ -39,7 +38,6 @@ export class NameBirthdayPage extends React.Component {
 				PAGES_NAMES.FLOW_GENDER_SEXUALITY
 			)
 			Keyboard.dismiss()
-			Answers.logCustom('Name/Birthdate Step done')
 		}
 	}
 

@@ -1,4 +1,3 @@
-import { Answers } from 'react-native-fabric'
 import I18n from '../../../../locales/i18n'
 import api from '../../../api'
 import { getErrorDataFromNetworkException } from '../../../common/utils'
@@ -36,9 +35,6 @@ export const createMessage = ({ targetHid, partner, text }) => async (
 		}
 		navigationService.navigate(PAGES_NAMES.RECOMMENDATIONS_PAGE)
 		toastService.showSuccessToast(I18n.t('bid_page.success'), 'top')
-		Answers.logCustom('Match event', {
-			messageSize: text.length
-		})
 	} catch (err) {
 		const errorMessage = getErrorDataFromNetworkException(err)
 		toastService.showErrorToast(errorMessage, 'top')

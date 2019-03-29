@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { Dimensions, Keyboard, Text, View } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
-import { Answers } from 'react-native-fabric'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import * as Progress from 'react-native-progress'
 import { connect } from 'react-redux'
@@ -58,13 +57,11 @@ export class AgeLimitPage extends React.Component {
 			PAGES_NAMES.FLOW_TAGLINE
 		)
 		Keyboard.dismiss()
-		Answers.logCustom('Age preferences Step done')
 	}
 
 	handleSkip = () => {
 		this.props.navigation.navigate(PAGES_NAMES.FLOW_ALLDONE)
 		Keyboard.dismiss()
-		Answers.logCustom('Skipped on Age Preferences')
 	}
 
 	calculateProgress = () => {
